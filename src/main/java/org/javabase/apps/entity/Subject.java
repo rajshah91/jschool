@@ -11,7 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * @author  Saurav Wahid<swahidfx@gmail.com>
+ * @author  Raj Shah<rajshah131291@gmail.com>
  * @version 1.0.0
  * @since   1.0.0
  */
@@ -30,6 +30,8 @@ public class Subject implements java.io.Serializable {
     private Integer entryUser;
     private Date updateDate;
     private Integer updateUser;
+    
+    
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
