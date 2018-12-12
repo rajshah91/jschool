@@ -49,11 +49,14 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2 control-label" for="last_name">Description</label>
+			<label class="col-sm-2 control-label" for="last_name">Active</label>
 			<div class="col-sm-8">
-				<input id="active" class="form-control" type="text" value="" name="active">
+                            <input type="radio" class="validate[required]"  name="active" value="true" checked> True&nbsp;&nbsp;
+                            <input type="radio" class="validate[required]"  name="active" value="false"> False
 			</div>
 		</div>
+                
+                
 		<div class="col-sm-offset-2 col-sm-8">
         	
         	<input type="submit" value="Save" name="save_ins_information" class="btn btn-success">

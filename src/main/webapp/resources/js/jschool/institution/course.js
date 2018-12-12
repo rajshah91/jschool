@@ -5,6 +5,7 @@
 $(document).ready(function($) {
 	
 	classDatatable();
+	loadSubjects();
 	
 	
 	$("#addClassForm").submit(function(event) {
@@ -22,6 +23,7 @@ $(document).ready(function($) {
 		data["courseName"]      = $("#courseName").val(),
 		data["semester"]        = $("#semester").val(),
 		data["fees"]        = $("#fees").val(),
+		data["subject"]        = $("#subjectCombo").val(),
 		url = "course/add";
 		
 		/*
@@ -65,26 +67,51 @@ $(document).ready(function($) {
 	});
 	
 	
-	function classDatatable(param) {
-		var url = 'course/load';
-		$('#classTable').dataTable({
-			destroy	: true,
-	        data	: jbf.ajax.load(url, param),
-	        columns	: [{
-		        	title	: 'Course Name',
-		        	data	: 'courseName'
-				},{
-					title	: 'Semester',
-					data	: 'semester'
-				},{
-		    		title	: 'Fees',
-		    		data	: 'fees'
-		    		
-		    	}
-	        ],
-	        columnDefs	: [
-               {"className": "dt-center", "targets": "_all"}
+    function classDatatable(param) {
+        var url = 'course/load';
+        $('#classTable').dataTable({
+            destroy: true,
+            data: jbf.ajax.load(url, param),
+            columns: [{
+                    title: 'Course Name',
+                    data: 'courseName'
+                }, {
+                    title: 'Semester',
+                    data: 'semester'
+                }, {
+                    title: 'Fees',
+                    data: 'fees'
+                }, {
+                    title: 'Subject',
+                    data: 'subject'
+                }
+            ],
+            columnDefs: [
+                {"className": "dt-center", "targets": "_all"}
             ]
-	    });
-	};
+        });
+    }
+    ;
+        
+        function loadSubjects() {
+        var url = 'course/subjectload';
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                var data=response.data;
+                for(var i=0;i<data.length;i++){
+                    $("#subjectCombo").append("<option value='"+data[i].subId+"'>"+data[i].subTitle+"</option>"); 
+                }
+//                $("#subjectCombo").trigger("change");
+            },
+            error: function (e) {
+                console.log("ERROR: ", e);
+                error("Load falied");
+            }
+        });
+    };
+    
 });

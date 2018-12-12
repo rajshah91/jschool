@@ -32,7 +32,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="middle_name">Semester </label>
+            <label class="col-sm-2 control-label" for="semester">Semester </label>
             <div class="col-sm-8">
                 <select id="semester">
                 	<option value="1">1</option>
@@ -53,6 +53,16 @@
                 <input id="fees" class="form-control validate[required]" type="number" value="" name="fees">
             </div>
         </div>
+        
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="subjectCombo">Select Subjects <span class="require-field">*</span></label>
+            <div class="col-sm-8">
+                <select name="subjectCombo" class="form-control select2 text-input validate[required]" id="subjectCombo" style="width: 100%">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        
         <div class="col-sm-offset-2 col-sm-8">
             
             <input type="submit" value="Save" name="save_ins_information" class="btn btn-success">

@@ -1,5 +1,6 @@
 package org.javabase.apps.entity;
 
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +30,7 @@ public class Course  implements java.io.Serializable{
 	
 	@Column(name= "subject")
 	private String subject;
+//	private Set<Subject> subject;
 
 	public int getId() {
 		return id;
@@ -69,6 +71,13 @@ public class Course  implements java.io.Serializable{
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
+//	public Set<Subject> getSubject() {
+//		return subject;
+//	}
+//
+//	public void setSubject(Set<Subject> subject) {
+//		this.subject = subject;
+//	}
 	
 	
 }

@@ -11,16 +11,16 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * @author  Raj Shah<rajshah131291@gmail.com>
+ * @author Raj Shah<rajshah131291@gmail.com>
  * @version 1.0.0
- * @since   1.0.0
+ * @since 1.0.0
  */
 @Entity
 @Table(name = "subject")
 public class Subject implements java.io.Serializable {
 
-	private static final long serialVersionUID = 9041113632700520034L;
-	private Integer subId;
+    private static final long serialVersionUID = 9041113632700520034L;
+    private Integer subId;
     /*private Integer classId;*/
     private String subTitle;
     private String subCode;
@@ -30,8 +30,6 @@ public class Subject implements java.io.Serializable {
     private Integer entryUser;
     private Date updateDate;
     private Integer updateUser;
-    
-    
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -45,7 +43,7 @@ public class Subject implements java.io.Serializable {
         this.subId = subId;
     }
 
-   /* @Column(name = "class_id")
+    /* @Column(name = "class_id")
     public Integer getClassId() {
         return this.classId;
     }
@@ -53,7 +51,6 @@ public class Subject implements java.io.Serializable {
     public void setClassId(Integer classId) {
         this.classId = classId;
     }*/
-
     @Column(name = "sub_title", length = 100)
     public String getSubTitle() {
         return this.subTitle;

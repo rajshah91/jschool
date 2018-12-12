@@ -23,10 +23,10 @@ $(document).ready(function($) {
 		// get form data
 		var data = {}
 		
-		data["subTitle"]    = $("#subTitle").val(),
-		data["subCode"]     = $("#subCode").val(),
-		data["subName"] 	= $("#subName").val(),
-		data["active"] 	    = $("#active").val(),
+		data["subTitle"]    = $("#subTitle").val();
+		data["subCode"]     = $("#subCode").val();
+		data["subName"]     = $("#subName").val();
+		data["active"] 	    = $("#addSubjectForm input[type='radio']:checked").val();
 		url = "subject/add";
 		
 		/*
@@ -85,19 +85,20 @@ $(document).ready(function($) {
 					title	: 'Subject Name',
 					data	: 'subName'
 		    	},{
-		    		title	: 'Status',
+		    		title	: 'Active',
 		    		data	: 'active'
-		    	},{
-		    		title	: 'Since',
-		    		data	: 'entryDate',
-		    		render  : function (date) {
-		    			if (date) {
-		    				return moment(date).format("DD MMM YYYY");
-						}else{
-							return "";
-						}
-		    		}
 		    	}
+//                        ,{
+//		    		title	: 'Since',
+//		    		data	: 'entryDate',
+//		    		render  : function (date) {
+//		    			if (date) {
+//		    				return moment(date).format("DD MMM YYYY");
+//						}else{
+//							return "";
+//						}
+//		    		}
+//		    	}
 	        ],
 	        columnDefs	: [
                {"Subject Title": "dt-center", "targets": "_all"}
