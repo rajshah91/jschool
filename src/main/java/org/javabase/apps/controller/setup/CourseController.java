@@ -31,20 +31,20 @@ public class CourseController {
 
     @ResponseBody
     @RequestMapping(value = "load", method = RequestMethod.GET)
-    public Map<String, Object> allInsClass() {
-        Map<String, Object> response = new HashMap<String, Object>();
-        List<Course> insClassList = courseService.getAllCourse();
+    public Map<String, Object> getAllCourse() {
+        Map<String, Object> response = new HashMap<>();
+        List<Course> courseList = courseService.getAllCourse();
 
         response.put("success", true);
-        response.put("data", insClassList);
+        response.put("data", courseList);
         return response;
 
     }
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public Map<String, Object> save(@RequestBody Course course) {
-        Map<String, Object> response = new HashMap<String, Object>();
+    public Map<String, Object> addCourse(@RequestBody Course course) {
+        Map<String, Object> response = new HashMap<>();
         Boolean save = courseService.addCourse(course);
 
         if (save) {
