@@ -28,7 +28,7 @@ public class SubjectController {
 	@ResponseBody
 	@RequestMapping(value = "load",method = RequestMethod.GET)
 	public Map<String, Object> allBuilding() {
-		Map<String, Object> response= new HashMap<String, Object>();
+		Map<String, Object> response= new HashMap<>();
 
 		List<Subject> subjectList = subjectService.getAllSubjects();
 

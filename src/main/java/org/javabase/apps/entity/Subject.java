@@ -1,128 +1,139 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package org.javabase.apps.entity;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * @author Raj Shah<rajshah131291@gmail.com>
- * @version 1.0.0
- * @since 1.0.0
+ *
+ * @author raj.shah
  */
 @Entity
 @Table(name = "subject")
-public class Subject implements java.io.Serializable {
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Subject.findAll", query = "SELECT s FROM Subject s")
+    , @NamedQuery(name = "Subject.findBySubId", query = "SELECT s FROM Subject s WHERE s.subId = :subId")
+    , @NamedQuery(name = "Subject.findByActive", query = "SELECT s FROM Subject s WHERE s.active = :active")
+    , @NamedQuery(name = "Subject.findBySubCode", query = "SELECT s FROM Subject s WHERE s.subCode = :subCode")
+    , @NamedQuery(name = "Subject.findBySubName", query = "SELECT s FROM Subject s WHERE s.subName = :subName")
+    , @NamedQuery(name = "Subject.findBySubTitle", query = "SELECT s FROM Subject s WHERE s.subTitle = :subTitle")})
+public class Subject implements Serializable {
 
-    private static final long serialVersionUID = 9041113632700520034L;
-    private Integer subId;
-    /*private Integer classId;*/
-    private String subTitle;
-    private String subCode;
-    private String subName;
-    private String active;
-    private Date entryDate;
-    private Integer entryUser;
-    private Date updateDate;
-    private Integer updateUser;
-
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "sub_id")
+    private Integer subId;
+    @Column(name = "active")
+    private String active;
+    @Column(name = "sub_code")
+    private String subCode;
+    @Column(name = "sub_name")
+    private String subName;
+    @Column(name = "sub_title")
+    private String subTitle;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subjectId")
+    private Collection<CourseSubjectMapping> courseSubjectMappingCollection;
 
-    @Column(name = "sub_id", unique = true, nullable = false)
+    public Subject() {
+    }
+
+    public Subject(Integer subId) {
+        this.subId = subId;
+    }
+
     public Integer getSubId() {
-        return this.subId;
+        return subId;
     }
 
     public void setSubId(Integer subId) {
         this.subId = subId;
     }
 
-    /* @Column(name = "class_id")
-    public Integer getClassId() {
-        return this.classId;
-    }
-
-    public void setClassId(Integer classId) {
-        this.classId = classId;
-    }*/
-    @Column(name = "sub_title", length = 100)
-    public String getSubTitle() {
-        return this.subTitle;
-    }
-
-    public void setSubTitle(String subTitle) {
-        this.subTitle = subTitle;
-    }
-
-    @Column(name = "sub_code", length = 10)
-    public String getSubCode() {
-        return this.subCode;
-    }
-
-    public void setSubCode(String subCode) {
-        this.subCode = subCode;
-    }
-
-    @Column(name = "sub_name", length = 100)
-    public String getSubName() {
-        return this.subName;
-    }
-
-    public void setSubName(String subName) {
-        this.subName = subName;
-    }
-
-    @Column(name = "active", length = 5)
     public String getActive() {
-        return this.active;
+        return active;
     }
 
     public void setActive(String active) {
         this.active = active;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "entry_date", length = 19)
-    public Date getEntryDate() {
-        return this.entryDate;
+    public String getSubCode() {
+        return subCode;
     }
 
-    public void setEntryDate(Date entryDate) {
-        this.entryDate = entryDate;
+    public void setSubCode(String subCode) {
+        this.subCode = subCode;
     }
 
-    @Column(name = "entry_user")
-    public Integer getEntryUser() {
-        return this.entryUser;
+    public String getSubName() {
+        return subName;
     }
 
-    public void setEntryUser(Integer entryUser) {
-        this.entryUser = entryUser;
+    public void setSubName(String subName) {
+        this.subName = subName;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "update_date", length = 19)
-    public Date getUpdateDate() {
-        return this.updateDate;
+    public String getSubTitle() {
+        return subTitle;
     }
 
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
     }
 
-    @Column(name = "update_user")
-    public Integer getUpdateUser() {
-        return this.updateUser;
+    @XmlTransient
+    public Collection<CourseSubjectMapping> getCourseSubjectMappingCollection() {
+        return courseSubjectMappingCollection;
     }
 
-    public void setUpdateUser(Integer updateUser) {
-        this.updateUser = updateUser;
+    public void setCourseSubjectMappingCollection(Collection<CourseSubjectMapping> courseSubjectMappingCollection) {
+        this.courseSubjectMappingCollection = courseSubjectMappingCollection;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (subId != null ? subId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Subject)) {
+            return false;
+        }
+        Subject other = (Subject) object;
+        if ((this.subId == null && other.subId != null) || (this.subId != null && !this.subId.equals(other.subId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "org.javabase.apps.entity.Subject[ subId=" + subId + " ]";
+    }
+    
 }

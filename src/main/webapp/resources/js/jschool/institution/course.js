@@ -23,7 +23,7 @@ $(document).ready(function($) {
 		data["courseName"]      = $("#courseName").val(),
 		data["semester"]        = $("#semester").val(),
 		data["fees"]        = $("#fees").val(),
-		data["subject"]        = $("#subjectCombo").val(),
+		data["subjectId"]  = $("#subjectCombo").val(),
 		url = "course/add";
 		
 		/*

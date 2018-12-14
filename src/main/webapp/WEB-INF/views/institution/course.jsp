@@ -57,7 +57,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="subjectCombo">Select Subjects <span class="require-field">*</span></label>
             <div class="col-sm-8">
-                <select name="subjectCombo" class="form-control select2 text-input validate[required]" id="subjectCombo" style="width: 100%" >
+                <select name="subjectCombo" class="form-control select2 text-input validate[required]" id="subjectCombo" style="width: 100%" multiple="multiple">
                     <option value=""></option>
                 </select>
             </div>

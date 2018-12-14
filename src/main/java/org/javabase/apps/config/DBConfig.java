@@ -68,6 +68,8 @@ public class DBConfig {
             properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
             properties.put("hibernate.enable_lazy_load_no_trans", "true");
             properties.put("hibernate.hbm2ddl.import_files", "import.sql");
+            properties.put("logging.level.org.hibernate.SQL", "DEBUG");
+            properties.put("logging.level.org.hibernate.type", "TRACE");
             return properties;        
        }	
 }
