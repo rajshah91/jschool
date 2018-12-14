@@ -10,6 +10,7 @@ import org.javabase.apps.entity.TempCourse;
 import org.javabase.apps.mapper.CourseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class CourseServiceImpl implements CourseService{
@@ -36,10 +37,20 @@ public class CourseServiceImpl implements CourseService{
         public List<TempCourse> getAllCourseWithSubjectForView(List<Course> courses) {
                 List<TempCourse> courseTempList= new ArrayList<>();
                 for(Course c : courses){
+                    TempCourse tc=new TempCourse();
+                    tc.setCourseName(c.getCourseName());
+                    tc.setSemester(c.getSemester());
+                    tc.setFees(c.getFees());
+                    
                     Collection<CourseSubjectMapping> csm=c.getCourseSubjectMappingCollection();
+                    List<String> subs=new ArrayList<>();
                     for(CourseSubjectMapping csmapping : csm){
-                        Integer mappingId=csmapping.getId();
+                        String subName=csmapping.getSubjectId().getSubName();
+                        subs.add(subName);
                     }
+                    tc.setSubjectNames(subs.toArray(new String[subs.size()]));
+                    tc.setCommaSeparatedSubjectNames();
+                    courseTempList.add(tc);
                 }
                 return courseTempList;
         }

@@ -64,11 +64,14 @@ public class TempCourse {
         return subjectNames;
     }
 
-    public String getCommaSeparatedSubjectNames() {
-        if(subjectNames != null && subjectNames.length >0 ){
-            commaSeparatedSubjectNames.join(",", subjectNames);
+    public void setCommaSeparatedSubjectNames() {
+        if(this.subjectNames != null && this.subjectNames.length >0 ){
+            this.commaSeparatedSubjectNames=this.commaSeparatedSubjectNames.join(",", subjectNames);
         }
-        return commaSeparatedSubjectNames;
+    }
+    
+    public String getCommaSeparatedSubjectNames() {
+        return this.commaSeparatedSubjectNames;
     }
     
     

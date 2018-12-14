@@ -24,6 +24,8 @@ $(document).ready(function($) {
 		data["semester"]        = $("#semester").val(),
 		data["fees"]        = $("#fees").val(),
 		data["subjectId"]  = $("#subjectCombo").val(),
+		data["subjectNames"]  = null,
+		data["commaSeparatedSubjectNames"]  = null,
 		url = "course/add";
 		
 		/*
@@ -83,7 +85,7 @@ $(document).ready(function($) {
                     data: 'fees'
                 }, {
                     title: 'Subject',
-                    data: 'subject'
+                    data: 'commaSeparatedSubjectNames'
                 }
             ],
             columnDefs: [
