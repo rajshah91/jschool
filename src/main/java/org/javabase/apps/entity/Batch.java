@@ -6,49 +6,51 @@
 package org.javabase.apps.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author raj.shah
  */
 @Entity
-@Table(name = "course_subject_mapping")
+@Table(name = "batch")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CourseSubjectMapping.findAll", query = "SELECT c FROM CourseSubjectMapping c")
-    , @NamedQuery(name = "CourseSubjectMapping.findById", query = "SELECT c FROM CourseSubjectMapping c WHERE c.id = :id")})
-public class CourseSubjectMapping implements Serializable {
+    @NamedQuery(name = "Batch.findAll", query = "SELECT b FROM Batch b")
+    , @NamedQuery(name = "Batch.findById", query = "SELECT b FROM Batch b WHERE b.id = :id")
+    , @NamedQuery(name = "Batch.findByBatch", query = "SELECT b FROM Batch b WHERE b.batch = :batch")})
+public class Batch implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "course_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Course courseId;
-    @JoinColumn(name = "subject_id", referencedColumnName = "sub_id")
-    @ManyToOne(optional = false)
-    private Subject subjectId;
+    @Column(name = "batch")
+    private String batch;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "batchId")
+    private List<CourseSubject> courseSubjectList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "batchId")
+    private List<CourseFee> courseFeeList;
 
-    public CourseSubjectMapping() {
+    public Batch() {
     }
 
-    public CourseSubjectMapping(Integer id) {
+    public Batch(Integer id) {
         this.id = id;
     }
 
@@ -60,20 +62,30 @@ public class CourseSubjectMapping implements Serializable {
         this.id = id;
     }
 
-    public Course getCourseId() {
-        return courseId;
+    public String getBatch() {
+        return batch;
     }
 
-    public void setCourseId(Course courseId) {
-        this.courseId = courseId;
+    public void setBatch(String batch) {
+        this.batch = batch;
     }
 
-    public Subject getSubjectId() {
-        return subjectId;
+    @XmlTransient
+    public List<CourseSubject> getCourseSubjectList() {
+        return courseSubjectList;
     }
 
-    public void setSubjectId(Subject subjectId) {
-        this.subjectId = subjectId;
+    public void setCourseSubjectList(List<CourseSubject> courseSubjectList) {
+        this.courseSubjectList = courseSubjectList;
+    }
+
+    @XmlTransient
+    public List<CourseFee> getCourseFeeList() {
+        return courseFeeList;
+    }
+
+    public void setCourseFeeList(List<CourseFee> courseFeeList) {
+        this.courseFeeList = courseFeeList;
     }
 
     @Override
@@ -86,10 +98,10 @@ public class CourseSubjectMapping implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CourseSubjectMapping)) {
+        if (!(object instanceof Batch)) {
             return false;
         }
-        CourseSubjectMapping other = (CourseSubjectMapping) object;
+        Batch other = (Batch) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -98,7 +110,7 @@ public class CourseSubjectMapping implements Serializable {
 
     @Override
     public String toString() {
-        return "org.javabase.apps.entity.CourseSubjectMapping[ id=" + id + " ]";
+        return "org.javabase.apps.entity.Batch[ id=" + id + " ]";
     }
     
 }

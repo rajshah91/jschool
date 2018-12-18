@@ -17,40 +17,66 @@
 	  <!-- <li><a href="#">Student Promotion</a></li> -->
 	</ul>
 </li>
-<%-- <li class="treeview">
+ <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>Employee</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
 	    <li><a href='<c:url value="/dashboard/employee"/>'><i class="fa fa-link"></i>Employee</a></li>
 	    <li><a href='<c:url value="/dashboard/teacher"/>'><i class="fa fa-link"></i>Teacher</a></li>
 	</ul>
-</li> --%>
-<%-- <li><a href='<c:url value="/dashboard/parents"/>'><i class="fa fa-link"></i> <span>Parents</span></a></li> --%>
-<%-- <li class="treeview">
+</li> 
+ <li><a href='<c:url value="/dashboard/parents"/>'><i class="fa fa-link"></i> <span>Parents</span></a></li> 
+ <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>Class</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
 	    <li><a href='<c:url value="/dashboard/class/manage"/>'><i class="fa fa-link"></i>Manage Class</a></li>
 		<li><a href='<c:url value="/dashboard/class/section"/>'><i class="fa fa-link"></i>Manage Section</a></li>
 		<li><a href='<c:url value="/dashboard/class/syllabus"/>'><i class="fa fa-link"></i>Manage Syllabus</a></li>
 	</ul>
-</li> --%>
-<%-- <li class="treeview">
+</li> 
+ <li class="treeview">
     <a href="#"><i class="fa fa-user"></i> <span>Manage User</span> <i class="fa fa-angle-left pull-right"></i></a>
 	<ul class="treeview-menu">
 	    <li><a href='<c:url value="/dashboard/role"/>'><i class="fa fa-link"></i> <span>User Role</span></a></li>
 	    <li><a href='<c:url value="/dashboard/user"/>'><i class="fa fa-plus"></i> <span>Add User</span></a></li>
 	    <li><a href='<c:url value="/dashboard/permssion"/>'><i class="fa fa-link"></i> <span>Permission</span></a></li>
 	</ul>
-</li> --%>
+</li> 
 <li class="treeview">
-	<a href="#"><i class="fa fa-gear"></i> <span>Setup</span> <i class="fa fa-angle-left pull-right"></i></a>
+	<a href="#"><i class="fa fa-gear "></i> <span>Setup</span> <i class="fa fa-angle-left pull-right"></i></a>
 	<ul class="treeview-menu">
+            <!--https://iconawesome.com/icon-package/font-awesome/4.7.0-->
+            <!--RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR -->
+            
 		<%-- <li><a href='<c:url value="/dashboard/institution"/>'><i class="fa fa-link"></i>Add Institution</a></li>
 		<li><a href='<c:url value="/dashboard/building"/>'><i class="fa fa-link"></i>Building </a></li>
 		<li><a href='<c:url value="/dashboard/roomUsed"/>'><i class="fa fa-link"></i>Room Used </a></li>
 		<li><a href='<c:url value="/dashboard/room"/>'><i class="fa fa-link"></i>Room </a></li>
 		<li><a href='<c:url value="/dashboard/shift"/>'><i class="fa fa-link"></i>Shift </a></li> --%>
-		<li><a href='<c:url value="/dashboard/course"/>'><i class="fa fa-link"></i>Course </a></li>
-		<li><a href='<c:url value="/dashboard/subject"/>'><i class="fa fa-link"></i>Subject </a></li>
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-cubes"></i> <span>Batch</span> <i class="fa fa-angle-down pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href='<c:url value="/dashboard/batch"/>'><i class="fa fa-plus-circle"></i> <span>Add Batch</span></a></li>
+                    </ul>
+                </li>
+                
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-book"></i> <span>Subject</span> <i class="fa fa-angle-down pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href='<c:url value="/dashboard/subject"/>'><i class="fa fa-plus-circle"></i> <span>Add Subject</span></a></li>
+                    </ul>
+                </li>
+                
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-pencil-square-o"></i> <span>Course</span> <i class="fa fa-angle-down pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href='<c:url value="/dashboard/course"/>'><i class="fa fa-plus-circle"></i> <span>Add Course</span></a></li>
+                        <li><a href='<c:url value="/dashboard/courseSubject"/>'><i class="fa fa-sitemap"></i> <span>Course Subject Mapping</span></a></li>
+                        <li><a href='<c:url value="/dashboard/courseFee"/>'><i class="fa fa-sitemap"></i> <span>Course Fee Mapping</span></a></li>
+                    </ul>
+                </li>
+               
+                    
+		<!--<li><a href='<c:url value="/dashboard/subject"/>'><i class="fa fa-link"></i>Subject </a></li>-->
 		<%-- <li><a href='<c:url value="/dashboard/classOnShift"/>'><i class="fa fa-link"></i>Class On Shift </a></li>
 		<li><a href='<c:url value="/dashboard/section"/>'><i class="fa fa-link"></i>Class Section</a></li>
 		<li><a href='<c:url value="/dashboard/session"/>'><i class="fa fa-link"></i>Academic Session</a></li>

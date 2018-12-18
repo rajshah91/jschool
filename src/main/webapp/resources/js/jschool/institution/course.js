@@ -4,16 +4,16 @@
  */
 $(document).ready(function($) {
 	
-	classDatatable();
-	loadSubjects();
-	
-	
+	courseDatatable();
+//	loadSubjects();
+        
+        $("#courseName").keyup(function () {
+             searchCourseName();
+        });
+        
 	$("#addClassForm").submit(function(event) {
 		
-		// form redirect stop
 		event.preventDefault();
-		
-		//call form validation code
 		var status =jbf.form.validate('#addClassForm');
 		if (!status) {
 			return;
@@ -21,11 +21,7 @@ $(document).ready(function($) {
 		// get form data
 		var data = {}
 		data["courseName"]      = $("#courseName").val(),
-		data["semester"]        = $("#semester").val(),
-		data["fees"]        = $("#fees").val(),
-		data["subjectId"]  = $("#subjectCombo").val(),
-		data["subjectNames"]  = null,
-		data["commaSeparatedSubjectNames"]  = null,
+		data["totalSemester"]   = $("#semester").val(),
 		url = "course/add";
 		
 		/*
@@ -55,7 +51,7 @@ $(document).ready(function($) {
 				//success notification
 				success(message);
 				
-				classDatatable();
+				courseDatatable();
 				document.getElementById("addClassForm").reset()
 			},
 			error 	 : function(e) {
@@ -69,8 +65,8 @@ $(document).ready(function($) {
 	});
 	
 	
-    function classDatatable(param) {
-        var url = 'course/load';
+    function courseDatatable(param) {
+        var url = 'course/loadallcourse';
         $('#classTable').dataTable({
             destroy: true,
             data: jbf.ajax.load(url, param),
@@ -78,42 +74,43 @@ $(document).ready(function($) {
                     title: 'Course Name',
                     data: 'courseName'
                 }, {
-                    title: 'Semester',
-                    data: 'semester'
-                }, {
-                    title: 'Fees',
-                    data: 'fees'
-                }, {
-                    title: 'Subject',
-                    data: 'commaSeparatedSubjectNames'
+                    title: 'Total Semester',
+                    data: 'totalSemester'
                 }
+//                , {
+//                    title: 'Fees',
+//                    data: 'fees'
+//                }, {
+//                    title: 'Subject',
+//                    data: 'commaSeparatedSubjectNames'
+//                }
             ],
             columnDefs: [
                 {"className": "dt-center", "targets": "_all"}
             ]
         });
-    }
-    ;
+    };
         
-        function loadSubjects() {
-        var url = 'course/subjectload';
+    function searchCourseName(){
+     
+        var url = 'course/searchcoursebyname';
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: url,
             dataType: 'json',
+            data: {
+                'searchCourseName': $("#courseName").val()
+            },
             contentType: "application/json; charset=utf-8",
             success: function (response) {
-                var data=response.data;
-                for(var i=0;i<data.length;i++){
-                    $("#subjectCombo").append("<option value='"+data[i].subId+"'>"+data[i].subTitle+"</option>"); 
-                }
-//                $("#subjectCombo").trigger("change");
+                var data1=response.data;
+                $("#courseHelp").html(data1).fadeIn("slow").fadeOut(90000);
             },
             error: function (e) {
                 console.log("ERROR: ", e);
                 error("Load falied");
             }
         });
-    };
+    }
     
 });

@@ -5,6 +5,8 @@
  */
 package org.javabase.apps.utility;
 
+import java.util.List;
+
 /**
  *
  * @author raj.shah
@@ -17,5 +19,13 @@ public class MyUtils {
             isNullOrEmpty=true;
         }
         return isNullOrEmpty;
+    }
+    
+    public static String getCommaSeparatedStringFromList(List<String> lst){
+        String str="";
+        if(lst != null && lst.size()>0){
+            str=String.join(",", lst);
+        }
+        return str;
     }
 }

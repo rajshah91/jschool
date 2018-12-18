@@ -6,7 +6,7 @@
 package org.javabase.apps.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,7 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Subject implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -53,7 +52,7 @@ public class Subject implements Serializable {
     @Column(name = "sub_title")
     private String subTitle;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subjectId")
-    private Collection<CourseSubjectMapping> courseSubjectMappingCollection;
+    private List<CourseSubject> courseSubjectList;
 
     public Subject() {
     }
@@ -103,12 +102,12 @@ public class Subject implements Serializable {
     }
 
     @XmlTransient
-    public Collection<CourseSubjectMapping> getCourseSubjectMappingCollection() {
-        return courseSubjectMappingCollection;
+    public List<CourseSubject> getCourseSubjectList() {
+        return courseSubjectList;
     }
 
-    public void setCourseSubjectMappingCollection(Collection<CourseSubjectMapping> courseSubjectMappingCollection) {
-        this.courseSubjectMappingCollection = courseSubjectMappingCollection;
+    public void setCourseSubjectList(List<CourseSubject> courseSubjectList) {
+        this.courseSubjectList = courseSubjectList;
     }
 
     @Override

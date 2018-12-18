@@ -3,9 +3,9 @@ package org.javabase.apps.controller.setup;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.javabase.apps.entity.Batch;
 
-import org.javabase.apps.entity.Subject;
-import org.javabase.apps.service.SubjectService;
+import org.javabase.apps.service.BatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,22 +14,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "dashboard/subject")
-public class SubjectController {
+@RequestMapping(value = "dashboard/batch")
+public class BatchController {
 	
 	@Autowired
-	SubjectService subjectService;
+	BatchService batchService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-        public String getAddSubjectPage() {
-            return "institution/subject";
-        }
+    public String getAddBatchPage() {
+        return "institution/batch";
+    }
 	
 	@ResponseBody
 	@RequestMapping(value = "load",method = RequestMethod.GET)
-	public Map<String, Object> loadAllSubjects() {
+	public Map<String, Object> getAllBatch() {
 		Map<String, Object> response= new HashMap<>();
-		List<Subject> subjectList = subjectService.getAllSubjects();
+		List<Batch> subjectList = batchService.getAllBatch();
+
 		response.put("success", true);
 		response.put("data", subjectList);
 		return response;
@@ -37,17 +38,17 @@ public class SubjectController {
 	
 	@ResponseBody
 	@RequestMapping(value="add", method = RequestMethod.POST)
-	public Map<String, Object> addSubject(@RequestBody Subject subject) {
-		Map<String, Object> response= new HashMap<String, Object>();
-		Boolean save = subjectService.addSubject(subject);
+	public Map<String, Object> registration(@RequestBody Batch batch) {
+		Map<String, Object> response= new HashMap<>();
+		Boolean save = batchService.addBatch(batch);
 		
 		if (save) {
 			response.put("suceess", true);
-	        response.put("message", "Add Subject Sucess");
+	        response.put("message", "Batch Added.");
 			return response;
 		}else {
 			response.put("error", true);
-	        response.put("message", "Add Subject Failed");
+	        response.put("message", "Add Batch Failed");
 			return response;
 		}
 		

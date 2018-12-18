@@ -27,12 +27,15 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="roll_id">Course Name<span class="require-field">*</span></label>
             <div class="col-sm-8">
-                <input id="courseName" class="form-control validate[required]" type="text" value="" name="courseName">
+                <input id="courseName" class="form-control validate[required]" type="text" value="" name="courseName" aria-describedby="courseHelp" >
+                <small id="courseHelp" class="form-text text-muted bg-info">
+                    
+                </small>
             </div>
         </div>
         <div class="clearfix"></div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="semester">Semester </label>
+            <label class="col-sm-2 control-label" for="semester">Total Semester </label>
             <div class="col-sm-8">
                 <select id="semester">
                 	<option value="1">1</option>
@@ -47,21 +50,21 @@
             </div>
         </div>
         
-         <div class="form-group">
+<!--         <div class="form-group">
             <label class="col-sm-2 control-label" for="roll_id">Fees<span class="require-field">*</span></label>
             <div class="col-sm-8">
                 <input id="fees" class="form-control validate[required]" type="number" value="" name="fees">
             </div>
-        </div>
+        </div>-->
         
-        <div class="form-group">
+<!--        <div class="form-group">
             <label class="col-sm-2 control-label" for="subjectCombo">Select Subjects <span class="require-field">*</span></label>
             <div class="col-sm-8">
                 <select name="subjectCombo" class="form-control select2 text-input validate[required]" id="subjectCombo" style="width: 100%" multiple="multiple">
                     <option value=""></option>
                 </select>
             </div>
-        </div>
+        </div>-->
         
         <div class="col-sm-offset-2 col-sm-8">
             

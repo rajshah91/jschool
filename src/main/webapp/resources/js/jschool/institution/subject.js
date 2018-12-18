@@ -73,7 +73,7 @@ $(document).ready(function($) {
 	function subjectDatatable(param) {
 		var url = 'subject/load';
 		$('#subjectTable').dataTable({
-			destroy	: true,
+		destroy	: true,
 	        data	: jbf.ajax.load(url, param),
 	        columns	: [{
 					title	: 'Subject Title',

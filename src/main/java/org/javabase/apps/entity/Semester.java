@@ -26,14 +26,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author raj.shah
  */
 @Entity
-@Table(name = "course")
+@Table(name = "semester")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Course.findAll", query = "SELECT c FROM Course c")
-    , @NamedQuery(name = "Course.findById", query = "SELECT c FROM Course c WHERE c.id = :id")
-    , @NamedQuery(name = "Course.findByCourseName", query = "SELECT c FROM Course c WHERE c.courseName = :courseName")
-    , @NamedQuery(name = "Course.findByTotalSemester", query = "SELECT c FROM Course c WHERE c.totalSemester = :totalSemester")})
-public class Course implements Serializable {
+    @NamedQuery(name = "Semester.findAll", query = "SELECT s FROM Semester s")
+    , @NamedQuery(name = "Semester.findById", query = "SELECT s FROM Semester s WHERE s.id = :id")
+    , @NamedQuery(name = "Semester.findBySemester", query = "SELECT s FROM Semester s WHERE s.semester = :semester")})
+public class Semester implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,19 +40,17 @@ public class Course implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "course_name")
-    private String courseName;
-    @Column(name = "total_semester")
-    private Integer totalSemester;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    @Column(name = "semester")
+    private Integer semester;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "semesterId")
     private List<CourseSubject> courseSubjectList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "semesterId")
     private List<CourseFee> courseFeeList;
 
-    public Course() {
+    public Semester() {
     }
 
-    public Course(Integer id) {
+    public Semester(Integer id) {
         this.id = id;
     }
 
@@ -65,20 +62,12 @@ public class Course implements Serializable {
         this.id = id;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public Integer getSemester() {
+        return semester;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public Integer getTotalSemester() {
-        return totalSemester;
-    }
-
-    public void setTotalSemester(Integer totalSemester) {
-        this.totalSemester = totalSemester;
+    public void setSemester(Integer semester) {
+        this.semester = semester;
     }
 
     @XmlTransient
@@ -109,10 +98,10 @@ public class Course implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Course)) {
+        if (!(object instanceof Semester)) {
             return false;
         }
-        Course other = (Course) object;
+        Semester other = (Semester) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -121,7 +110,7 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return "org.javabase.apps.entity.Course[ id=" + id + " ]";
+        return "org.javabase.apps.entity.Semester[ id=" + id + " ]";
     }
     
 }
