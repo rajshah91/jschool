@@ -42,10 +42,13 @@ public class Batch implements Serializable {
     private Integer id;
     @Column(name = "batch")
     private String batch;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "batchId")
     private List<CourseSubject> courseSubjectList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "batchId")
     private List<CourseFee> courseFeeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "batchId")
+    private List<Student> studentList;
 
     public Batch() {
     }
@@ -87,6 +90,16 @@ public class Batch implements Serializable {
     public void setCourseFeeList(List<CourseFee> courseFeeList) {
         this.courseFeeList = courseFeeList;
     }
+    
+    @XmlTransient
+    public List<Student> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
+    }
+    
 
     @Override
     public int hashCode() {
@@ -112,5 +125,5 @@ public class Batch implements Serializable {
     public String toString() {
         return "org.javabase.apps.entity.Batch[ id=" + id + " ]";
     }
-    
+
 }

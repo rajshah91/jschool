@@ -90,3 +90,44 @@ INSERT INTO semester(semester) VALUES(5);
 INSERT INTO semester(semester) VALUES(6);
 INSERT INTO semester(semester) VALUES(7);
 INSERT INTO semester(semester) VALUES(8);
+
+------------------------------------------------------------------------------------------------------------------------------
+DROP TABLE if exists student;
+
+CREATE TABLE student 
+(
+  id                       INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  enrollment_number        VARCHAR(20) NOT NULL,
+  course_id                INT NOT NULL,
+  batch_id                 INT NOT NULL,
+  semester_id              INT NOT NULL,
+  first_name               VARCHAR(50) NOT NULL,
+  middle_name              VARCHAR(50),
+  last_name                VARCHAR(50) NOT NULL,
+  gender                   VARCHAR(20) NOT NULL,
+  birth_date               DATE,
+  enrollment_date          DATE DEFAULT NULL,
+  address_line1            VARCHAR(1000),
+  city                     VARCHAR(50),
+  state                    VARCHAR(50),
+  country                  VARCHAR(50),
+  pincode                  VARCHAR(10),
+  mobile_number            VARCHAR(15),
+  email_id                 VARCHAR(50),
+  guardian_full_name       VARCHAR(50),
+  guardian_full_address    VARCHAR(1000),
+  guardian_mobile_number   VARCHAR(15),
+  blood_group              VARCHAR(20),
+  disability               VARCHAR(10),
+  disability_detail        VARCHAR(500),
+  data_create_time         DATETIME  DEFAULT now(),
+  data_update_time         TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+)
+ENGINE = InnoDB;
+
+
+ALTER TABLE student ADD CONSTRAINT fk_stud_batch FOREIGN KEY (batch_id) REFERENCES batch (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE student ADD CONSTRAINT fk_stud_course FOREIGN KEY (course_id) REFERENCES course (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE student ADD CONSTRAINT fk_stud_semester FOREIGN KEY (semester_id) REFERENCES semester (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE student ADD CONSTRAINT uk_stud_mob UNIQUE (mobile_number);
+ALTER TABLE student ADD CONSTRAINT uk_stud_email UNIQUE (email_id);

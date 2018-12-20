@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "dashboard/courseSubject")
+@RequestMapping(value = {"dashboard/courseSubject"})
 public class CourseSubjectController {
 
     @Autowired
@@ -39,7 +39,7 @@ public class CourseSubjectController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "add", method = RequestMethod.POST)
+    @RequestMapping(value = "addcoursesubject", method = RequestMethod.POST)
     public Map<String, Object> addCourseSubject(@RequestBody TempCourse tempCourse) {
         Map<String, Object> response = new HashMap<>();
         Boolean save = false;

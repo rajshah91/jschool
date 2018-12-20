@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "dashboard/course")
+@RequestMapping(value = {"dashboard/course"})
 public class CourseController {
 
     @Autowired
@@ -38,7 +38,6 @@ public class CourseController {
         response.put("success", true);
         response.put("data", courseList);
         return response;
-
     }
     
 //    @ResponseBody

@@ -8,6 +8,7 @@
     <class>org.javabase.apps.entity.Batch</class>
     <class>org.javabase.apps.entity.CourseFee</class>
     <class>org.javabase.apps.entity.CourseSubject</class>
+    <class>org.javabase.apps.entity.Student</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jschool?zeroDateTimeBehavior=convertToNull"/>

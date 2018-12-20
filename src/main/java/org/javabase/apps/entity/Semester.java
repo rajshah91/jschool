@@ -42,10 +42,13 @@ public class Semester implements Serializable {
     private Integer id;
     @Column(name = "semester")
     private Integer semester;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "semesterId")
     private List<CourseSubject> courseSubjectList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "semesterId")
     private List<CourseFee> courseFeeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "semesterId")
+    private List<Student> studentList;
 
     public Semester() {
     }
@@ -87,7 +90,16 @@ public class Semester implements Serializable {
     public void setCourseFeeList(List<CourseFee> courseFeeList) {
         this.courseFeeList = courseFeeList;
     }
+    
+    @XmlTransient
+    public List<Student> getStudentList() {
+        return studentList;
+    }
 
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -112,5 +124,5 @@ public class Semester implements Serializable {
     public String toString() {
         return "org.javabase.apps.entity.Semester[ id=" + id + " ]";
     }
-    
+
 }

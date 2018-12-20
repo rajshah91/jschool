@@ -1,10 +1,12 @@
 package org.javabase.apps.mapper;
 
 import java.util.List;
+import org.javabase.apps.entity.Batch;
 
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.CourseFee;
 import org.javabase.apps.entity.CourseSubject;
+import org.javabase.apps.entity.Semester;
 
 public interface CourseMapper {
 
@@ -21,4 +23,6 @@ public interface CourseMapper {
     public List<CourseFee> getAllCourseFee();
     
     public List<CourseSubject> getAllCourseSubject();
+
+    public CourseFee getFeeForCourse(Course course, Batch batch, Semester sem);
 }

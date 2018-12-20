@@ -45,10 +45,13 @@ public class Course implements Serializable {
     private String courseName;
     @Column(name = "total_semester")
     private Integer totalSemester;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
     private List<CourseSubject> courseSubjectList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
     private List<CourseFee> courseFeeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    private List<Student> studentList;
 
     public Course() {
     }
@@ -98,7 +101,17 @@ public class Course implements Serializable {
     public void setCourseFeeList(List<CourseFee> courseFeeList) {
         this.courseFeeList = courseFeeList;
     }
+    
+    @XmlTransient
+    public List<Student> getStudentList() {
+        return studentList;
+    }
 
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -123,5 +136,5 @@ public class Course implements Serializable {
     public String toString() {
         return "org.javabase.apps.entity.Course[ id=" + id + " ]";
     }
-    
+
 }

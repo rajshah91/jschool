@@ -16,13 +16,20 @@ import javax.persistence.Table;
 public class StudentDetails implements java.io.Serializable {
 
 	private static final long serialVersionUID = -5457596000511194801L;
+        @Id
+        @GeneratedValue
+        @Column(name = "user_id", unique = true, nullable = false)
 	private int userId;
+        @Column(name = "birth_id", length = 45)
 	private String birthId;
 	@Column(name="student_name")
 	private String name;
+        @Column(name = "class_roel")
 	private Integer classRoel;
 	
+        @Column(name = "present_address", length = 45)
 	private String presentAddress;
+        @Column(name = "upgrade_class")
 	private Integer upgradeClass;
 	@Column(name="course")
 	private Integer courseId;
@@ -31,9 +38,6 @@ public class StudentDetails implements java.io.Serializable {
 	@Column(name="mobile_number")
 	private String mobileNumber;
 
-	@Id
-	@GeneratedValue
-	@Column(name = "user_id", unique = true, nullable = false)
 	public int getUserId() {
 		return this.userId;
 	}
@@ -42,7 +46,6 @@ public class StudentDetails implements java.io.Serializable {
 		this.userId = userId;
 	}
 
-	@Column(name = "birth_id", length = 45)
 	public String getBirthId() {
 		return this.birthId;
 	}
@@ -51,9 +54,6 @@ public class StudentDetails implements java.io.Serializable {
 		this.birthId = birthId;
 	}
 
-	
-
-	@Column(name = "class_roel")
 	public Integer getClassRoel() {
 		return this.classRoel;
 	}
@@ -62,9 +62,6 @@ public class StudentDetails implements java.io.Serializable {
 		this.classRoel = classRoel;
 	}
 
-	
-
-	@Column(name = "present_address", length = 45)
 	public String getPresentAddress() {
 		return this.presentAddress;
 	}
@@ -73,9 +70,6 @@ public class StudentDetails implements java.io.Serializable {
 		this.presentAddress = presentAddress;
 	}
 
-
-
-	@Column(name = "upgrade_class")
 	public Integer getUpgradeClass() {
 		return this.upgradeClass;
 	}
@@ -107,7 +101,5 @@ public class StudentDetails implements java.io.Serializable {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	
-	
 
 }

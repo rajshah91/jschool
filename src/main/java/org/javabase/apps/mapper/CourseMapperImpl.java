@@ -2,10 +2,12 @@ package org.javabase.apps.mapper;
 
 import java.util.List;
 import javax.persistence.NamedQuery;
+import org.javabase.apps.entity.Batch;
 
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.CourseFee;
 import org.javabase.apps.entity.CourseSubject;
+import org.javabase.apps.entity.Semester;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -88,6 +90,17 @@ public class CourseMapperImpl implements CourseMapper{
             try {
                 String hql = "FROM CourseSubject";
                 return (List<CourseSubject>) hibernateTemplate.find(hql);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
+        }
+
+        @Override
+        public CourseFee getFeeForCourse(Course course, Batch batch, Semester sem) {
+            try {
+                String hql = "FROM Course c WHERE c.courseId = " + course + " AND c.batchId= "+ batch +" AND c.semesterId= "+sem;
+                return (CourseFee) hibernateTemplate.find(hql).get(0);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 return null;

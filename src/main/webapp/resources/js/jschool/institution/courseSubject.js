@@ -27,7 +27,7 @@ $(document).ready(function($) {
 		data["semesterId"]   = $("#semesterCombo").val(),
 		data["batchId"]   = $("#batchCombo").val(),
 		data["subjectIds"] = $("#subjectCombo").val(),
-		url = "courseSubject/add";
+		url = "courseSubject/addcoursesubject";
 	
 		$.ajax({
 			type 	 : "POST",

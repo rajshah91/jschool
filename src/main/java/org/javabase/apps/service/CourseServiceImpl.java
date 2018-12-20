@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.dto.TempCourse;
+import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.CourseFee;
 import org.javabase.apps.entity.CourseSubject;
+import org.javabase.apps.entity.Semester;
 import org.javabase.apps.mapper.CourseMapper;
 import org.javabase.apps.utility.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +30,7 @@ public class CourseServiceImpl implements CourseService{
 		return courseMapper.addCourse(course);
 	}
         
-//	@Override
-//	public boolean addCourseSubjectMapping(CourseSubjectMapping csm){
-//		return courseMapper.addCourseSubjectMapping(csm);
-//	}
-
-        @Override
+	@Override
         public List<TempCourse> getAllCourseWithSubjectForView(List<Course> courses) {
                 List<TempCourse> courseTempList= new ArrayList<>();
                 for(Course c : courses){
@@ -80,6 +77,11 @@ public class CourseServiceImpl implements CourseService{
         @Override
         public List<CourseSubject> getAllCourseSubject() {
             return courseMapper.getAllCourseSubject();
+        }
+
+        @Override
+        public CourseFee getFeeForCourse(Course course, Batch batch, Semester sem) {
+            return courseMapper.getFeeForCourse(course,batch,sem);
         }
 
 }
