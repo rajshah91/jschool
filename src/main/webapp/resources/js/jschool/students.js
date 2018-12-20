@@ -1,87 +1,85 @@
-
-/*
- * DataTable function add Student Page
- */
-
-$(function () {
-    $("#studentTable").dataTable();
-});
-
-
-
-
-/*
- * registration function with jquery ajax 
- */
 $(document).ready(function ($) {
+    jbf.combo.loadClass('#classCombo', 'insClass/load');
+    //studentTable
+    studentDatatable();
 
-    loadCourses();
-
-    $("#addClassForm").submit(function (event) {
-
-        // form redirect stop
-        event.preventDefault();
-
-        //call form validation code
-        var status = jbf.form.validate('#addClassForm');
-        if (!status) {
-            return;
+   $("#search_value").on('input',function() {
+        if ($("#search_field").val() !== "") {
+            studentDatatable();
         }
-        // get form data
-        var data = {}
-        data["courseName"] = $("#courseName").val(),
-                data["semester"] = $("#semester").val(),
-                data["fees"] = $("#fees").val(),
-                data["subjectId"] = $("#subjectCombo").val(),
-                data["subjectNames"] = null,
-                data["commaSeparatedSubjectNames"] = null,
-                url = "course/add";
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: JSON.stringify(data),
-            dataType: 'json',
-            contentType: "application/json; charset=utf-8",
-            success: function (resonse) {
-                var message = resonse.message;
-                //success notification
-                success(message);
-
-                classDatatable();
-                document.getElementById("addClassForm").reset()
-            },
-            error: function (e) {
-                console.log("ERROR: ", e);
-                error("Add falied");
-
-
-            }
-        });
-
     });
 
 
-    function loadCourses() {
-        var url = 'course/subjectload';
-        $.ajax({
-            type: "POST",
-            url: url,
-            dataType: 'json',
-            contentType: "application/json; charset=utf-8",
-            success: function (response) {
-                var data = response.data;
-                for (var i = 0; i < data.length; i++) {
-                    $("#subjectCombo").append("<option value='" + data[i].subId + "'>" + data[i].subTitle + "</option>");
+    function studentDatatable(param) {
+
+//        $(document).ready(function() {
+//    var table = $('#example').DataTable( {
+//        "ajax": "data/arrays.txt",
+//        "columnDefs": [ {
+//            "targets": -1,
+//            "data": null,
+//            "defaultContent": "<button>Click!</button>"
+//        } ]
+//    } );
+// 
+//    $('#example tbody').on( 'click', 'button', function () {
+//        var data = table.row( $(this).parents('tr') ).data();
+//        alert( data[0] +"'s salary is: "+ data[ 5 ] );
+//    } );
+//} );
+
+        $('#studentTable').dataTable({
+            "processing": true,
+            "destroy": true,
+            responsive: true,
+//            "serverSide": true,
+//            data: jbf.ajax.load("student/loadallstudents", "{search_field:'first_name',search_value:'Raj'}"),
+//            "data": {
+//                "search_field": $("#search_field").val(),
+//                "search_value": $("#search_value").val()
+//            },
+            "ajax": {
+                "url": "student/loadallstudents",
+                "type": "POST",
+                "data": function (d) {
+                    d.searchType = $("#search_field").val();
+                    d.searchText = $("#search_value").val();
                 }
-//                $("#subjectCombo").trigger("change");
             },
-            error: function (e) {
-                console.log("ERROR: ", e);
-                error("Load falied");
-            }
+            "columns": [
+                {
+                    title: 'Enrollment No',
+                    data: 'enrollmentNumber'
+                }, {
+                    title: 'Course',
+                    data: 'courseName'
+                }, {
+                    title: 'Batch',
+                    data: 'batchName'
+                }, {
+                    title: 'Student Name',
+                    data: 'firstName',
+                    render: function (data, type, row) {
+                        return row.firstName + ' ' + row.lastName;
+                    }
+                }, {
+                    title: 'Gender',
+                    data: 'gender'
+                }, {
+                    title: 'Mobile',
+                    data: 'mobileNumber'
+                }, {
+                    title: 'Email',
+                    data: 'emailId'
+                }
+            ],
+//            columnDefs: [
+//                {"Subject Title": "dt-center", "targets": "_all"}
+////                {"targets": 1, "defaultContent": "<button>Click!</button>", "data": null}
+//            ],
+
+
         });
     }
     ;
-
 });

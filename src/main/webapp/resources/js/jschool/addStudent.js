@@ -56,10 +56,6 @@ $(document).ready(function ($) {
 
         // form redirect stop
         event.preventDefault();
-//        var datastring = $("#student_form").serialize();
-//        console.log(datastring);
-//        alert(datastring);
-        //call form validation code
         var status = jbf.form.validate('#student_form');
         if (!status) {
             return;
@@ -108,15 +104,11 @@ $(document).ready(function ($) {
                 var message = resonse.message;
                 //success notification
                 success(message);
-
-//                classDatatable();
-//                document.getElementById("student_form").reset()
+                document.getElementById("student_form").reset()
             },
             error: function (e) {
                 console.log("ERROR: ", e);
                 error("Add falied");
-
-
             }
         });
 

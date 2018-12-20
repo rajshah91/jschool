@@ -37,6 +37,10 @@ public class TempStudent {
     private String bloodGroup;
     private String disability;
     private String disabilityDetail;
+    
+    private String batchName;
+    private String courseName;
+    private String semesterName;
 
     /**
      * @return the id
@@ -403,6 +407,29 @@ public class TempStudent {
     public void setDisabilityDetail(String disabilityDetail) {
         this.disabilityDetail = disabilityDetail;
     }
-    
+
+    public String getBatchName() {
+        return batchName;
+    }
+
+    public void setBatchName(String batchName) {
+        this.batchName = batchName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public String getSemesterName() {
+        return semesterName;
+    }
+
+    public void setSemesterName(String semesterName) {
+        this.semesterName = semesterName;
+    }
     
 }

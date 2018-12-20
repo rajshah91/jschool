@@ -1,6 +1,5 @@
 package org.javabase.apps.controller.student;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,7 @@ import org.javabase.apps.entity.Student;
 import org.javabase.apps.service.BatchService;
 import org.javabase.apps.service.CommonService;
 import org.javabase.apps.service.CourseService;
-import org.javabase.apps.service.SubjectService;
+import org.javabase.apps.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +28,7 @@ public class AddStudentController {
     @Autowired
     CourseService courseService;
     @Autowired
-    private SubjectService subjectService;
+    private StudentService studentService;
     @Autowired
     private BatchService batchService;
     @Autowired
@@ -104,31 +103,11 @@ public class AddStudentController {
         course = (Course)commonService.getObjectById(course, Integer.parseInt(ts.getCourseId()));
         
         if (course != null && sem != null && batch != null) {
-            Student student=new Student();
-            student.setEnrollmentNumber(tempStudent.getEnrollmentNumber());
-            student.setCourseId(course);
-            student.setBatchId(batch);
-            student.setSemesterId(sem);
-            student.setFirstName(tempStudent.getFirstName());
-            student.setMiddleName(tempStudent.getMiddleName());
-            student.setLastName(tempStudent.getLastName());
-            student.setLastName(tempStudent.getLastName());
-            student.setGender(tempStudent.getGender());
-            student.setBirthDate(Date.valueOf(tempStudent.getBirthDate()));
-            student.setEnrollmentDate(Date.valueOf(tempStudent.getEnrollmentDate()));
-            student.setAddressLine1(tempStudent.getAddressLine1());
-            student.setCity(tempStudent.getCity());
-            student.setState(tempStudent.getState());
-            student.setCountry(tempStudent.getCountry());
-            student.setPincode(tempStudent.getPincode());
-            student.setMobileNumber(tempStudent.getMobileNumber());
-            student.setEmailId(tempStudent.getEmailId());
-            student.setGuardianFullName(tempStudent.getGuardianFullName());
-            student.setGuardianFullAddress(tempStudent.getGuardianFullAddress());
-            student.setGuardianMobileNumber(tempStudent.getGuardianMobileNumber());
-            student.setBloodGroup(tempStudent.getBloodGroup());
-            student.setDisability(tempStudent.getDisability());
-            student.setDisabilityDetail(tempStudent.getDisabilityDetail());
+            Map<String,Object> map=new HashMap();
+            map.put("course", course);
+            map.put("semester", sem);
+            map.put("batch", batch);
+            Student student=studentService.convertTempObjectToMain(tempStudent, map);
             save=commonService.saveObject(student);
             
             // username VARCHAR ,
