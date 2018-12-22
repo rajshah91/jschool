@@ -131,3 +131,31 @@ ALTER TABLE student ADD CONSTRAINT fk_stud_course FOREIGN KEY (course_id) REFERE
 ALTER TABLE student ADD CONSTRAINT fk_stud_semester FOREIGN KEY (semester_id) REFERENCES semester (id) ON UPDATE CASCADE ON DELETE NO ACTION;
 ALTER TABLE student ADD CONSTRAINT uk_stud_mob UNIQUE (mobile_number);
 ALTER TABLE student ADD CONSTRAINT uk_stud_email UNIQUE (email_id);
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+DROP TABLE if exists student_fee;
+
+CREATE TABLE student_fee 
+(
+  id                       INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  student_id               INT NOT NULL,
+  course_id                INT NOT NULL,
+  batch_id                 INT NOT NULL,
+  semester_id              INT NOT NULL,
+  discount                 DOUBLE DEFAULT 0,
+  amount_paid              DOUBLE,
+  payment_mode             VARCHAR(10),
+  cheque_number            VARCHAR(50),
+  fee_collected_by         VARCHAR(50) DEFAULT NULL,
+  data_create_time         DATETIME  DEFAULT now(),
+  data_update_time         TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP  
+)
+ENGINE = InnoDB;
+
+
+ALTER TABLE student_fee ADD CONSTRAINT fk_studfee_student FOREIGN KEY (student_id) REFERENCES student (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE student_fee ADD CONSTRAINT fk_studfee_batch FOREIGN KEY (batch_id) REFERENCES batch (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE student_fee ADD CONSTRAINT fk_studfee_course FOREIGN KEY (course_id) REFERENCES course (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE student_fee ADD CONSTRAINT fk_studfee_semester FOREIGN KEY (semester_id) REFERENCES semester (id) ON UPDATE CASCADE ON DELETE NO ACTION;

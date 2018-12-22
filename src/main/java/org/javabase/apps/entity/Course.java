@@ -35,6 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Course.findByTotalSemester", query = "SELECT c FROM Course c WHERE c.totalSemester = :totalSemester")})
 public class Course implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    private List<StudentFee> studentFeeList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -135,6 +138,15 @@ public class Course implements Serializable {
     @Override
     public String toString() {
         return "org.javabase.apps.entity.Course[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<StudentFee> getStudentFeeList() {
+        return studentFeeList;
+    }
+
+    public void setStudentFeeList(List<StudentFee> studentFeeList) {
+        this.studentFeeList = studentFeeList;
     }
 
 }

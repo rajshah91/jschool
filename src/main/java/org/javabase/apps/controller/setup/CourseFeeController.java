@@ -80,9 +80,12 @@ public class CourseFeeController {
         for(CourseFee cf : courseFeeList){
             TempCourse tc=new TempCourse();
             tc.setCourseName(cf.getCourseId().getCourseName());
+            tc.setCourseId(String.valueOf(cf.getCourseId().getId()));
             tc.setFees(cf.getFeeAmount());
             tc.setBatchName(cf.getBatchId().getBatch());
+            tc.setBatchId(String.valueOf(cf.getBatchId().getId()));
             tc.setSemester(cf.getSemesterId().getSemester());
+            tc.setSemesterId(String.valueOf(cf.getSemesterId().getId()));
             tempcourseFeeList.add(tc);
         }
         response.put("success", true);

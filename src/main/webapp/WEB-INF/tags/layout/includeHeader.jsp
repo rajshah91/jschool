@@ -70,6 +70,10 @@
     <link rel='stylesheet' href='<c:url value="/resources/css/datatables/dataTables.responsive.css"/>'>
     <link rel='stylesheet' href='<c:url value="/resources/css/datatables/dataTables.tableTools.css"/>'>
     <script src=<c:url value="/resources/plugins/datatables/jquery.dataTables.min.js"/> type="text/javascript"></script>
+    <script src=<c:url value="/resources/plugins/datatables/dataTables.bootstrap.min.js"/> type="text/javascript"></script>
+    <script src=<c:url value="/resources/plugins/datatables/dataTables.buttons.min.js"/> type="text/javascript"></script>
+    <script src=<c:url value="/resources/plugins/datatables/dataTables.responsive.min.js"/> type="text/javascript"></script>
+    <script src=<c:url value="/resources/plugins/datatables/dataTables.tableTools.min.js"/> type="text/javascript"></script>
     
     <!-- DATEPICKER -->
     <link rel='stylesheet' href='<c:url value="/resources/plugins/datepicker/datepicker3.css"/>'>

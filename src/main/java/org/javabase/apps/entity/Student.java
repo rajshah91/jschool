@@ -7,7 +7,9 @@ package org.javabase.apps.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +19,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -57,6 +61,9 @@ import org.hibernate.annotations.UpdateTimestamp;
     , @NamedQuery(name = "Student.findByDataCreateTime", query = "SELECT s FROM Student s WHERE s.dataCreateTime = :dataCreateTime")
     , @NamedQuery(name = "Student.findByDataUpdateTime", query = "SELECT s FROM Student s WHERE s.dataUpdateTime = :dataUpdateTime")})
 public class Student implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentId")
+    private List<StudentFee> studentFeeList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -376,6 +383,15 @@ public class Student implements Serializable {
     @Override
     public String toString() {
         return "org.javabase.apps.entity.Student[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<StudentFee> getStudentFeeList() {
+        return studentFeeList;
+    }
+
+    public void setStudentFeeList(List<StudentFee> studentFeeList) {
+        this.studentFeeList = studentFeeList;
     }
     
 }

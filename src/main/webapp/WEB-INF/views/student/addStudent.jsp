@@ -81,25 +81,22 @@
                                     <label class="radio-inline col-sm-2">
                                         <input type="radio" value="female" class="tog validate[required]" name="gender">Female 
                                     </label>
-                                    
-<!--                                    <label class="control-label col-sm-5">Blood Group
-                                    <select name="blood_group" class="form-control col-sm-4 select2 text-input" id="blood_group" style="width: 50%" >
-                                        <option value=""></option>
-                                        <option value="AB+">AB+</option>
-                                        <option value="AB-">AB-</option>
-                                        <option value="O+">O+</option>
-                                        <option value="O-">O-</option>
-                                        <option value="A+">A+</option>
-                                        <option value="A-">A-</option>
-                                        <option value="B+">B+</option>
-                                        <option value="B-">B-</option>
-                                    </select>
-                                    </label>-->
-                                    
+
+                                    <!--                                    <label class="control-label col-sm-5">Blood Group
+                                                                        <select name="blood_group" class="form-control col-sm-4 select2 text-input" id="blood_group" style="width: 50%" >
+                                                                            <option value=""></option>
+                                                                            <option value="AB+">AB+</option>
+                                                                            <option value="AB-">AB-</option>
+                                                                            <option value="O+">O+</option>
+                                                                            <option value="O-">O-</option>
+                                                                            <option value="A+">A+</option>
+                                                                            <option value="A-">A-</option>
+                                                                            <option value="B+">B+</option>
+                                                                            <option value="B-">B-</option>
+                                                                        </select>
+                                                                        </label>-->
+
                                 </div>
-                                
-                                
-                               
                             </div>
                             
                             <div class="form-group ">

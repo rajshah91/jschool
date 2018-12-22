@@ -12,6 +12,7 @@ import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.Semester;
 import org.javabase.apps.entity.Student;
+import org.javabase.apps.mapper.CourseMapper;
 import org.javabase.apps.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     StudentMapper studentMapper;
+    @Autowired
+    CourseMapper courseMapper;
 
     @Override
     public List<Student> getAllStudents() {
@@ -70,7 +73,9 @@ public class StudentServiceImpl implements StudentService {
                     ts.setId(student.getId());
                     ts.setEnrollmentNumber(student.getEnrollmentNumber());
                     ts.setCourseName(student.getCourseId() != null ? student.getCourseId().getCourseName() : "");
+                    ts.setCourseId(student.getCourseId() != null ? String.valueOf(student.getCourseId().getId()) : "");
                     ts.setBatchName(student.getBatchId() != null ? student.getBatchId().getBatch() : "");
+                    ts.setBatchId(student.getBatchId() != null ? String.valueOf(student.getBatchId().getId()) : "");
                     ts.setSemesterName(student.getSemesterId()!= null ? String.valueOf(student.getSemesterId().getSemester()) : "");
                     ts.setFirstName(student.getFirstName());
                     ts.setMiddleName(student.getMiddleName());
@@ -100,6 +105,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> getAllStudentsWithSearchCriteria(String searchType, String searchText) {
         return studentMapper.getAllStudentsWithSearchCriteria(searchType,searchText);
+    }
+
+    @Override
+    public double getTotalPaidFeeForStudent(int studentId, int courseId, int batchId, int semesterId) {
+        return studentMapper.getTotalPaidFeeForStudent(studentId,courseId,batchId,semesterId);
     }
 
 }

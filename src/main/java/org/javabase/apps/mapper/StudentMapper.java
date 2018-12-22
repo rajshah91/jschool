@@ -9,6 +9,8 @@ public interface StudentMapper {
 
     public List<Student> getAllStudentsWithSearchCriteria(String searchType, String searchText);
 
+    public double getTotalPaidFeeForStudent(int studentId, int courseId, int batchId, int semesterId);
+
    
 
 }
