@@ -6,6 +6,14 @@ $(document).ready(function ($) {
     var courseSemesterMap = new Map();
     getAllCourse();
     getAllBatch();
+    
+    $('#courseCombo').select2({
+        placeholder: "Select Course"
+    });
+    
+    $('#batchCombo').select2({
+        placeholder: "Select Batch"
+    });
 
 //    var url = 'getfeeforcourse';
 //            $.ajax({
