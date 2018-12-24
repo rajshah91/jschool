@@ -116,12 +116,12 @@ public class AddStudentController {
 
         if (save) {
             response.put("suceess", true);
-            response.put("message", "Add Course Fee Sucess");
+            response.put("message", "Student enrolled Sucessfully.");
             return response;
         } else {
             response.put("error", true);
             response.put("success", false);
-            response.put("message", "Add Course Fee Failed");
+            response.put("message", "Student enrollment Failed");
             return response;
         }
     }

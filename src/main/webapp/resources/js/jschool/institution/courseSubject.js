@@ -55,7 +55,7 @@ $(document).ready(function($) {
 	
 	
     function courseSubjectDatatable(param) {
-        var url = 'courseSubject/loadcoursesubject';
+        var url = 'courseSubject/loadcoursesubjectforview';
         $('#courseSubjectTable').dataTable({
             destroy: true,
             data: jbf.ajax.load(url, param),

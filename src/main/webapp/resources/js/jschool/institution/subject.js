@@ -56,11 +56,11 @@ $(document).ready(function($) {
 				//success notification
 				success(message);
 				subjectDatatable();
-				document.getElementById("addSubjectForm").reset()
+				document.getElementById("addSubjectForm").reset();
 			},
 			error 	 : function(e) {
 				console.log("ERROR: ",e);
-				error("Add falied");
+				error("Add Subject Failed");
 				
 				
 			}

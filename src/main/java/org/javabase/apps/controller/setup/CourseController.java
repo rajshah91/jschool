@@ -39,19 +39,7 @@ public class CourseController {
         response.put("data", courseList);
         return response;
     }
-    
-//    @ResponseBody
-//    @RequestMapping(value = "loadcoursewithsubject", method = RequestMethod.GET)
-//    public Map<String, Object> getAllCourseWithSubject() {
-//        Map<String, Object> response = new HashMap<>();
-//        List<Course> courseList = courseService.getAllCourse();
-//        List<TempCourse> tempCourseList= courseService.getAllCourseWithSubjectForView(courseList);
-//        response.put("success", true);
-//        response.put("data", tempCourseList);
-//        return response;
-//
-//    }
-
+  
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public Map<String, Object> addCourse(@RequestBody TempCourse tempCourse) {

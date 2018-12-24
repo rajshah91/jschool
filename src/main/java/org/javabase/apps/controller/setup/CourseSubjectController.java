@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.javabase.apps.dto.TempCourse;
+import org.javabase.apps.dto.TempCourseSubject;
 import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.CourseFee;
@@ -82,21 +83,12 @@ public class CourseSubjectController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "loadcoursesubject", method = RequestMethod.GET)
-    public Map<String, Object> getAllCourseSubject() {
+    @RequestMapping(value = "loadcoursesubjectforview", method = RequestMethod.GET)
+    public Map<String, Object> getAllCourseWithCommaSeparatedSubject() {
         Map<String, Object> response = new HashMap<>();
-        List<CourseSubject> courseSubjectList = courseService.getAllCourseSubject();
-        List<TempCourse> tempcourseFeeList = new ArrayList<>();
-        for(CourseSubject cs : courseSubjectList){
-            TempCourse tc=new TempCourse();
-            tc.setCourseName(cs.getCourseId().getCourseName());
-            tc.setBatchName(cs.getBatchId().getBatch());
-            tc.setSemester(cs.getSemesterId().getSemester());
-            tc.setSubjectName(cs.getSubjectId().getSubName());
-            tempcourseFeeList.add(tc);
-        }
+        List<TempCourseSubject> courseSubjectList = courseService.getAllCourseWithCommaSeparatedSubject();
         response.put("success", true);
-        response.put("data", tempcourseFeeList);
+        response.put("data", courseSubjectList);
         return response;
 
     }

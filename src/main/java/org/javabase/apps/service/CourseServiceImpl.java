@@ -2,9 +2,9 @@ package org.javabase.apps.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.javabase.apps.dto.TempCourseSubject;
 
 import org.javabase.apps.entity.Course;
-import org.javabase.apps.dto.TempCourse;
 import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.CourseFee;
 import org.javabase.apps.entity.CourseSubject;
@@ -30,28 +30,6 @@ public class CourseServiceImpl implements CourseService{
 		return courseMapper.addCourse(course);
 	}
         
-	@Override
-        public List<TempCourse> getAllCourseWithSubjectForView(List<Course> courses) {
-                List<TempCourse> courseTempList= new ArrayList<>();
-                for(Course c : courses){
-                    TempCourse tc=new TempCourse();
-                    tc.setCourseName(c.getCourseName());
-//                    tc.setSemester(c.getSemester());
-//                    tc.setFees(c.getFees());
-                    
-//                    Collection<CourseSubjectMapping> csm=c.getCourseSubjectMappingCollection();
-                    List<String> subs=new ArrayList<>();
-//                    for(CourseSubjectMapping csmapping : csm){
-//                        String subName=csmapping.getSubjectId().getSubName();
-//                        subs.add(subName);
-//                    }
-                    tc.setSubjectNames(subs.toArray(new String[subs.size()]));
-                    tc.setCommaSeparatedSubjectNames();
-                    courseTempList.add(tc);
-                }
-                return courseTempList;
-        }
-
         @Override
         public String findCourseByName(String courseSearchStr) {
             List <Course> courseList=courseMapper.findCourseByName(courseSearchStr);
@@ -82,6 +60,11 @@ public class CourseServiceImpl implements CourseService{
         @Override
         public CourseFee getFeeForCourse(Course course, Batch batch, Semester sem) {
             return courseMapper.getFeeForCourse(course,batch,sem);
+        }
+        
+        @Override
+        public List<TempCourseSubject> getAllCourseWithCommaSeparatedSubject() {
+            return courseMapper.getAllCourseWithCommaSeparatedSubject();
         }
 
 }

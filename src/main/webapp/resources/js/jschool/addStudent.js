@@ -176,40 +176,4 @@ $(document).ready(function ($) {
         }
     }
 
-    /*
-     function getFeeForCourse() {
-     var courseVal=$("#courseCombo").val(); 
-     var semesterVal=$("#semesterCombo").val(); 
-     var batchVal=$("#batchCombo").val(); 
-     var isCourseSelected= courseVal !== undefined && courseVal !== "";
-     var isSemesterSelected= semesterVal !== undefined && semesterVal !== "";
-     var isBatchSelected= batchVal !== undefined && batchVal !== "";
-     
-     if (isBatchSelected && isSemesterSelected && isCourseSelected) {
-     var url = 'add/getfeeforcourse';
-     $.ajax({
-     url: url,
-     type: "GET",
-     dataType: 'json',
-     data: {
-     'batchId': $("#batchCombo").val(),
-     'semesterId': $("#semesterCombo").val(),
-     'courseId': $("#courseCombo").val()
-     },
-     contentType: "application/json; charset=utf-8",
-     success: function (response) {
-     var data = response.data;
-     alert(data);
-     //                for (var i = 0; i < data.length; i++) {
-     //                    $("#subjectCombo").append("<option value='" + data[i].subId + "'>" + data[i].subTitle + "</option>");
-     //                }
-     },
-     error: function (e) {
-     console.log("ERROR: ", e);
-     error("Fee Load falied");
-     }
-     });
-     }
-     } */
-
 });
