@@ -44,7 +44,7 @@
                             </div>
                             
                             
-                            <div class="clearfix"></div>
+<!--                            <div class="clearfix"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="semesterCombo">Select Semester<span class="require-field">*</span></label>
                                 <div class="col-sm-8">
@@ -52,7 +52,7 @@
                                         <option value=""></option>
                                     </select>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="fees">Fees<span class="require-field">*</span></label>

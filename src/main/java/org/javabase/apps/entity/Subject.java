@@ -14,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,13 +26,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "subject")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Subject.findAll", query = "SELECT s FROM Subject s")
-    , @NamedQuery(name = "Subject.findBySubId", query = "SELECT s FROM Subject s WHERE s.subId = :subId")
-    , @NamedQuery(name = "Subject.findByActive", query = "SELECT s FROM Subject s WHERE s.active = :active")
-    , @NamedQuery(name = "Subject.findBySubCode", query = "SELECT s FROM Subject s WHERE s.subCode = :subCode")
-    , @NamedQuery(name = "Subject.findBySubName", query = "SELECT s FROM Subject s WHERE s.subName = :subName")
-    , @NamedQuery(name = "Subject.findBySubTitle", query = "SELECT s FROM Subject s WHERE s.subTitle = :subTitle")})
 public class Subject implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -7,7 +7,6 @@ import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.CourseFee;
 import org.javabase.apps.entity.CourseSubject;
-import org.javabase.apps.entity.Semester;
 
 public interface CourseMapper {
 
@@ -17,15 +16,13 @@ public interface CourseMapper {
 
     public boolean addCourse(Course course);
     
-//    public boolean addCourseSubjectMapping(CourseSubjectMapping csm);
-    
     public Course getCourseByName(String courseName);
 
     public List<CourseFee> getAllCourseFee();
     
     public List<CourseSubject> getAllCourseSubject();
 
-    public CourseFee getFeeForCourse(Course course, Batch batch, Semester sem);
+    public CourseFee getFeeForCourse(int courseId, int batchId);
 
     public List<TempCourseSubject> getAllCourseWithCommaSeparatedSubject();
 }

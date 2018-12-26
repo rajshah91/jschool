@@ -14,8 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -26,10 +24,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "course_fee")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CourseFee.findAll", query = "SELECT c FROM CourseFee c")
-    , @NamedQuery(name = "CourseFee.findById", query = "SELECT c FROM CourseFee c WHERE c.id = :id")
-    , @NamedQuery(name = "CourseFee.findByFeeAmount", query = "SELECT c FROM CourseFee c WHERE c.feeAmount = :feeAmount")})
 public class CourseFee implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,9 +41,6 @@ public class CourseFee implements Serializable {
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Course courseId;
-    @JoinColumn(name = "semester_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Semester semesterId;
 
     public CourseFee() {
     }
@@ -88,14 +79,6 @@ public class CourseFee implements Serializable {
 
     public void setCourseId(Course courseId) {
         this.courseId = courseId;
-    }
-
-    public Semester getSemesterId() {
-        return semesterId;
-    }
-
-    public void setSemesterId(Semester semesterId) {
-        this.semesterId = semesterId;
     }
 
     @Override

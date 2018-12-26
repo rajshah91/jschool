@@ -14,7 +14,6 @@ public class TempStudentFee {
     private String studentId;
     private String courseId;
     private String batchId;
-    private String semesterId;
     private Double totalFee;
     private Double discount;
     private Double remainingFee;
@@ -23,7 +22,10 @@ public class TempStudentFee {
     private String chequeNumber;
     private String feeCollectedBy;
     private String paymentDate;
-    
+    private String studentName;
+    private String courseName;
+    private String enrollmentNumber; 
+    private String batchName;
 
     /**
      * @return the id
@@ -79,20 +81,6 @@ public class TempStudentFee {
      */
     public void setBatchId(String batchId) {
         this.batchId = batchId;
-    }
-
-    /**
-     * @return the semesterId
-     */
-    public String getSemesterId() {
-        return semesterId;
-    }
-
-    /**
-     * @param semesterId the semesterId to set
-     */
-    public void setSemesterId(String semesterId) {
-        this.semesterId = semesterId;
     }
 
     /**
@@ -199,6 +187,62 @@ public class TempStudentFee {
      */
     public void setPaymentDate(String paymentDate) {
         this.paymentDate = paymentDate;
+    }
+
+    /**
+     * @return the studentName
+     */
+    public String getStudentName() {
+        return studentName;
+    }
+
+    /**
+     * @param studentName the studentName to set
+     */
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    /**
+     * @return the courseName
+     */
+    public String getCourseName() {
+        return courseName;
+    }
+
+    /**
+     * @param courseName the courseName to set
+     */
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    /**
+     * @return the enrollmentNumber
+     */
+    public String getEnrollmentNumber() {
+        return enrollmentNumber;
+    }
+
+    /**
+     * @param enrollmentNumber the enrollmentNumber to set
+     */
+    public void setEnrollmentNumber(String enrollmentNumber) {
+        this.enrollmentNumber = enrollmentNumber;
+    }
+
+    /**
+     * @return the batchName
+     */
+    public String getBatchName() {
+        return batchName;
+    }
+
+    /**
+     * @param batchName the batchName to set
+     */
+    public void setBatchName(String batchName) {
+        this.batchName = batchName;
     }
     
     

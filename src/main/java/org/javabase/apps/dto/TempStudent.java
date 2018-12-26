@@ -15,7 +15,6 @@ public class TempStudent {
     private String enrollmentNumber;
     private String courseId;
     private String batchId;
-    private String semesterId;
     private String firstName;
     private String middleName;
     private String lastName;
@@ -37,10 +36,11 @@ public class TempStudent {
     private String bloodGroup;
     private String disability;
     private String disabilityDetail;
+    private Double discount;
+    private String qualification;
     
     private String batchName;
     private String courseName;
-    private String semesterName;
 
     /**
      * @return the id
@@ -98,20 +98,7 @@ public class TempStudent {
         this.batchId = batchId;
     }
 
-    /**
-     * @return the semesterId
-     */
-    public String getSemesterId() {
-        return semesterId;
-    }
-
-    /**
-     * @param semesterId the semesterId to set
-     */
-    public void setSemesterId(String semesterId) {
-        this.semesterId = semesterId;
-    }
-
+   
     /**
      * @return the firstName
      */
@@ -424,12 +411,20 @@ public class TempStudent {
         return courseName;
     }
 
-    public String getSemesterName() {
-        return semesterName;
+    public void setDiscount(Double discount) {
+        this.discount = discount;
     }
 
-    public void setSemesterName(String semesterName) {
-        this.semesterName = semesterName;
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public String getQualification() {
+        return qualification;
+    }
+
+    public void setQualification(String qualification) {
+        this.qualification = qualification;
     }
     
 }

@@ -35,19 +35,23 @@ $(document).ready(function($) {
 			data 	 : JSON.stringify(data),
 			dataType : 'json',
 			contentType: "application/json; charset=utf-8",
-			success  : function(resonse) {
-				var message = resonse.message;
-				success(message);
-				courseSubjectDatatable();
-				document.getElementById("addCourseSubjectForm").reset();
-//                               $("#courseCombo").val("");
-//                               $("#semesterCombo").val("");
-//                               $("#batchCombo").val("");
-//                               $("#subjectCombo").val("");
+			success  : function(response) {
+				var message = response.message;
+                                if(response.success == true){
+                                    success(message);
+                                    courseSubjectDatatable();
+                                    document.getElementById("addCourseSubjectForm").reset();
+                                    $('#courseCombo').val("").trigger('change');
+                                    $('#semesterCombo').val("").trigger('change');
+                                    $('#batchCombo').val("").trigger('change');
+//                                    $('#subjectCombo').val(null).trigger('change');
+                                }else{
+                                    error(message);
+                                }
 			},
 			error 	 : function(e) {
 				console.log("ERROR: ",e);
-				error("Add falied");
+				error("Add failed");
 			}
 		});
 		
@@ -104,7 +108,7 @@ $(document).ready(function($) {
             },
             error: function (e) {
                 console.log("ERROR: ", e);
-                error("Course Load falied");
+                error("Course Load failed");
             }
         });
     }
@@ -128,7 +132,7 @@ $(document).ready(function($) {
             },
             error: function (e) {
                 console.log("ERROR: ", e);
-                error("Batch Load falied");
+                error("Batch Load failed");
             }
         });
     }
@@ -159,7 +163,7 @@ $(document).ready(function($) {
             },
             error: function (e) {
                 console.log("ERROR: ", e);
-                error("Subject Load falied");
+                error("Subject Load failed");
             }
         });
     }

@@ -58,8 +58,13 @@ public class CourseServiceImpl implements CourseService{
         }
 
         @Override
-        public CourseFee getFeeForCourse(Course course, Batch batch, Semester sem) {
-            return courseMapper.getFeeForCourse(course,batch,sem);
+        public CourseFee getFeeForCourse(Course course, Batch batch) {
+            return this.getFeeForCourse(course.getId(),batch.getId());
+        }
+        
+        @Override
+        public CourseFee getFeeForCourse(int courseId, int batchId) {
+            return courseMapper.getFeeForCourse(courseId,batchId);
         }
         
         @Override

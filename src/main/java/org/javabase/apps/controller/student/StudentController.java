@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.javabase.apps.dto.TempCourse;
 import org.javabase.apps.dto.TempStudent;
 import org.javabase.apps.dto.TempStudentFee;
 import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.Course;
+import org.javabase.apps.entity.CourseFee;
 import org.javabase.apps.entity.Semester;
 import org.javabase.apps.entity.Student;
 import org.javabase.apps.entity.StudentFee;
@@ -59,14 +61,39 @@ public class StudentController {
     @ResponseBody
     @RequestMapping(value = "getremainingfeeforstudent", method = {RequestMethod.POST, RequestMethod.GET})
     public Map<String, Object> getRemainingFeeForStudent(@RequestBody TempStudentFee ts) {
-        double totalFee = ts.getTotalFee();
+        double totalCourseFee=0;
+        double studentGivenDiscount=0;
         double totalPaidFee = 0;
+        double totalFeeToBePaidForCourse=0;
+        double remainingFeeToBePaid=0;
+        Student student = new Student();
         Map<String, Object> response = new HashMap<>();
-        if (!MyUtils.isNullOrEmpty(ts.getBatchId()) && !MyUtils.isNullOrEmpty(ts.getCourseId()) && !MyUtils.isNullOrEmpty(ts.getStudentId()) && !MyUtils.isNullOrEmpty(ts.getSemesterId())) {
-            totalPaidFee = studentService.getTotalPaidFeeForStudent(Integer.parseInt(ts.getStudentId()), Integer.parseInt(ts.getCourseId()), Integer.parseInt(ts.getBatchId()), Integer.parseInt(ts.getSemesterId()));
+        if (!MyUtils.isNullOrEmpty(ts.getBatchId()) && !MyUtils.isNullOrEmpty(ts.getCourseId()) && !MyUtils.isNullOrEmpty(ts.getStudentId())) {
+            totalPaidFee = studentService.getTotalPaidFeeForStudent(Integer.parseInt(ts.getStudentId()), Integer.parseInt(ts.getCourseId()), Integer.parseInt(ts.getBatchId()));
+            
+            CourseFee cf=courseService.getFeeForCourse(Integer.parseInt(ts.getCourseId()),Integer.parseInt(ts.getBatchId()));
+            if(cf !=null){
+                totalCourseFee=cf.getFeeAmount();
+            }
+            
+            
+            student = (Student) commonService.getObjectById(student, Integer.parseInt(ts.getStudentId()));
+            if(student != null){
+                studentGivenDiscount=student.getDiscount();
+            }
+            totalFeeToBePaidForCourse=totalCourseFee-studentGivenDiscount;
+            remainingFeeToBePaid=totalFeeToBePaidForCourse-totalPaidFee;
+       
         }
         TempStudentFee tempStudent = new TempStudentFee();
-        tempStudent.setRemainingFee(totalFee - totalPaidFee);
+        tempStudent.setRemainingFee(remainingFeeToBePaid);
+        tempStudent.setTotalFee(totalCourseFee);
+        tempStudent.setDiscount(studentGivenDiscount);
+        tempStudent.setAmountPaid(totalPaidFee);
+        tempStudent.setStudentName(student.getFirstName()+" "+student.getLastName());
+        tempStudent.setCourseName(student.getCourseId().getCourseName());
+        tempStudent.setBatchName(student.getBatchId().getBatch());
+        tempStudent.setEnrollmentNumber(student.getEnrollmentNumber());
         response.put("success", true);
         response.put("data", tempStudent);
         return response;
@@ -81,9 +108,6 @@ public class StudentController {
         Batch batch = new Batch();
         batch = (Batch) commonService.getObjectById(batch, Integer.parseInt(ts.getBatchId()));
 
-        Semester sem = new Semester();
-        sem = (Semester) commonService.getObjectById(sem, Integer.parseInt(ts.getSemesterId()));
-
         Course course = new Course();
         course = (Course) commonService.getObjectById(course, Integer.parseInt(ts.getCourseId()));
         
@@ -92,10 +116,8 @@ public class StudentController {
         
         StudentFee sf=new StudentFee();
         sf.setAmountPaid(ts.getAmountPaid());
-        sf.setDiscount(ts.getDiscount());
         sf.setBatchId(batch);
         sf.setCourseId(course);
-        sf.setSemesterId(sem);
         sf.setStudentId(student);
         sf.setChequeNumber(ts.getChequeNumber());
         sf.setPaymentMode(ts.getPaymentMode());
@@ -107,10 +129,32 @@ public class StudentController {
             response.put("message", "Fee Mayment Sucess");
             return response;
         } else {
+            response.put("success", false);
             response.put("error", true);
             response.put("message", "Fee Payment Failed");
             return response;
         }
     }
-
+    
+    @ResponseBody
+    @RequestMapping(value = "getfeeforcourse", method = { RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> getFeeForCourse(@RequestBody TempCourse tempCourse) {
+        Map<String, Object> response = new HashMap<>();
+        Boolean success = false;
+        CourseFee courseFee=new CourseFee();
+        Batch batch=new Batch();
+        batch = (Batch)commonService.getObjectById(batch, Integer.parseInt(tempCourse.getBatchId()));
+        
+        Course course=new Course();
+        course = (Course)commonService.getObjectById(course, Integer.parseInt(tempCourse.getCourseId()));
+        
+        if (course != null && batch != null) {
+            courseFee = courseService.getFeeForCourse(course,batch);
+            success=true;
+        }
+        
+        response.put("success", success);
+        response.put("data", courseFee);
+        return response;
+    }
 }

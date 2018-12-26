@@ -52,15 +52,14 @@ CREATE TABLE course_fee
    id       INT    NOT NULL AUTO_INCREMENT   primary key,
    fee_amount DOUBLE default 0,
    course_id INT   NOT NULL ,
-   batch_id INT   NOT NULL ,
-   semester_id INT  NOT NULL
+   batch_id INT   NOT NULL 
 )
 ENGINE=InnoDB;
 
 ALTER TABLE course_fee ADD CONSTRAINT fk_cf_batch FOREIGN KEY (batch_id) REFERENCES batch (id) ON UPDATE CASCADE ON DELETE NO ACTION;
 ALTER TABLE course_fee ADD CONSTRAINT fk_cf_course  FOREIGN KEY (course_id ) REFERENCES course (id) ON UPDATE CASCADE ON DELETE NO ACTION;
-ALTER TABLE course_fee ADD CONSTRAINT fk_cf_semester  FOREIGN KEY (semester_id ) REFERENCES semester (id) ON UPDATE CASCADE ON DELETE  NO ACTION;
-ALTER TABLE course_fee ADD CONSTRAINT uk_cf_fee UNIQUE (course_id,batch_id,semester_id);
+-- ALTER TABLE course_fee ADD CONSTRAINT fk_cf_semester  FOREIGN KEY (semester_id ) REFERENCES semester (id) ON UPDATE CASCADE ON DELETE  NO ACTION;
+ALTER TABLE course_fee ADD CONSTRAINT uk_cf_fee UNIQUE (course_id,batch_id);
 
 
 DROP TABLE if exists course_subject;
@@ -100,11 +99,12 @@ CREATE TABLE student
   enrollment_number        VARCHAR(20) NOT NULL,
   course_id                INT NOT NULL,
   batch_id                 INT NOT NULL,
-  semester_id              INT NOT NULL,
+--   semester_id              INT NOT NULL,
   first_name               VARCHAR(50) NOT NULL,
   middle_name              VARCHAR(50),
   last_name                VARCHAR(50) NOT NULL,
   gender                   VARCHAR(20) NOT NULL,
+  qualification            VARCHAR(50) NOT NULL,
   birth_date               DATE,
   enrollment_date          DATE DEFAULT NULL,
   address_line1            VARCHAR(1000),
@@ -120,6 +120,7 @@ CREATE TABLE student
   blood_group              VARCHAR(20),
   disability               VARCHAR(10),
   disability_detail        VARCHAR(500),
+  discount                 DOUBLE DEFAULT 0,
   data_create_time         DATETIME  DEFAULT now(),
   data_update_time         TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 )
@@ -128,7 +129,7 @@ ENGINE = InnoDB;
 
 ALTER TABLE student ADD CONSTRAINT fk_stud_batch FOREIGN KEY (batch_id) REFERENCES batch (id) ON UPDATE CASCADE ON DELETE NO ACTION;
 ALTER TABLE student ADD CONSTRAINT fk_stud_course FOREIGN KEY (course_id) REFERENCES course (id) ON UPDATE CASCADE ON DELETE NO ACTION;
-ALTER TABLE student ADD CONSTRAINT fk_stud_semester FOREIGN KEY (semester_id) REFERENCES semester (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+-- ALTER TABLE student ADD CONSTRAINT fk_stud_semester FOREIGN KEY (semester_id) REFERENCES semester (id) ON UPDATE CASCADE ON DELETE NO ACTION;
 ALTER TABLE student ADD CONSTRAINT uk_stud_mob UNIQUE (mobile_number);
 ALTER TABLE student ADD CONSTRAINT uk_stud_email UNIQUE (email_id);
 
@@ -143,8 +144,8 @@ CREATE TABLE student_fee
   student_id               INT NOT NULL,
   course_id                INT NOT NULL,
   batch_id                 INT NOT NULL,
-  semester_id              INT NOT NULL,
-  discount                 DOUBLE DEFAULT 0,
+--   semester_id              INT NOT NULL,
+--   discount                 DOUBLE DEFAULT 0,
   amount_paid              DOUBLE,
   payment_mode             VARCHAR(10),
   cheque_number            VARCHAR(50),
@@ -158,4 +159,4 @@ ENGINE = InnoDB;
 ALTER TABLE student_fee ADD CONSTRAINT fk_studfee_student FOREIGN KEY (student_id) REFERENCES student (id) ON UPDATE CASCADE ON DELETE NO ACTION;
 ALTER TABLE student_fee ADD CONSTRAINT fk_studfee_batch FOREIGN KEY (batch_id) REFERENCES batch (id) ON UPDATE CASCADE ON DELETE NO ACTION;
 ALTER TABLE student_fee ADD CONSTRAINT fk_studfee_course FOREIGN KEY (course_id) REFERENCES course (id) ON UPDATE CASCADE ON DELETE NO ACTION;
-ALTER TABLE student_fee ADD CONSTRAINT fk_studfee_semester FOREIGN KEY (semester_id) REFERENCES semester (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+-- ALTER TABLE student_fee ADD CONSTRAINT fk_studfee_semester FOREIGN KEY (semester_id) REFERENCES semester (id) ON UPDATE CASCADE ON DELETE NO ACTION;

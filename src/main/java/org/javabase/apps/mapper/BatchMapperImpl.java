@@ -4,6 +4,8 @@
 package org.javabase.apps.mapper;
 
 import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.javabase.apps.entity.Batch;
 
 import org.slf4j.Logger;
@@ -34,17 +36,31 @@ public class BatchMapperImpl implements BatchMapper {
     @Override
     @Transactional(readOnly = true)
     public List<Batch> getAllBatch() {
-        String hql = "FROM Batch";
-        return (List<Batch>) hibernateTemplate.find(hql);
+        Session session = hibernateTemplate.getSessionFactory().openSession();
+        try {
+            Query q=session.createQuery("FROM Batch");
+            List<Batch> batchList = q.list();
+            session.close();
+            return batchList;
+        } catch (Exception e) {
+            session.close();
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            return null;
+        }
     }
 
     @Override
     @Transactional
     public Boolean addBatch(Batch batch) {
+        Session session = hibernateTemplate.getSessionFactory().openSession();
         try {
-            hibernateTemplate.save(batch);
+            session.save(batch);
+//            hibernateTemplate.save(batch);
             return true;
         } catch (Exception e) {
+            session.close();
+            e.printStackTrace();
             log.error(e.getMessage(), e);
             return false;
         }

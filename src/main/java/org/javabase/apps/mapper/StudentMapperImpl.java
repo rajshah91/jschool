@@ -43,15 +43,38 @@ public class StudentMapperImpl implements StudentMapper {
     }
 
     @Override
-    public double getTotalPaidFeeForStudent(int studentId, int courseId, int batchId, int semesterId) {
+    public double getTotalPaidFeeForStudent(int studentId, int courseId, int batchId) {
         Session session = hibernateTemplate.getSessionFactory().openSession();
         try {
-            String hql = "SELECT SUM(sf.amountPaid)+SUM(sf.discount) FROM StudentFee sf WHERE sf.studentId.id=" + studentId + " AND sf.courseId.id=" + courseId + " AND sf.batchId.id=" + batchId + " AND sf.semesterId.id=" + semesterId;
-            hql += " GROUP BY sf.studentId.id,sf.batchId.id,sf.courseId.id,sf.semesterId.id ";
+            String hql = "SELECT SUM(sf.amountPaid) FROM StudentFee sf WHERE sf.studentId.id=" + studentId + " AND sf.courseId.id=" + courseId + " AND sf.batchId.id=" + batchId ;
+            hql += " GROUP BY sf.studentId.id,sf.batchId.id,sf.courseId.id ";
            
             Query query = session.createQuery(hql);
             List listResult = query.list();
             double paidfee = listResult != null && listResult.size() > 0 ? (double) listResult.get(0) : 0;
+            session.close();
+            return paidfee;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            session.close();
+            return 0;
+        }
+    }
+
+    @Override
+    public double getTotalFeeToBePaidForStudentForCourse(int studentId, int courseId, int batchId) {
+        Session session = hibernateTemplate.getSessionFactory().openSession();
+        try {
+            String hql = "SELECT cf.feeAmount-s.discount FROM CourseFee cf JOIN Student s ON s.courseId=cf.courseId "
+                    + " WHERE s.id=" + studentId + " AND cf.courseId.id=" + courseId + " AND cf.batchId.id=" + batchId ;
+           
+//            String sql="SELECT cf.fee_amount-s.discount from course_fee cf INNER JOIN student s ON s.course_id=cf.course_id "
+//                    + " WHERE s.id='' AND cf.course_id ='' AND cf.batch_id=''";
+            Query query = session.createQuery(hql);
+            List listResult = query.list();
+            double paidfee = listResult != null && listResult.size() > 0 ? (double) listResult.get(0) : 0;
+            session.close();
             return paidfee;
         } catch (Exception e) {
             e.printStackTrace();

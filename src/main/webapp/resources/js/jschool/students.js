@@ -1,11 +1,15 @@
 $(document).ready(function ($) {
     jbf.combo.loadClass('#classCombo', 'insClass/load');
     var courseSemesterMap = new Map();
-    var courseBatchSemFee = null;
+    var courseBatchFee = null;
     studentDatatable();
     getAllCourse();
     loadCourseFee();
-
+    
+     $('#search_field').select2({
+        placeholder: "Select Field For Search"
+    });
+    
     $("#search_value").on('input', function () {
         if ($("#search_field").val() !== "") {
             studentDatatable();
@@ -20,34 +24,6 @@ $(document).ready(function ($) {
         }
     });
 
-    $("#semesterCombo").on('change', function () {
-        var semId = $("#semesterCombo").val();
-        var courseId = $("#courseId").val();
-        var batchId = $("#batchId").val();
-        var studentId = $("#studentId").val();
-        $("#total_fee").val("0");
-        $("#remaining_fee").val("0");
-        $("#discount").val("0");
-        var valuefound = false;
-        for (var i = 0; i < courseBatchSemFee.length; i++) {
-            var b = courseBatchSemFee[i].batchId;
-            var c = courseBatchSemFee[i].courseId;
-            var s = courseBatchSemFee[i].semesterId;
-            if (b === batchId && c === courseId && s === semId) {
-                $("#total_fee").val(courseBatchSemFee[i].fees);
-                valuefound = true;
-                break;
-            }
-        }
-        if (!valuefound) {
-            error("Fee is not available for given selection");
-        } else {
-            var totalFee = $("#total_fee").val();
-            getRemainingFeeForStudent(studentId, courseId, batchId, semId, totalFee);
-        }
-
-    });
-
     $('input[type=radio][name=payment_mode]').change(function () {
         if (this.value === 'cheque') {
             $("#cheque_number").val("");
@@ -58,19 +34,52 @@ $(document).ready(function ($) {
         }
     });
 
-//    $("input[name='gender']:checked").val();
+    printPage = function () {
+       var studentName= $("#studentName").val();
+       var batchName= $("#batchName").val();
+       var courseName= $("#courseName").val();
+       var enrollmentNumber= $("#enrollmentNumber").val();
+       var studentDetail="<b>"+studentName+"</b> ("+enrollmentNumber+")<br/>"+courseName+"  "+batchName;
+       var todayDate = new Date().toISOString().slice(0,10);
+  
+
+        
+        $("#r1c1").html(studentDetail);
+        $("#r1c2").html($("#paying_fee").val());
+        $("#r1c3").html($("input[name='payment_mode']:checked").val());
+        $("#r1c4").html(todayDate);
+
+        var divToPrint = document.getElementById('printModal');
+        newWin = window.open();
+        newWin.document.write(divToPrint.innerHTML);
+        newWin.location.reload();
+        newWin.focus();
+        newWin.print();
+        newWin.close();
+    };
 
     $(document).on("click", "#feebtn", function () {
         var myDataJSON = $(this).data('id');
         var batchId = myDataJSON.b;
         var studentId = myDataJSON.id;
         var courseId = myDataJSON.c;
-
+        
+        $("#total_fee").val("0");
+        $("#remaining_fee").val("0");
+        $("#discount").val("0");
+        $("#total_fee_paid").val("0");
+        $("#paying_fee").val("0");
+        $("#cheque_number").prop("disabled", true);
+        $("#studentName").val("");
+        $("#batchName").val("");
+        $("#courseName").val("");
+        $("#enrollmentNumber").val("");
+        
         $("#courseId").val(courseId);
         $("#batchId").val(batchId);
         $("#studentId").val(studentId);
 
-        populateSemester(courseId);
+        getRemainingFeeForStudent(studentId, courseId, batchId);
 
     });
 
@@ -83,12 +92,11 @@ $(document).ready(function ($) {
             contentType: "application/json; charset=utf-8",
             success: function (response) {
                 var data = response.data;
-//                alert(data);
-                courseBatchSemFee = data;
+                courseBatchFee = data;
             },
             error: function (e) {
                 console.log("ERROR: ", e);
-                error("Course Fee Load falied");
+                error("Course Fee Load failed");
             }
         });
     }
@@ -110,18 +118,9 @@ $(document).ready(function ($) {
             },
             error: function (e) {
                 console.log("ERROR: ", e);
-                error("Course Load falied");
+                error("Course Load failed");
             }
         });
-    }
-
-    function populateSemester(courseId) {
-        var totalSem = courseSemesterMap.get(parseInt(courseId));
-        $("#semesterCombo").html("");
-        $("#semesterCombo").append("<option value=''>Select Semester<option>");
-        for (var i = 1; i <= totalSem; i++) {
-            $("#semesterCombo").append("<option value='" + i + "'>" + i + "</option>");
-        }
     }
 
     function studentDatatable(param) {
@@ -202,17 +201,14 @@ $(document).ready(function ($) {
 
         });
 
-    }
-    ;
+    };
 
 
-    function getRemainingFeeForStudent(studentId, courseId, batchId, semId, totalFee) {
+    function getRemainingFeeForStudent(studentId, courseId, batchId) {
         var data = {};
         data["studentId"] = studentId;
         data["courseId"] = courseId;
         data["batchId"] = batchId;
-        data["semesterId"] = semId;
-        data["totalFee"] = totalFee;
 
         var url = "student/getremainingfeeforstudent";
 
@@ -222,16 +218,25 @@ $(document).ready(function ($) {
             data: JSON.stringify(data),
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
-            success: function (resonse) {
-                if (resonse.success === true) {
-                    var data = resonse.data;
+            success: function (response) {
+                if (response.success === true) {
+                    var data = response.data;
+                    $("#total_fee").val(data.totalFee);
+                    $("#discount").val(data.discount);
                     $("#remaining_fee").val(data.remainingFee);
+                    $("#total_fee_paid").val(data.amountPaid);
+                    
+                    $("#studentName").val(data.studentName);
+                    $("#batchName").val(data.batchName);
+                    $("#courseName").val(data.courseName);
+                    $("#enrollmentNumber").val(data.enrollmentNumber);
+                }else{
+                    error(response.message);
                 }
-
             },
             error: function (e) {
                 console.log("ERROR: ", e);
-                error("Remaining fee load falied");
+                error("Remaining fee load failed");
             }
         });
     }
@@ -241,9 +246,7 @@ $(document).ready(function ($) {
         data["studentId"] =  $("#studentId").val();
         data["courseId"] = $("#courseId").val();
         data["batchId"] = $("#batchId").val();
-        data["semesterId"] = $("#semesterCombo").val();
         data["amountPaid"] = $("#paying_fee").val();
-        data["discount"] = $("#discount").val();
         data["chequeNumber"] = $("#cheque_number").val();
         data["paymentMode"] = $("input[name='payment_mode']:checked").val();
 
@@ -261,7 +264,7 @@ $(document).ready(function ($) {
                     document.getElementById("feepaymentform").reset();
                     $( "#modalclosebtn" ).trigger( "click" );
                 }else{
-                     error("Fee Payment falied");
+                     error("Fee Payment failed");
                 }
             },
             error: function (e) {
@@ -271,5 +274,5 @@ $(document).ready(function ($) {
         });
     });
 
-
+    
 });

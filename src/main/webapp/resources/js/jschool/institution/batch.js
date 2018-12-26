@@ -27,10 +27,15 @@ $(document).ready(function($) {
 			dataType : 'json',
 			contentType: "application/json; charset=utf-8",
 			success  : function(response) {
-				var message = response.message;
-				success(message);
-				batchDatatable();
-				document.getElementById("addBatchForm").reset()
+                            var message = response.message;
+                                if(response.success == true){
+                                    success(message);
+                                    batchDatatable();
+                                    document.getElementById("addBatchForm").reset();
+                                }else if(response.success == false && response.error==true){
+                                    error(message);
+                                }
+				
 			},
 			error 	 : function(e) {
 				console.log("ERROR: ",e);

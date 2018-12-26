@@ -34,13 +34,11 @@ public class StudentServiceImpl implements StudentService {
     public Student convertTempObjectToMain(TempStudent tempStudent, Map<String, Object> objMap) {
             Batch batch= objMap.containsKey("batch") && objMap.get("batch") != null ? (Batch) objMap.get("batch") : null ;
             Course course= objMap.containsKey("course") && objMap.get("course") != null ? (Course) objMap.get("course") : null ;
-            Semester sem= objMap.containsKey("semester") && objMap.get("semester") != null ? (Semester) objMap.get("semester") : null ;
             
             Student student = new Student();
             student.setEnrollmentNumber(tempStudent.getEnrollmentNumber());
             student.setCourseId(course);
             student.setBatchId(batch);
-            student.setSemesterId(sem);
             student.setFirstName(tempStudent.getFirstName());
             student.setMiddleName(tempStudent.getMiddleName());
             student.setLastName(tempStudent.getLastName());
@@ -60,6 +58,8 @@ public class StudentServiceImpl implements StudentService {
             student.setBloodGroup(tempStudent.getBloodGroup());
             student.setDisability(tempStudent.getDisability());
             student.setDisabilityDetail(tempStudent.getDisabilityDetail());
+            student.setDiscount(tempStudent.getDiscount());
+            student.setQualification(tempStudent.getQualification());
             
             return student;
         }
@@ -76,7 +76,6 @@ public class StudentServiceImpl implements StudentService {
                     ts.setCourseId(student.getCourseId() != null ? String.valueOf(student.getCourseId().getId()) : "");
                     ts.setBatchName(student.getBatchId() != null ? student.getBatchId().getBatch() : "");
                     ts.setBatchId(student.getBatchId() != null ? String.valueOf(student.getBatchId().getId()) : "");
-                    ts.setSemesterName(student.getSemesterId()!= null ? String.valueOf(student.getSemesterId().getSemester()) : "");
                     ts.setFirstName(student.getFirstName());
                     ts.setMiddleName(student.getMiddleName());
                     ts.setLastName(student.getLastName());
@@ -96,6 +95,8 @@ public class StudentServiceImpl implements StudentService {
                     ts.setBloodGroup(student.getBloodGroup());
                     ts.setDisability(student.getDisability());
                     ts.setDisabilityDetail(student.getDisabilityDetail());
+                    ts.setDiscount(student.getDiscount());
+                    ts.setQualification(student.getQualification());
                     tempStudentList.add(ts);
                 }
             }
@@ -108,8 +109,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public double getTotalPaidFeeForStudent(int studentId, int courseId, int batchId, int semesterId) {
-        return studentMapper.getTotalPaidFeeForStudent(studentId,courseId,batchId,semesterId);
+    public double getTotalFeeToBePaidForStudentForCourse(int studentId, int courseId, int batchId) {
+        return studentMapper.getTotalFeeToBePaidForStudentForCourse(studentId,courseId,batchId);
+    }
+    
+    @Override
+    public double getTotalPaidFeeForStudent(int studentId, int courseId, int batchId) {
+        return studentMapper.getTotalPaidFeeForStudent(studentId,courseId,batchId);
     }
 
 }

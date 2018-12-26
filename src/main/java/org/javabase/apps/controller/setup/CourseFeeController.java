@@ -44,24 +44,20 @@ public class CourseFeeController {
         Batch batch=new Batch();
         batch = (Batch)commonService.getObjectById(batch, Integer.parseInt(tempCourse.getBatchId()));
         
-        Semester sem=new Semester();
-        sem = (Semester)commonService.getObjectById(sem, Integer.parseInt(tempCourse.getSemesterId()));
-        
         Course course=new Course();
         course = (Course)commonService.getObjectById(course, Integer.parseInt(tempCourse.getCourseId()));
         
-        if (course != null && sem != null && batch != null) {
+        if (course != null && batch != null) {
             CourseFee coursefee = new CourseFee();
             coursefee.setBatchId(batch);
             coursefee.setCourseId(course);
-            coursefee.setSemesterId(sem);
             coursefee.setFeeAmount(tempCourse.getFees());
             save = commonService.saveObject(coursefee);
         }
 
         if (save) {
-            response.put("suceess", true);
-            response.put("message", "Add Course Fee Sucess");
+            response.put("success", true);
+            response.put("message", "Add Course Fee Success");
             return response;
         } else {
             response.put("error", true);
@@ -84,8 +80,6 @@ public class CourseFeeController {
             tc.setFees(cf.getFeeAmount());
             tc.setBatchName(cf.getBatchId().getBatch());
             tc.setBatchId(String.valueOf(cf.getBatchId().getId()));
-            tc.setSemester(cf.getSemesterId().getSemester());
-            tc.setSemesterId(String.valueOf(cf.getSemesterId().getId()));
             tempcourseFeeList.add(tc);
         }
         response.put("success", true);

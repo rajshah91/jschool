@@ -23,7 +23,9 @@ public interface CourseService {
 
     public List<CourseSubject> getAllCourseSubject();
 
-    public CourseFee getFeeForCourse(Course course, Batch batch, Semester sem);
+    public CourseFee getFeeForCourse(Course course, Batch batch);
+    
+    public CourseFee getFeeForCourse(int courseId, int batchId);
 
     public List<TempCourseSubject> getAllCourseWithCommaSeparatedSubject();
 }

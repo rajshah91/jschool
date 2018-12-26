@@ -60,33 +60,6 @@ public class AddStudentController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "getfeeforcourse", method = RequestMethod.GET)
-    public Map<String, Object> getFeeForCourse(@RequestBody TempCourse tempCourse) {
-//    public Map<String, Object> getFeeForCourse() {
-        Map<String, Object> response = new HashMap<>();
-        Boolean success = false;
-        CourseFee courseFee=null;
-        Batch batch=new Batch();
-        batch = (Batch)commonService.getObjectById(batch, Integer.parseInt(tempCourse.getBatchId()));
-        
-        Semester sem=new Semester();
-        sem = (Semester)commonService.getObjectById(sem, Integer.parseInt(tempCourse.getSemesterId()));
-        
-        Course course=new Course();
-        course = (Course)commonService.getObjectById(course, Integer.parseInt(tempCourse.getCourseId()));
-        
-        if (course != null && sem != null && batch != null) {
-            courseFee = courseService.getFeeForCourse(course,batch,sem);
-            success=true;
-        }
-        
-        response.put("success", success);
-        response.put("data", courseFee);
-        return response;
-    }
-
-    
-    @ResponseBody
     @RequestMapping(value = "enrollstudent", method = RequestMethod.POST)
     public Map<String, Object> enrollStudent(@RequestBody TempStudent tempStudent) {
         Map<String, Object> response = new HashMap<>();
@@ -96,16 +69,12 @@ public class AddStudentController {
         Batch batch=new Batch();
         batch = (Batch)commonService.getObjectById(batch, Integer.parseInt(ts.getBatchId()));
         
-        Semester sem=new Semester();
-        sem = (Semester)commonService.getObjectById(sem, Integer.parseInt(ts.getSemesterId()));
-        
         Course course=new Course();
         course = (Course)commonService.getObjectById(course, Integer.parseInt(ts.getCourseId()));
         
-        if (course != null && sem != null && batch != null) {
+        if (course != null  && batch != null) {
             Map<String,Object> map=new HashMap();
             map.put("course", course);
-            map.put("semester", sem);
             map.put("batch", batch);
             Student student=studentService.convertTempObjectToMain(tempStudent, map);
             save=commonService.saveObject(student);
@@ -115,7 +84,7 @@ public class AddStudentController {
         }
 
         if (save) {
-            response.put("suceess", true);
+            response.put("success", true);
             response.put("message", "Student enrolled Sucessfully.");
             return response;
         } else {

@@ -15,8 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,15 +29,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @Table(name = "student_fee")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "StudentFee.findAll", query = "SELECT s FROM StudentFee s")
-    , @NamedQuery(name = "StudentFee.findById", query = "SELECT s FROM StudentFee s WHERE s.id = :id")
-    , @NamedQuery(name = "StudentFee.findByAmountPaid", query = "SELECT s FROM StudentFee s WHERE s.amountPaid = :amountPaid")
-    , @NamedQuery(name = "StudentFee.findByPaymentMode", query = "SELECT s FROM StudentFee s WHERE s.paymentMode = :paymentMode")
-    , @NamedQuery(name = "StudentFee.findByChequeNumber", query = "SELECT s FROM StudentFee s WHERE s.chequeNumber = :chequeNumber")
-    , @NamedQuery(name = "StudentFee.findByFeeCollectedBy", query = "SELECT s FROM StudentFee s WHERE s.feeCollectedBy = :feeCollectedBy")
-    , @NamedQuery(name = "StudentFee.findByDataCreateTime", query = "SELECT s FROM StudentFee s WHERE s.dataCreateTime = :dataCreateTime")
-    , @NamedQuery(name = "StudentFee.findByDataUpdateTime", query = "SELECT s FROM StudentFee s WHERE s.dataUpdateTime = :dataUpdateTime")})
 public class StudentFee implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,8 +38,6 @@ public class StudentFee implements Serializable {
     @Column(name = "id")
     private Integer id;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "discount")
-    private Double discount;
     @Column(name = "amount_paid")
     private Double amountPaid;
     @Column(name = "payment_mode")
@@ -59,7 +46,6 @@ public class StudentFee implements Serializable {
     private String chequeNumber;
     @Column(name = "fee_collected_by")
     private String feeCollectedBy;
-    
     @CreationTimestamp
     @Column(name = "data_create_time")
     @Temporal(TemporalType.TIMESTAMP)
@@ -68,16 +54,12 @@ public class StudentFee implements Serializable {
     @Column(name = "data_update_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUpdateTime;
-    
     @JoinColumn(name = "batch_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Batch batchId;
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Course courseId;
-    @JoinColumn(name = "semester_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Semester semesterId;
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Student studentId;
@@ -85,14 +67,6 @@ public class StudentFee implements Serializable {
     public StudentFee() {
     }
 
-    public Double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Double discount) {
-        this.discount = discount;
-    }
-    
     public StudentFee(Integer id) {
         this.id = id;
     }
@@ -167,14 +141,6 @@ public class StudentFee implements Serializable {
 
     public void setCourseId(Course courseId) {
         this.courseId = courseId;
-    }
-
-    public Semester getSemesterId() {
-        return semesterId;
-    }
-
-    public void setSemesterId(Semester semesterId) {
-        this.semesterId = semesterId;
     }
 
     public Student getStudentId() {

@@ -102,10 +102,11 @@ public class CourseMapperImpl implements CourseMapper {
     }
 
     @Override
-    public CourseFee getFeeForCourse(Course course, Batch batch, Semester sem) {
+    public CourseFee getFeeForCourse(int  courseId, int batchId) {
         try {
-            String hql = "FROM Course c WHERE c.courseId = " + course + " AND c.batchId= " + batch + " AND c.semesterId= " + sem;
-            return (CourseFee) hibernateTemplate.find(hql).get(0);
+            String hql = "FROM CourseFee c WHERE c.courseId.id = '" + courseId + "' AND c.batchId.id= '" + batchId+"'" ;
+            CourseFee cf= (CourseFee) hibernateTemplate.find(hql).get(0);
+            return cf;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;

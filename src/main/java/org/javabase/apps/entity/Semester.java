@@ -14,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,14 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "semester")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Semester.findAll", query = "SELECT s FROM Semester s")
-    , @NamedQuery(name = "Semester.findById", query = "SELECT s FROM Semester s WHERE s.id = :id")
-    , @NamedQuery(name = "Semester.findBySemester", query = "SELECT s FROM Semester s WHERE s.semester = :semester")})
 public class Semester implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "semesterId")
-    private List<StudentFee> studentFeeList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,13 +36,8 @@ public class Semester implements Serializable {
     private Integer id;
     @Column(name = "semester")
     private Integer semester;
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "semesterId")
     private List<CourseSubject> courseSubjectList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "semesterId")
-    private List<CourseFee> courseFeeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "semesterId")
-    private List<Student> studentList;
 
     public Semester() {
     }
@@ -85,24 +71,6 @@ public class Semester implements Serializable {
         this.courseSubjectList = courseSubjectList;
     }
 
-    @XmlTransient
-    public List<CourseFee> getCourseFeeList() {
-        return courseFeeList;
-    }
-
-    public void setCourseFeeList(List<CourseFee> courseFeeList) {
-        this.courseFeeList = courseFeeList;
-    }
-    
-    @XmlTransient
-    public List<Student> getStudentList() {
-        return studentList;
-    }
-
-    public void setStudentList(List<Student> studentList) {
-        this.studentList = studentList;
-    }
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -127,14 +95,5 @@ public class Semester implements Serializable {
     public String toString() {
         return "org.javabase.apps.entity.Semester[ id=" + id + " ]";
     }
-
-    @XmlTransient
-    public List<StudentFee> getStudentFeeList() {
-        return studentFeeList;
-    }
-
-    public void setStudentFeeList(List<StudentFee> studentFeeList) {
-        this.studentFeeList = studentFeeList;
-    }
-
+    
 }

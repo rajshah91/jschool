@@ -15,33 +15,12 @@ $(document).ready(function ($) {
         placeholder: "Select Batch"
     });
 
-//    var url = 'getfeeforcourse';
-//            $.ajax({
-//                url: url,
-//                type: "POST",
-//                dataType: 'json',
-//                data: {
-//                'batchId': 1,
-//                'semesterId': 2,
-//                'courseId': 3
-//                },
-//                contentType: "application/json; charset=utf-8",
-//                success: function (response) {
-//                    var data = response.data;
-//                    alert(data);
-////                for (var i = 0; i < data.length; i++) {
-////                    $("#subjectCombo").append("<option value='" + data[i].subId + "'>" + data[i].subTitle + "</option>");
-////                }
-//                },
-//                error: function (e) {
-//                    console.log("ERROR: ", e);
-//                    error("Fee Load falied");
-//                }
-//            });
-
-
     $("#courseCombo").change(function () {
-        populateSemester();
+        populateCourseFee();
+    });
+    
+    $("#batchCombo").change(function () {
+        populateCourseFee();
     });
 
     $("#mobile_number").change(function () {
@@ -75,7 +54,7 @@ $(document).ready(function ($) {
         data["enrollmentNumber"] = $("#enrollmentNumber").val();
         data["courseId"] = $("#courseCombo").val();
         data["batchId"] = $("#batchCombo").val();
-        data["semesterId"] = $("#semesterCombo").val();
+        data["qualification"] = $("#qualification").val();
         data["firstName"] = $("#first_name").val();
         data["middleName"] = $("#middle_name").val();
         data["lastName"] = $("#last_name").val();
@@ -87,18 +66,17 @@ $(document).ready(function ($) {
         data["state"] = $("#state").val();
         data["country"] = $("#country").val();
         data["pincode"] = $("#pincode").val();
-//        data["phonecode"] = $("#").val();
         data["mobileNumber"] = $("#mobile_number").val();
         data["emailId"] = $("#email").val();
         data["guardianFullName"] = $("#guardian_full_name").val();
         data["guardianFullAddress"] = $("#guardian_full_address").val();
-//        data["phonecode1"] = $("#").val();
         data["guardianMobileNumber"] = $("#guardian_mobile_number").val();
         data["username"] = $("#username").val();
         data["password"] = $("#password").val();
         data["bloodGroup"] = $("#blood_group").val();
         data["disability"] =$("input[name='disability']:checked").val();
         data["disabilityDetail"] = $("#disability_detail").val();
+        data["discount"] = $("#discount").val();
         
         url = "enrollstudent";
 
@@ -108,11 +86,19 @@ $(document).ready(function ($) {
             data: JSON.stringify(data),
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
-            success: function (resonse) {
-                var message = resonse.message;
+            success: function (response) {
+                var message = response.message;
                 //success notification
-                success(message);
-                document.getElementById("student_form").reset()
+                if(response.success === true){
+                    success(message);
+                    document.getElementById("student_form").reset();
+                    $('#courseCombo').val("").trigger('change');
+                    $('#batchCombo').val("").trigger('change');
+        data["batchId"] = $("#batchCombo").val();
+                }else{
+                    error(message);
+                }
+                
             },
             error: function (e) {
                 console.log("ERROR: ", e);
@@ -175,12 +161,35 @@ $(document).ready(function ($) {
         });
     }
 
-    function populateSemester() {
-        var selectedCourse = $("#courseCombo :selected").text();
-        var totalSem = Number(courseSemesterMap.get(selectedCourse));
-        $("#semesterCombo").html("");
-        for (var i = 1; i <= totalSem; i++) {
-            $("#semesterCombo").append("<option value='" + i + "'>" + i + "</option>");
+    function populateCourseFee() {
+        var selectedCourseId = $("#courseCombo").val();
+        var selectedBatchId = $("#batchCombo").val();
+        if (selectedBatchId != "" && selectedBatchId != null && selectedCourseId != null && selectedCourseId != "") {
+            var data = {};
+            data["courseId"] = selectedCourseId;
+            data["batchId"] = selectedBatchId;
+
+            var url = 'getfeeforcourse';
+            $.ajax({
+                type: "POST",
+                url: url,
+                dataType: 'json',
+                data:  JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    if(response.success === true){
+                        var data = response.data;
+                        $("#total_fee").val(data.feeAmount);
+                    }else{
+                        error(response.message);
+                    }
+                    
+                },
+                error: function (e) {
+                    console.log("ERROR: ", e);
+                    error("Fee Load falied");
+                }
+            });
         }
     }
 

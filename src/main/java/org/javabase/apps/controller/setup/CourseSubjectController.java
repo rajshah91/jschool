@@ -1,6 +1,5 @@
 package org.javabase.apps.controller.setup;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +7,6 @@ import org.javabase.apps.dto.TempCourse;
 import org.javabase.apps.dto.TempCourseSubject;
 import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.Course;
-import org.javabase.apps.entity.CourseFee;
 import org.javabase.apps.entity.Semester;
 import org.javabase.apps.entity.CourseSubject;
 import org.javabase.apps.entity.Subject;
@@ -72,11 +70,12 @@ public class CourseSubjectController {
         }
 
         if (save) {
-            response.put("suceess", true);
+            response.put("success", true);
             response.put("message", "Add Course Subject Sucess");
             return response;
         } else {
             response.put("error", true);
+            response.put("success", false);
             response.put("message", "Add Course Subject Failed");
             return response;
         }

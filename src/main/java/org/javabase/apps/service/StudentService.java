@@ -16,6 +16,8 @@ public interface StudentService {
 
     public List<Student> getAllStudentsWithSearchCriteria(String searchType, String searchText);
 
-    public double getTotalPaidFeeForStudent(int studentId, int courseId, int batchId, int semesterId);
+    public double getTotalFeeToBePaidForStudentForCourse(int studentId, int courseId, int batchId);
+    
+    public double getTotalPaidFeeForStudent(int studentId, int courseId, int batchId);
 
 }

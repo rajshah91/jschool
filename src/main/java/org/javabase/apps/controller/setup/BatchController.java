@@ -42,10 +42,11 @@ public class BatchController {
         Boolean save = batchService.addBatch(batch);
 
         if (save) {
-            response.put("suceess", true);
+            response.put("success", true);
             response.put("message", "Batch Added.");
             return response;
         } else {
+            response.put("success", false);
             response.put("error", true);
             response.put("message", "Add Batch Failed");
             return response;

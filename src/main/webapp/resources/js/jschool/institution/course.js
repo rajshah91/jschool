@@ -77,13 +77,6 @@ $(document).ready(function($) {
                     title: 'Total Semester',
                     data: 'totalSemester'
                 }
-//                , {
-//                    title: 'Fees',
-//                    data: 'fees'
-//                }, {
-//                    title: 'Subject',
-//                    data: 'commaSeparatedSubjectNames'
-//                }
             ],
             columnDefs: [
                 {"className": "dt-center", "targets": "_all"}

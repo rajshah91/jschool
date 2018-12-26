@@ -35,6 +35,7 @@
                                 <label class="col-sm-2 control-label" for="">Enrollment Detail<span class="require-field">*</span></label>
                                 
                                 <div class="col-sm-3">
+                                    <!--<select name="courseId" class="form-control select2 text-input validate[required]" id="courseCombo" style="width: 100%" placeholder="Select Course">-->
                                     <select name="courseId" class="form-control select2 text-input validate[required]" id="courseCombo" style="width: 100%" placeholder="Select Course">
                                         <option value=""></option>
                                     </select>
@@ -44,11 +45,11 @@
                                         <option value=""></option>
                                     </select>
                                 </div>
-                                <div class="col-sm-2">
+<!--                                <div class="col-sm-2">
                                     <select name="semesterId" class="form-control select2 validate[required]" id="semesterCombo" style="width: 100%" placeholder="Select Semester">
                                         <option value=""></option>
                                     </select>
-                                </div>
+                                </div>-->
                             </div>
                             
                             <!-- 
@@ -62,10 +63,10 @@
                                 <div class="col-sm-3">
                                     <input id="first_name" class="form-control validate[required] text-input" type="text" value="" name="firstName" placeholder="First Name">
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                      <input id="middle_name" class="form-control validate[required] text-input" type="text" value="" name="middleName"  placeholder="Middle Name">
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <input id="last_name" class="form-control validate[required] text-input" type="text" value="" name="lastName" placeholder="Last Name">
                                 </div>
                             </div>
@@ -238,6 +239,27 @@
                                 <label class="col-sm-2 control-label" for=""></label>
                                 <div class="col-sm-8">
                                     <input id="disability_detail" class="form-control validate[required]" type="text" name="disabilityDetail" value="" placeholder="Disability Detail">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="qualification">Qualification<span class="require-field">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="qualification" class="form-control validate[required]" type="text" name="qualification" value="">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="total_fee">Total Fee</label>
+                                <div class="col-sm-3">
+                                    <input id="total_fee" class="form-control text-input" type="number" value="" disabled="disabled" name="total_fee" placeholder="" value="0">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="discount">Discount(in rupees)<span class="require-field">*</span></label>
+                                <div class="col-sm-3">
+                                    <input id="discount" class="form-control validate[required] text-input" type="number" value="0" name="discount" placeholder="First Name">
                                 </div>
                             </div>
                             

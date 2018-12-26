@@ -17,8 +17,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -35,35 +33,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @Table(name = "student")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s")
-    , @NamedQuery(name = "Student.findById", query = "SELECT s FROM Student s WHERE s.id = :id")
-    , @NamedQuery(name = "Student.findByEnrollmentNumber", query = "SELECT s FROM Student s WHERE s.enrollmentNumber = :enrollmentNumber")
-    , @NamedQuery(name = "Student.findByFirstName", query = "SELECT s FROM Student s WHERE s.firstName = :firstName")
-    , @NamedQuery(name = "Student.findByMiddleName", query = "SELECT s FROM Student s WHERE s.middleName = :middleName")
-    , @NamedQuery(name = "Student.findByLastName", query = "SELECT s FROM Student s WHERE s.lastName = :lastName")
-    , @NamedQuery(name = "Student.findByGender", query = "SELECT s FROM Student s WHERE s.gender = :gender")
-    , @NamedQuery(name = "Student.findByBirthDate", query = "SELECT s FROM Student s WHERE s.birthDate = :birthDate")
-    , @NamedQuery(name = "Student.findByEnrollmentDate", query = "SELECT s FROM Student s WHERE s.enrollmentDate = :enrollmentDate")
-    , @NamedQuery(name = "Student.findByAddressLine1", query = "SELECT s FROM Student s WHERE s.addressLine1 = :addressLine1")
-    , @NamedQuery(name = "Student.findByCity", query = "SELECT s FROM Student s WHERE s.city = :city")
-    , @NamedQuery(name = "Student.findByState", query = "SELECT s FROM Student s WHERE s.state = :state")
-    , @NamedQuery(name = "Student.findByCountry", query = "SELECT s FROM Student s WHERE s.country = :country")
-    , @NamedQuery(name = "Student.findByPincode", query = "SELECT s FROM Student s WHERE s.pincode = :pincode")
-    , @NamedQuery(name = "Student.findByMobileNumber", query = "SELECT s FROM Student s WHERE s.mobileNumber = :mobileNumber")
-    , @NamedQuery(name = "Student.findByEmailId", query = "SELECT s FROM Student s WHERE s.emailId = :emailId")
-    , @NamedQuery(name = "Student.findByGuardianFullName", query = "SELECT s FROM Student s WHERE s.guardianFullName = :guardianFullName")
-    , @NamedQuery(name = "Student.findByGuardianFullAddress", query = "SELECT s FROM Student s WHERE s.guardianFullAddress = :guardianFullAddress")
-    , @NamedQuery(name = "Student.findByGuardianMobileNumber", query = "SELECT s FROM Student s WHERE s.guardianMobileNumber = :guardianMobileNumber")
-    , @NamedQuery(name = "Student.findByBloodGroup", query = "SELECT s FROM Student s WHERE s.bloodGroup = :bloodGroup")
-    , @NamedQuery(name = "Student.findByDisability", query = "SELECT s FROM Student s WHERE s.disability = :disability")
-    , @NamedQuery(name = "Student.findByDisabilityDetail", query = "SELECT s FROM Student s WHERE s.disabilityDetail = :disabilityDetail")
-    , @NamedQuery(name = "Student.findByDataCreateTime", query = "SELECT s FROM Student s WHERE s.dataCreateTime = :dataCreateTime")
-    , @NamedQuery(name = "Student.findByDataUpdateTime", query = "SELECT s FROM Student s WHERE s.dataUpdateTime = :dataUpdateTime")})
 public class Student implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentId")
-    private List<StudentFee> studentFeeList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -85,6 +55,9 @@ public class Student implements Serializable {
     @Basic(optional = false)
     @Column(name = "gender")
     private String gender;
+    @Basic(optional = false)
+    @Column(name = "qualification")
+    private String qualification;
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
@@ -117,12 +90,13 @@ public class Student implements Serializable {
     private String disability;
     @Column(name = "disability_detail")
     private String disabilityDetail;
-    
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "discount")
+    private Double discount;
     @CreationTimestamp
     @Column(name = "data_create_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCreateTime;
-    
     @UpdateTimestamp
     @Column(name = "data_update_time")
     @Temporal(TemporalType.TIMESTAMP)
@@ -133,9 +107,8 @@ public class Student implements Serializable {
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Course courseId;
-    @JoinColumn(name = "semester_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Semester semesterId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentId")
+    private List<StudentFee> studentFeeList;
 
     public Student() {
     }
@@ -144,12 +117,13 @@ public class Student implements Serializable {
         this.id = id;
     }
 
-    public Student(Integer id, String enrollmentNumber, String firstName, String lastName, String gender) {
+    public Student(Integer id, String enrollmentNumber, String firstName, String lastName, String gender, String qualification) {
         this.id = id;
         this.enrollmentNumber = enrollmentNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
+        this.qualification = qualification;
     }
 
     public Integer getId() {
@@ -198,6 +172,14 @@ public class Student implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getQualification() {
+        return qualification;
+    }
+
+    public void setQualification(String qualification) {
+        this.qualification = qualification;
     }
 
     public Date getBirthDate() {
@@ -320,6 +302,14 @@ public class Student implements Serializable {
         this.disabilityDetail = disabilityDetail;
     }
 
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
     public Date getDataCreateTime() {
         return dataCreateTime;
     }
@@ -352,12 +342,13 @@ public class Student implements Serializable {
         this.courseId = courseId;
     }
 
-    public Semester getSemesterId() {
-        return semesterId;
+    @XmlTransient
+    public List<StudentFee> getStudentFeeList() {
+        return studentFeeList;
     }
 
-    public void setSemesterId(Semester semesterId) {
-        this.semesterId = semesterId;
+    public void setStudentFeeList(List<StudentFee> studentFeeList) {
+        this.studentFeeList = studentFeeList;
     }
 
     @Override
@@ -383,15 +374,6 @@ public class Student implements Serializable {
     @Override
     public String toString() {
         return "org.javabase.apps.entity.Student[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public List<StudentFee> getStudentFeeList() {
-        return studentFeeList;
-    }
-
-    public void setStudentFeeList(List<StudentFee> studentFeeList) {
-        this.studentFeeList = studentFeeList;
     }
     
 }

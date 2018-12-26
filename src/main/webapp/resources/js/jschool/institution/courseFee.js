@@ -9,9 +9,9 @@ $(document).ready(function($) {
 	getAllBatch();
         courseFeeDatatable();
         
-        $("#courseCombo").change(function () {
-             populateSemester();
-        });
+//        $("#courseCombo").change(function () {
+//             populateSemester();
+//        });
         
 	$("#addCourseFeeForm").submit(function(event) {
 		
@@ -23,7 +23,6 @@ $(document).ready(function($) {
 		// get form data
 		var data = {}
 		data["courseId"]      = $("#courseCombo").val(),
-		data["semesterId"]   = $("#semesterCombo").val(),
 		data["batchId"]   = $("#batchCombo").val(),
 		data["fees"]        = $("#fees").val(),
 		url = "courseFee/add";
@@ -36,9 +35,16 @@ $(document).ready(function($) {
 			contentType: "application/json; charset=utf-8",
 			success  : function(resonse) {
 				var message = resonse.message;
-				success(message);
-				courseFeeDatatable();
-				document.getElementById("addCourseFeeForm").reset();
+                                if(resonse.success == true){
+                                    success(message);
+                                    courseFeeDatatable();
+                                    document.getElementById("addCourseFeeForm").reset();
+                                    $('#courseCombo').val("").trigger('change');
+                                    $('#batchCombo').val("").trigger('change');
+                                }else{
+                                    error(message);
+                                }
+				
 			},
 			error 	 : function(e) {
 				console.log("ERROR: ",e);
@@ -61,10 +67,6 @@ $(document).ready(function($) {
                 }, {
                     title: 'Batch',
                     data: 'batchName'
-                }
-                , {
-                    title: 'Semester',
-                    data: 'semester'
                 }, {
                     title: 'Fees',
                     data: 'fees'
@@ -125,12 +127,12 @@ $(document).ready(function($) {
         });
     }
     
-    function populateSemester(){
-        var selectedCourse= $("#courseCombo :selected").text();
-        var totalSem=Number(courseSemesterMap.get(selectedCourse));
-        $("#semesterCombo").html("");
-        for(var i=1;i<=totalSem;i++){
-            $("#semesterCombo").append("<option value='"+i+"'>"+i+"</option>"); 
-        }
-    }
+//    function populateSemester(){
+//        var selectedCourse= $("#courseCombo :selected").text();
+//        var totalSem=Number(courseSemesterMap.get(selectedCourse));
+//        $("#semesterCombo").html("");
+//        for(var i=1;i<=totalSem;i++){
+//            $("#semesterCombo").append("<option value='"+i+"'>"+i+"</option>"); 
+//        }
+//    }
 });

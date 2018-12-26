@@ -33,3 +33,13 @@ INSERT INTO role_permission(perm_id,role_id,is_active,grant_user,grant_date) VAL
 INSERT INTO role_permission(perm_id,role_id,is_active,grant_user,grant_date) VALUES (2, 1 ,1 ,1,now() );
 INSERT INTO role_permission(perm_id,role_id,is_active,grant_user,grant_date) VALUES (3, 1 ,1 ,1,now() );
 INSERT INTO role_permission(perm_id,role_id,is_active,grant_user,grant_date) VALUES (4, 1 ,1 ,1,now() );
+
+
+INSERT INTO semester(semester) VALUES(1);
+INSERT INTO semester(semester) VALUES(2);
+INSERT INTO semester(semester) VALUES(3);
+INSERT INTO semester(semester) VALUES(4);
+INSERT INTO semester(semester) VALUES(5);
+INSERT INTO semester(semester) VALUES(6);
+INSERT INTO semester(semester) VALUES(7);
+INSERT INTO semester(semester) VALUES(8);

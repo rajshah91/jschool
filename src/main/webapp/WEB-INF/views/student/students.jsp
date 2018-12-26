@@ -90,41 +90,54 @@
                                         <input type="hidden" id="courseId" value=""/>
                                         <input type="hidden" id="batchId" value=""/>
                                         <input type="hidden" id="studentId" value=""/>
-                                        <label for="semesterId" class="col-form-label">Semester<span class="require-field">*</span></label>
-                                        <select name="semesterId" class="form-control select2 validate[required]" id="semesterCombo" style="width: 100%" placeholder="Select Semester">
-                                            <option value=""></option>
-                                        </select>
+                                        
+                                        <input type="hidden" id="studentName" value=""/>
+                                        <input type="hidden" id="batchName" value=""/>
+                                        <input type="hidden" id="courseName" value=""/>
+                                        <input type="hidden" id="enrollmentNumber" value=""/>
+                                        
+                                        <!--                                        <label for="semesterId" class="col-form-label">Semester<span class="require-field">*</span></label>
+                                                                                <select name="semesterId" class="form-control select2 validate[required]" id="semesterCombo" style="width: 100%" placeholder="Select Semester">
+                                                                                    <option value=""></option>
+                                                                                </select>-->
                                     </div>
                                     <div class="form-group">
                                         <label for="recipient-name" class="col-form-label">Total Fee</label>
-                                        <input type="text" disabled="disabled" class="form-control" id="total_fee" value="">
+                                        <input type="text" disabled="disabled" class="form-control" id="total_fee" value="0">
                                     </div>
 
+
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Discount(in Rupees)</label>
+                                        <input type="number" disabled="disabled"  class="form-control" id="discount" value="0">
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Total Fee Paid till now</label>
+                                        <input type="number" disabled="disabled"  class="form-control" id="total_fee_paid" value="0">
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="recipient-name" class="col-form-label">Remaining Fee</label>
-                                        <input type="text" disabled="disabled" class="form-control" id="remaining_fee" value="">
+                                        <input type="text" disabled="disabled" class="form-control" id="remaining_fee" value="0">
                                     </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="col-form-label">Discount(in Rupees)</label>
-                                        <input type="number"  class="form-control" id="discount" value="0">
-                                    </div>
-                                    
+
+
                                     <div class="form-group">
                                         <label for="recipient-name" class="col-form-label">Currently Paying Fee</label>
-                                        <input type="number"  class="form-control" id="paying_fee" value="">
+                                        <input type="number"  class="form-control" id="paying_fee" value="0">
                                     </div>
-                                    
+
                                     <div class="form-group">
-                                         <label class="col-form-label" for="payment_type">Payment Mode<span class="require-field">*</span></label>
-                                         <div class="form-group">
+                                        <label class="col-form-label" for="payment_type">Payment Mode<span class="require-field">*</span></label>
+                                        <div class="form-group">
                                             <label class="radio-inline col-sm-1">
                                                 <input type="radio" value="cash" class="tog validate[required]" name="payment_mode" checked="checked">Cash
                                             </label>
                                             <label class="radio-inline col-sm-1">
                                                 <input type="radio" value="cheque" class="tog validate[required]" name="payment_mode">Cheque
-                                                 
+
                                             </label>
                                             <label class="radio-inline col-sm-6">
                                                 <input type="text" value="" disabled="disabled" id="cheque_number" class="form-control" name="cheque_number" placeholder="Enter Cheque Number">
@@ -138,9 +151,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" id="savebtn">Save</button>
+                                <input type="submit" class="btn btn-secondary" id="printbtn" onclick="printPage()" value="Print"/>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modalclosebtn">Close</button>
-                                
-                                
                             </div>
                         </div>
                     </div>
@@ -149,6 +161,75 @@
 
 
                 <!---------------------------------------------------Modal div End--------------------------------------------------->            
+
+                <!---------------------------------------------Modal Fee Payment Receipt Start----------------------------------------->            
+
+                <!--                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#feePayModal" data-whatever="">Pay Fee</button>-->
+
+                <div class="modal fade" id="printModal" tabindex="-2" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel">Fee Payment Receipt</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                
+                                 <!--<input type="text" class="form-control" id="username" readonly value="${user.username}">-->
+                                
+                                
+                                <!-- =========================== Search Datatable Class Start ======================== -->
+                                <div class="box-body table-responsive box box-primary" >
+                                    <table id="feePaymentReceiptTable" class="table table-bordered table-striped" border="1">
+                                        <!-- table body part dynamically call from databases function
+                                        server side processing -->
+                                        <thead>
+                                            <tr>
+                                                <th>Student Detail</th>
+                                                <th>Fee Paid Amount</th>
+                                                <th>Payment Mode</th>
+                                                <th>Payment Date</th>
+                                                <th>Collected By</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td id="r1c1"></td>
+                                                <td id="r1c2"></td>
+                                                <td id="r1c3"></td>
+                                                <td id="r1c4"></td>
+                                                <td id="r1c5">${user.username}</td>
+                                            </tr>
+<!--                                            <tr>
+                                                <td>Trident</td>
+                                                <td>Win 95+</td>
+                                                <td>5</td>
+                                                <td>C</td>
+                                            </tr>-->
+                                        <tbody>
+                                    </table>
+                                </div>
+                                <!-- /.box-body -->
+                                <!-- =========================== Search Datatable Class END ========================== -->
+                                
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <!--                                <button type="button" class="btn btn-primary" id="savebtn">Save</button>
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modalclosebtn">Close</button>
+                                -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!---------------------------------------------Modal Fee Payment Receipt End-------------------------------------------->            
+
 
 
 
