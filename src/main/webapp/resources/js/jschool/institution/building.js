@@ -57,7 +57,7 @@ $(document).ready(function($) {
 			},
 			error 	 : function(e) {
 				console.log("ERROR: ",e);
-				error("Add falied");
+				error("Add failed");
 				
 				
 			}

@@ -49,7 +49,7 @@ $(document).ready(function($) {
 			},
 			error 	 : function(e) {
 				console.log("ERROR: ",e);
-				error("Insert falied");
+				error("Insert failed");
 			}
 		});
 		

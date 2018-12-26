@@ -49,7 +49,7 @@ $(document).ready(function($) {
 			},
 			error 	 : function(e) {
 				console.log("ERROR: ",e);
-				alert("registration falied");
+				alert("registration failed");
 //						$("#msg").html(e.message);
 				data = null;
 				document.getElementById("registerForm").reset()

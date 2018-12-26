@@ -102,7 +102,7 @@ $(document).ready(function ($) {
             },
             error: function (e) {
                 console.log("ERROR: ", e);
-                error("Add falied");
+                error("Add failed");
             }
         });
 
@@ -132,7 +132,7 @@ $(document).ready(function ($) {
             },
             error: function (e) {
                 console.log("ERROR: ", e);
-                error("Course Load falied");
+                error("Course Load failed");
             }
         });
     }
@@ -156,7 +156,7 @@ $(document).ready(function ($) {
             },
             error: function (e) {
                 console.log("ERROR: ", e);
-                error("Batch Load falied");
+                error("Batch Load failed");
             }
         });
     }
@@ -187,7 +187,7 @@ $(document).ready(function ($) {
                 },
                 error: function (e) {
                     console.log("ERROR: ", e);
-                    error("Fee Load falied");
+                    error("Fee Load failed");
                 }
             });
         }

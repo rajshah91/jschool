@@ -45,7 +45,7 @@ $(document).ready(function($) {
             },
             error    : function(e) {
                 console.log("ERROR: ",e);
-                error("update falied");
+                error("update failed");
             }
         });
         
@@ -83,7 +83,7 @@ $(document).ready(function($) {
             },
             error    : function(e) {
                 console.log("ERROR: ",e);
-                error("update falied");
+                error("update failed");
             }
         });
         

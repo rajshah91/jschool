@@ -41,7 +41,7 @@ $(document).ready(function($) {
 			},
 			error 	 : function(e) {
 				console.log("ERROR: ",e);
-				alert("Add falied");
+				alert("Add failed");
 //						$("#msg").html(e.message);
 				
 				data = null;
