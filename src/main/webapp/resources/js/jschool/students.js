@@ -6,13 +6,23 @@ $(document).ready(function ($) {
     getAllCourse();
     loadCourseFee();
     
-     $('#search_field').select2({
+    $( "#savebtn").prop("disabled", true);
+    
+    $('#search_field').select2({
         placeholder: "Select Field For Search"
     });
     
     $("#search_value").on('input', function () {
         if ($("#search_field").val() !== "") {
             studentDatatable();
+        }
+    });
+    
+    $("#paying_fee").on('change', function () {
+        if ($("#paying_fee").val() == "" || $("#paying_fee").val() ==0) {
+           $("#savebtn").prop("disabled", true);
+        }else{
+           $("#savebtn").prop("disabled", false); 
         }
     });
 
@@ -42,7 +52,7 @@ $(document).ready(function ($) {
        var studentDetail="<b>"+studentName+"</b> ("+enrollmentNumber+")<br/>"+courseName+"  "+batchName;
        var todayDate = new Date().toISOString().slice(0,10);
   
-
+//        alert(toWords(20000)); 
         
         $("#r1c1").html(studentDetail);
         $("#r1c2").html($("#paying_fee").val());
@@ -230,6 +240,14 @@ $(document).ready(function ($) {
                     $("#batchName").val(data.batchName);
                     $("#courseName").val(data.courseName);
                     $("#enrollmentNumber").val(data.enrollmentNumber);
+                    
+                    if(data.remainingFee == 0 || data.remainingFee == "0"){
+                        $( "#savebtn").prop("disabled", true);
+                        $( "#paying_fee").prop("disabled", true);
+                    }else{
+                        $( "#paying_fee").prop("disabled", false);
+                    }
+                    
                 }else{
                     error(response.message);
                 }
@@ -249,7 +267,8 @@ $(document).ready(function ($) {
         data["amountPaid"] = $("#paying_fee").val();
         data["chequeNumber"] = $("#cheque_number").val();
         data["paymentMode"] = $("input[name='payment_mode']:checked").val();
-
+        
+        var isPartial= ($("#remaining_fee").val() - $("#paying_fee").val()) > 0 ? "Partial" : "Full";
         var url = "student/paystudentfee";
 
         $.ajax({
@@ -261,8 +280,21 @@ $(document).ready(function ($) {
             success: function (response) {
                 if (response.success === true) {
                     success(response.message);
-                    document.getElementById("feepaymentform").reset();
+                    var feePaymentId=response.payment_id;
+                    $("#print_id").html(feePaymentId);
+                    $("#print_date").html(new Date().toISOString().slice(0,10));
+                    $("#print_student_name").html($("#studentName").val());
+                    $("#print_paid_fee_in_words").html(toWords($("#paying_fee").val()));
+                    $("#print_paying_fee").html($("#paying_fee").val());
+                    $("#print_payment_mode").html($("input[name='payment_mode']:checked").val());
+                    $("#print_partial_full_payment").html(isPartial);
+                    $("#print_total_fee").html($("#total_fee").val());
+                    
                     $( "#modalclosebtn" ).trigger( "click" );
+                    $( "#printbtn" ).trigger( "click" );
+                    $( "#savebtn").prop("disabled", true);
+                    
+                    document.getElementById("feepaymentform").reset();
                 }else{
                      error("Fee Payment failed");
                 }
@@ -274,5 +306,41 @@ $(document).ready(function ($) {
         });
     });
 
+    var th = ['','Thousand','Million', 'Billion','Trillion'];
+    var dg = ['Zero','One','Two','Three','Four', 'Five','Six','Seven','Eight','Nine']; 
+    var tn = ['Ten','Eleven','Twelve','Thirteen', 'Fourteen','Fifteen','Sixteen', 'Seventeen','Eighteen','Nineteen']; 
+    var tw = ['Twenty','Thirty','Forty','Fifty', 'Sixty','Seventy','Eighty','Ninety']; 
     
+    function toWords(s){
+        s = s.toString(); 
+        s = s.replace(/[\, ]/g,'');
+        if (s != parseFloat(s))
+            return 'not a number'; 
+        var x = s.indexOf('.'); 
+        if (x == -1) x = s.length; 
+        if (x > 15) return 'too big';
+        var n = s.split(''); 
+        var str = ''; 
+        var sk = 0; 
+        for (var i=0; i < x; i++){
+            if ((x-i)%3==2) {
+                if (n[i] == '1') {
+                    str += tn[Number(n[i+1])] + ' '; i++; sk=1;
+                } else if (n[i]!=0) {
+                    str += tw[n[i]-2] + ' ';sk=1;
+                }
+            } else if (n[i]!=0) {
+                str += dg[n[i]] +' '; 
+                if ((x-i)%3==0) str += 'Hundred ';
+                sk=1;
+            } if ((x-i)%3==1) {
+                if (sk) str += th[(x-i-1)/3] + ' ';sk=0;
+            }
+        } if (x != s.length) {
+            var y = s.length;
+            str += 'point ';
+            for (var i=x+1; i<y; i++) str += dg[n[i]] +' ';
+        } 
+        return str.replace(/\s+/g,' ');
+    }
 });

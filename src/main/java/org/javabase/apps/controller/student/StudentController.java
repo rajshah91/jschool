@@ -126,7 +126,8 @@ public class StudentController {
 
         if (save) {
             response.put("success", true);
-            response.put("message", "Fee Mayment Sucess");
+            response.put("message", "Fee Payment Sucess");
+            response.put("payment_id", sf.getId());
             return response;
         } else {
             response.put("success", false);
