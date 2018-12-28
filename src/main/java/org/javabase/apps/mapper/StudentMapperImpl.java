@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.javabase.apps.entity.Student;
+import org.javabase.apps.entity.StudentFee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -81,6 +82,17 @@ public class StudentMapperImpl implements StudentMapper {
             System.out.println(e.getMessage());
             session.close();
             return 0;
+        }
+    }
+
+    @Override
+    public List<StudentFee> getStudentFeeHistory(Student student) {
+        try {
+            String hql = "FROM StudentFee sf WHERE sf.studentId.id=" + student.getId();
+            return (List<StudentFee>) hibernateTemplate.find(hql);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 }

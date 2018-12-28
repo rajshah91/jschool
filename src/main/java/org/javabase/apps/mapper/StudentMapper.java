@@ -2,6 +2,7 @@ package org.javabase.apps.mapper;
 
 import java.util.List;
 import org.javabase.apps.entity.Student;
+import org.javabase.apps.entity.StudentFee;
 
 public interface StudentMapper {
 
@@ -12,5 +13,7 @@ public interface StudentMapper {
     public double getTotalPaidFeeForStudent(int studentId, int courseId, int batchId);
 
     public double getTotalFeeToBePaidForStudentForCourse(int studentId, int courseId, int batchId);
+
+    public List<StudentFee> getStudentFeeHistory(Student student);
 
 }

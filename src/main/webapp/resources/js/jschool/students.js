@@ -5,24 +5,24 @@ $(document).ready(function ($) {
     studentDatatable();
     getAllCourse();
     loadCourseFee();
-    
-    $( "#savebtn").prop("disabled", true);
-    
+
+    $("#savebtn").prop("disabled", true);
+
     $('#search_field').select2({
         placeholder: "Select Field For Search"
     });
-    
+
     $("#search_value").on('input', function () {
         if ($("#search_field").val() !== "") {
             studentDatatable();
         }
     });
-    
+
     $("#paying_fee").on('change', function () {
-        if ($("#paying_fee").val() == "" || $("#paying_fee").val() ==0) {
-           $("#savebtn").prop("disabled", true);
-        }else{
-           $("#savebtn").prop("disabled", false); 
+        if ($("#paying_fee").val() == "" || $("#paying_fee").val() == 0) {
+            $("#savebtn").prop("disabled", true);
+        } else {
+            $("#savebtn").prop("disabled", false);
         }
     });
 
@@ -45,15 +45,15 @@ $(document).ready(function ($) {
     });
 
     printPage = function () {
-       var studentName= $("#studentName").val();
-       var batchName= $("#batchName").val();
-       var courseName= $("#courseName").val();
-       var enrollmentNumber= $("#enrollmentNumber").val();
-       var studentDetail="<b>"+studentName+"</b> ("+enrollmentNumber+")<br/>"+courseName+"  "+batchName;
-       var todayDate = new Date().toISOString().slice(0,10);
-  
+        var studentName = $("#studentName").val();
+        var batchName = $("#batchName").val();
+        var courseName = $("#courseName").val();
+        var enrollmentNumber = $("#enrollmentNumber").val();
+        var studentDetail = "<b>" + studentName + "</b> (" + enrollmentNumber + ")<br/>" + courseName + "  " + batchName;
+        var todayDate = new Date().toISOString().slice(0, 10);
+
 //        alert(toWords(20000)); 
-        
+
         $("#r1c1").html(studentDetail);
         $("#r1c2").html($("#paying_fee").val());
         $("#r1c3").html($("input[name='payment_mode']:checked").val());
@@ -73,7 +73,7 @@ $(document).ready(function ($) {
         var batchId = myDataJSON.b;
         var studentId = myDataJSON.id;
         var courseId = myDataJSON.c;
-        
+
         $("#total_fee").val("0");
         $("#remaining_fee").val("0");
         $("#discount").val("0");
@@ -84,13 +84,28 @@ $(document).ready(function ($) {
         $("#batchName").val("");
         $("#courseName").val("");
         $("#enrollmentNumber").val("");
-        
+
         $("#courseId").val(courseId);
         $("#batchId").val(batchId);
         $("#studentId").val(studentId);
 
         getRemainingFeeForStudent(studentId, courseId, batchId);
 
+    });
+
+
+    $(document).on("click", "#feehistorybtn", function () {
+        var myDataJSON = $(this).data('id');
+        var studentId = myDataJSON.id;
+        studentFeeHistoryDatatable(studentId);
+
+    });
+    
+    $(document).on("click", "#feedeletebtn", function () {
+        var myDataJSON = $(this).data('id');
+        var feePaymentId = myDataJSON.id;
+        var studentId = myDataJSON.studentId;
+        deleteStudentFeeRecord(feePaymentId,studentId);
     });
 
     function loadCourseFee() {
@@ -177,7 +192,7 @@ $(document).ready(function ($) {
                     title: 'City',
                     data: 'city'
                 }, {
-                    title: 'Button',
+                    title: '',
                     data: null,
                     render: function (data, type, row) {
                         var dataToSend = {};
@@ -186,6 +201,14 @@ $(document).ready(function ($) {
                         dataToSend["b"] = row.batchId;
 //                        console.log("JSON :" + JSON.stringify(dataToSend));
                         return "<button class='btn-primary' id='feebtn' data-id=" + JSON.stringify(dataToSend) + " data-toggle='modal' data-target='#feePayModal' data-whatever=''>Pay Fee</button>";
+                    }
+                }, {
+                    title: '',
+                    data: null,
+                    render: function (data, type, row) {
+                        var dataToSend = {};
+                        dataToSend["id"] = row.id;
+                        return "<button class='btn-primary' id='feehistorybtn' data-id=" + JSON.stringify(dataToSend) + " data-toggle='modal' data-target='#feepaymenthistory' data-whatever=''>View Fee History</button>";
                     }
                 }
             ],
@@ -211,7 +234,8 @@ $(document).ready(function ($) {
 
         });
 
-    };
+    }
+    ;
 
 
     function getRemainingFeeForStudent(studentId, courseId, batchId) {
@@ -235,20 +259,20 @@ $(document).ready(function ($) {
                     $("#discount").val(data.discount);
                     $("#remaining_fee").val(data.remainingFee);
                     $("#total_fee_paid").val(data.amountPaid);
-                    
+
                     $("#studentName").val(data.studentName);
                     $("#batchName").val(data.batchName);
                     $("#courseName").val(data.courseName);
                     $("#enrollmentNumber").val(data.enrollmentNumber);
-                    
-                    if(data.remainingFee == 0 || data.remainingFee == "0"){
-                        $( "#savebtn").prop("disabled", true);
-                        $( "#paying_fee").prop("disabled", true);
-                    }else{
-                        $( "#paying_fee").prop("disabled", false);
+
+                    if (data.remainingFee == 0 || data.remainingFee == "0") {
+                        $("#savebtn").prop("disabled", true);
+                        $("#paying_fee").prop("disabled", true);
+                    } else {
+                        $("#paying_fee").prop("disabled", false);
                     }
-                    
-                }else{
+
+                } else {
                     error(response.message);
                 }
             },
@@ -261,14 +285,14 @@ $(document).ready(function ($) {
 
     $("#savebtn").on('click', function () {
         var data = {};
-        data["studentId"] =  $("#studentId").val();
+        data["studentId"] = $("#studentId").val();
         data["courseId"] = $("#courseId").val();
         data["batchId"] = $("#batchId").val();
         data["amountPaid"] = $("#paying_fee").val();
         data["chequeNumber"] = $("#cheque_number").val();
         data["paymentMode"] = $("input[name='payment_mode']:checked").val();
-        
-        var isPartial= ($("#remaining_fee").val() - $("#paying_fee").val()) > 0 ? "Partial" : "Full";
+
+        var isPartial = ($("#remaining_fee").val() - $("#paying_fee").val()) > 0 ? "Partial" : "Full";
         var url = "student/paystudentfee";
 
         $.ajax({
@@ -280,23 +304,23 @@ $(document).ready(function ($) {
             success: function (response) {
                 if (response.success === true) {
                     success(response.message);
-                    var feePaymentId=response.payment_id;
+                    var feePaymentId = response.payment_id;
                     $("#print_id").html(feePaymentId);
-                    $("#print_date").html(new Date().toISOString().slice(0,10));
+                    $("#print_date").html(new Date().toISOString().slice(0, 10));
                     $("#print_student_name").html($("#studentName").val());
                     $("#print_paid_fee_in_words").html(toWords($("#paying_fee").val()));
                     $("#print_paying_fee").html($("#paying_fee").val());
                     $("#print_payment_mode").html($("input[name='payment_mode']:checked").val());
                     $("#print_partial_full_payment").html(isPartial);
                     $("#print_total_fee").html($("#total_fee").val());
-                    
-                    $( "#modalclosebtn" ).trigger( "click" );
-                    $( "#printbtn" ).trigger( "click" );
-                    $( "#savebtn").prop("disabled", true);
-                    
+
+                    $("#modalclosebtn").trigger("click");
+                    $("#printbtn").trigger("click");
+                    $("#savebtn").prop("disabled", true);
+
                     document.getElementById("feepaymentform").reset();
-                }else{
-                     error("Fee Payment failed");
+                } else {
+                    error("Fee Payment failed");
                 }
             },
             error: function (e) {
@@ -306,41 +330,128 @@ $(document).ready(function ($) {
         });
     });
 
-    var th = ['','Thousand','Million', 'Billion','Trillion'];
-    var dg = ['Zero','One','Two','Three','Four', 'Five','Six','Seven','Eight','Nine']; 
-    var tn = ['Ten','Eleven','Twelve','Thirteen', 'Fourteen','Fifteen','Sixteen', 'Seventeen','Eighteen','Nineteen']; 
-    var tw = ['Twenty','Thirty','Forty','Fifty', 'Sixty','Seventy','Eighty','Ninety']; 
-    
-    function toWords(s){
-        s = s.toString(); 
-        s = s.replace(/[\, ]/g,'');
-        if (s != parseFloat(s))
-            return 'not a number'; 
-        var x = s.indexOf('.'); 
-        if (x == -1) x = s.length; 
-        if (x > 15) return 'too big';
-        var n = s.split(''); 
-        var str = ''; 
-        var sk = 0; 
-        for (var i=0; i < x; i++){
-            if ((x-i)%3==2) {
-                if (n[i] == '1') {
-                    str += tn[Number(n[i+1])] + ' '; i++; sk=1;
-                } else if (n[i]!=0) {
-                    str += tw[n[i]-2] + ' ';sk=1;
+
+    function studentFeeHistoryDatatable(studentId) {
+
+        var tbl1 = $('#studentFeeHistory').dataTable({
+            "processing": true,
+            "destroy": true,
+            "responsive": true,
+            "ajax": {
+                "url": "student/getstudentfeehistory",
+                "type": "POST",
+                "data": function (d) {
+                    d.studentId = studentId;
                 }
-            } else if (n[i]!=0) {
-                str += dg[n[i]] +' '; 
-                if ((x-i)%3==0) str += 'Hundred ';
-                sk=1;
-            } if ((x-i)%3==1) {
-                if (sk) str += th[(x-i-1)/3] + ' ';sk=0;
+            },
+            "columns": [
+                { 
+                    data: null,
+                    sortable: false, 
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }  
+                },
+                {
+                    title: 'Mode of Payment',
+                    data: 'paymentMode'
+                }, {
+                    title: 'Cheque Number',
+                    data: 'chequeNumber'
+                }, {
+                    title: 'Amount',
+                    data: 'amountPaid'
+                },{
+                    title: 'Paid On',
+                    data: 'paymentDate'
+                },{
+                    title: '',
+                    data: null,
+                    render: function (data, type, row) {
+                        var dataToSend = {};
+                        dataToSend["id"] = row.id;
+                        dataToSend["studentId"] = row.studentId;
+                        return "<button class='btn-primary' id='feedeletebtn' data-id=" + JSON.stringify(dataToSend) + " data-toggle='modal' data-target='#' data-whatever=''>Undo</button>";
+                    }
+                }
+            ],
+            "dom": 'T<"clear">lfrtip'
+        });
+    };
+
+    function deleteStudentFeeRecord(feePaymentId,studentId) {
+        var url = "student/deletefeerecord";
+        var data = {};
+        data["feePaymentId"] = feePaymentId.toString();
+        
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: data,
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                if (response.success === true) {
+                    success(response.message);
+                    studentFeeHistoryDatatable(studentId);
+                } else {
+                    error(response.message);
+                }
+            },
+            error: function (e) {
+                console.log("ERROR: ", e);
+                error("Something went wrong");
             }
-        } if (x != s.length) {
+        });
+   };
+
+
+    var th = ['', 'Thousand', 'Million', 'Billion', 'Trillion'];
+    var dg = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+    var tn = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    var tw = ['Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+    function toWords(s) {
+        s = s.toString();
+        s = s.replace(/[\, ]/g, '');
+        if (s != parseFloat(s))
+            return 'not a number';
+        var x = s.indexOf('.');
+        if (x == -1)
+            x = s.length;
+        if (x > 15)
+            return 'too big';
+        var n = s.split('');
+        var str = '';
+        var sk = 0;
+        for (var i = 0; i < x; i++) {
+            if ((x - i) % 3 == 2) {
+                if (n[i] == '1') {
+                    str += tn[Number(n[i + 1])] + ' ';
+                    i++;
+                    sk = 1;
+                } else if (n[i] != 0) {
+                    str += tw[n[i] - 2] + ' ';
+                    sk = 1;
+                }
+            } else if (n[i] != 0) {
+                str += dg[n[i]] + ' ';
+                if ((x - i) % 3 == 0)
+                    str += 'Hundred ';
+                sk = 1;
+            }
+            if ((x - i) % 3 == 1) {
+                if (sk)
+                    str += th[(x - i - 1) / 3] + ' ';
+                sk = 0;
+            }
+        }
+        if (x != s.length) {
             var y = s.length;
             str += 'point ';
-            for (var i=x+1; i<y; i++) str += dg[n[i]] +' ';
-        } 
-        return str.replace(/\s+/g,' ');
+            for (var i = x + 1; i < y; i++)
+                str += dg[n[i]] + ' ';
+        }
+        return str.replace(/\s+/g, ' ');
     }
 });

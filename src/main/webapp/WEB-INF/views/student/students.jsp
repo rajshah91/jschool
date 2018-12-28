@@ -176,7 +176,7 @@
                                     <!--Fee Payment Receipt-->
                                 </h5>
                                 <!--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
+                                    <span aria-hidden="true">&times;</span>
                                                                 </button>-->
                             </div>
                             <div class="modal-body">
@@ -224,13 +224,13 @@
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             </u>&nbsp;&nbsp;&nbsp; by &nbsp;
                                             <u>
-                                                
+
                                                 <span id="print_payment_mode">Cash</span>
-                                               
+
                                             </u> 
-                                             &nbsp;   
-                                             in 
-                                                <span id="print_partial_full_payment">  Partial</span>
+                                            &nbsp;   
+                                            in 
+                                            <span id="print_partial_full_payment">  Partial</span>
                                             &nbsp; payment of fees
                                             <u>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -249,27 +249,27 @@
                                                     <li style="color: #285e8e">FEES PAID IS NON REFUNDABLE AND NON ADJUSTABLE</li>
                                                 </ul></td>
                                             <td><center>
-                                                <div style="color: #285e8e;border : solid #285e8e 2px;width: 70px;height: 70px;">
-                                                    
-                                                </div></center>
-                                            </td>
+                                            <div style="color: #285e8e;border : solid #285e8e 2px;width: 70px;height: 70px;">
+
+                                            </div></center>
+                                        </td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <div style="color: #285e8e;border : solid #285e8e 2px;border-radius: 25px; width: 120px;height:30px ;margin-left: 3%;margin-bottom: 3%">
-                                                   &nbsp;&nbsp;Rs.&nbsp;&nbsp;
-                                                   <span style="color: #9f191f;" id="print_paying_fee">20000</span>
-                                                   &nbsp;&nbsp;
+                                                    &nbsp;&nbsp;Rs.&nbsp;&nbsp;
+                                                    <span style="color: #9f191f;" id="print_paying_fee">20000</span>
+                                                    &nbsp;&nbsp;
                                                 </div>
                                             </td>
-                                            
+
                                             <td>
-                                            <span style="color: #285e8e;text-align: right;margin-bottom: 3%">
-                                                <center>For,GUJARAT INSTITUTE OF HOTEL MANAGEMENT </center>
-                                            </span>
+                                                <span style="color: #285e8e;text-align: right;margin-bottom: 3%">
+                                                    <center>For,GUJARAT INSTITUTE OF HOTEL MANAGEMENT </center>
+                                                </span>
                                             </td>
                                         </tr>
-                                       
+
                                     </table>
                                 </div>
 
@@ -289,6 +289,49 @@
                 <!---------------------------------------------Modal Fee Payment Receipt End-------------------------------------------->            
 
 
+
+                <!---------------------------------------------Modal Fee Payment History Start----------------------------------------->            
+
+
+                <div class="modal fade" id="feepaymenthistory" tabindex="-3" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" style="height: auto;width: 100%">
+                    <style>
+                        @page { size: auto;  margin: 5mm; }
+                    </style>
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <b><h4 class="modal-title" id="modalLabel">Fee Payment History</h4></b>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+
+
+
+                                <!-- =========================== Fee History div Start ======================== -->
+
+                                <div class="box-body table-responsive box box-primary" style="border : solid #285e8e 2px;" >
+
+                                    <table id="studentFeeHistory" class="display" style="width:100%">
+                                    </table>
+
+                                </div>
+
+                                <!-- =========================== Fee History div END ========================== -->
+
+                            </div>
+                            <div class="modal-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!---------------------------------------------Modal Fee Payment History End-------------------------------------------->            
 
 
 

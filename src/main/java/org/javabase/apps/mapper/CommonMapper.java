@@ -6,4 +6,6 @@ public interface CommonMapper {
     
     public Boolean saveObject(Object obj);
 
+    public Boolean deleteObject(Object obj);
+
 }

@@ -44,4 +44,17 @@ public class CommonMapperImpl implements CommonMapper {
         }
     }
 
+    @Override
+    @Transactional
+    public Boolean deleteObject(Object obj) {
+        try {
+            hibernateTemplate.delete(obj);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error in CommonMapperImpl.deleteObject : "+e.getMessage());
+            log.error(e.getMessage(), e);
+            return false;
+        }
+    }
+
 }

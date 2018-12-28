@@ -12,6 +12,7 @@ import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.Semester;
 import org.javabase.apps.entity.Student;
+import org.javabase.apps.entity.StudentFee;
 import org.javabase.apps.mapper.CourseMapper;
 import org.javabase.apps.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +117,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public double getTotalPaidFeeForStudent(int studentId, int courseId, int batchId) {
         return studentMapper.getTotalPaidFeeForStudent(studentId,courseId,batchId);
+    }
+
+    @Override
+    public List<StudentFee> getStudentFeeHistory(Student student) {
+        return studentMapper.getStudentFeeHistory(student);
     }
 
 }

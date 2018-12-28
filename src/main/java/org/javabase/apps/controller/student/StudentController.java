@@ -158,4 +158,60 @@ public class StudentController {
         response.put("data", courseFee);
         return response;
     }
+    
+    
+    @ResponseBody
+    @RequestMapping(value = "getstudentfeehistory", method = {RequestMethod.POST, RequestMethod.GET})
+    public Map<String, Object> loadStudentFeeHistory(@RequestParam("studentId") String studentId) {
+        
+        List<TempStudentFee> tempStudentFeeList = new ArrayList<>();
+        Map<String, Object> response = new HashMap<>();
+        
+        if (!MyUtils.isNullOrEmpty(studentId)) {
+            Student student = new Student();
+            student = (Student) commonService.getObjectById(student, Integer.parseInt(studentId));
+            if(student != null){
+                List<StudentFee> sfList=studentService.getStudentFeeHistory(student);
+                if(sfList != null && sfList.size()>0){
+                    for(StudentFee sf : sfList){
+                        TempStudentFee tsf=new TempStudentFee();
+                        tsf.setAmountPaid(sf.getAmountPaid());
+                        tsf.setChequeNumber(sf.getChequeNumber());
+                        tsf.setPaymentMode(sf.getPaymentMode());
+                        tsf.setId(sf.getId());
+                        tsf.setPaymentDate(String.valueOf(sf.getDataCreateTime()));
+                        tsf.setStudentId(studentId);
+                        tempStudentFeeList.add(tsf);
+                    }
+                }
+            }
+        }
+        response.put("success", true);
+        response.put("data", tempStudentFeeList);
+        return response;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "deletefeerecord", method = {RequestMethod.POST, RequestMethod.GET})
+    public Map<String, Object> deleteStudentFeeRecord(@RequestParam("feePaymentId") String feePaymentId) {
+        Map<String, Object> response = new HashMap<>();
+        boolean isSuccess=false;
+        if (!MyUtils.isNullOrEmpty(feePaymentId)) {
+            StudentFee studentFee = new StudentFee();
+            studentFee = (StudentFee) commonService.getObjectById(studentFee, Integer.parseInt(feePaymentId));
+            if(studentFee != null){
+                isSuccess=commonService.deleteObject(studentFee);
+            }
+        }
+        if (isSuccess) {
+            response.put("success", true);
+            response.put("message", "Fee Payment Undo Successful");
+            return response;
+        } else {
+            response.put("success", false);
+            response.put("error", true);
+            response.put("message", "Fee Payment Undo Failed");
+            return response;
+        }
+    }
 }

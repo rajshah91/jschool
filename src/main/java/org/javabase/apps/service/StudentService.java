@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import org.javabase.apps.dto.TempStudent;
 import org.javabase.apps.entity.Student;
+import org.javabase.apps.entity.StudentFee;
 
 
 public interface StudentService {
@@ -19,5 +20,7 @@ public interface StudentService {
     public double getTotalFeeToBePaidForStudentForCourse(int studentId, int courseId, int batchId);
     
     public double getTotalPaidFeeForStudent(int studentId, int courseId, int batchId);
+    
+    public List<StudentFee> getStudentFeeHistory(Student student);
 
 }

@@ -28,4 +28,9 @@ public class CommonServiceImpl implements CommonService {
         return commonMapper.saveObject(object);
     }
 
+    @Override
+    public Boolean deleteObject(Object obj) {
+        return commonMapper.deleteObject(obj);
+    }
+
 }
