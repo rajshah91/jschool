@@ -14,6 +14,7 @@
 	<ul class="treeview-menu">
 	  <li><a href='<c:url value="/dashboard/student/add"/>'><i class="fa fa-user"></i>Enroll Student</a></li>
 	  <li><a href='<c:url value="/dashboard/student"/>'><i class="fa fa-info-circle"></i>Student Information</a></li>
+          <li><a href='<c:url value="/dashboard/student/attendance"/>'><i class="fa fa-check-square-o"></i> <span>Student Attendance</span></a></li>
 	  <!-- <li><a href="#">Student Promotion</a></li> -->
 	</ul>
 </li>
@@ -74,8 +75,8 @@
                         <li><a href='<c:url value="/dashboard/courseFee"/>'><i class="fa fa-sitemap"></i> <span>Course Fee Mapping</span></a></li>
                     </ul>
                 </li>
-               
-                    
+                
+                        
 		<!--<li><a href='<c:url value="/dashboard/subject"/>'><i class="fa fa-link"></i>Subject </a></li>-->
 		<%-- <li><a href='<c:url value="/dashboard/classOnShift"/>'><i class="fa fa-link"></i>Class On Shift </a></li>
 		<li><a href='<c:url value="/dashboard/section"/>'><i class="fa fa-link"></i>Class Section</a></li>

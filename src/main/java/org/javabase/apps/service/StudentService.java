@@ -13,6 +13,8 @@ public interface StudentService {
     
     public Student convertTempObjectToMain(TempStudent tempStudent,Map<String,Object> objMap);
     
+    public Student getStudentByEnrollmentNumber(String enrollmentNumber);
+    
     public List<TempStudent> convertMainObjectToTemp(List<Student> student);
 
     public List<Student> getAllStudentsWithSearchCriteria(String searchType, String searchText);
@@ -22,5 +24,6 @@ public interface StudentService {
     public double getTotalPaidFeeForStudent(int studentId, int courseId, int batchId);
     
     public List<StudentFee> getStudentFeeHistory(Student student);
-
+    
+    public int deleteStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month);
 }

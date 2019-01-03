@@ -10,6 +10,7 @@
     <class>org.javabase.apps.entity.CourseSubject</class>
     <class>org.javabase.apps.entity.Student</class>
     <class>org.javabase.apps.entity.StudentFee</class>
+    <class>org.javabase.apps.entity.StudentAttendance</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jschool?zeroDateTimeBehavior=convertToNull"/>

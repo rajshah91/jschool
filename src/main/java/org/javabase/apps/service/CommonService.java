@@ -11,5 +11,7 @@ public interface CommonService {
 
     public Boolean saveObject(Object obj);
     
+    public Boolean saveOrUpdateObject(Object obj);
+    
     public Boolean deleteObject(Object obj);
 }

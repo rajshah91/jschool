@@ -48,5 +48,6 @@ Contributor(s):
     <property name="hibernate.connection.password">123</property>
     <property name="logging.level.org.hibernate.SQL">DEBUG</property>
     <property name="logging.level.org.hibernate.type">TRACE</property>
+    <property name="hibernate.dialect.storage_engine">innodb</property>
   </session-factory>
 </hibernate-configuration>

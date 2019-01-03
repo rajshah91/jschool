@@ -95,4 +95,33 @@ public class StudentMapperImpl implements StudentMapper {
             return null;
         }
     }
+
+    @Override
+    public Student getStudentByEnrollmentNumber(String enrollmentNumber) {
+        try {
+            String hql = "FROM Student s WHERE s.enrollmentNumber='" + enrollmentNumber+"'";
+            return (Student) hibernateTemplate.find(hql).get(0);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    @Override
+    @Transactional
+    public int deleteStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month){
+        Session session = hibernateTemplate.getSessionFactory().openSession();
+        int totalDeleteCount=0;
+        try {
+            Query hql=session.createQuery("DELETE FROM StudentAttendance sa WHERE  sa.courseId.id="+courseId+
+                    " AND sa.batchId.id="+batchId+" AND sa.semesterId.id="+semesterId+" AND sa.monthName='"+month+"' ");
+            totalDeleteCount=hql.executeUpdate();
+            return totalDeleteCount;
+        } catch (Exception e) {
+            session.close();
+            System.out.println("Error in CommonMapperImpl.deleteObject : "+e.getMessage());
+            e.printStackTrace();
+            return totalDeleteCount;
+        }
+    }
 }

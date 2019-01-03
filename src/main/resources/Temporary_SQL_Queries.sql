@@ -160,3 +160,65 @@ ALTER TABLE student_fee ADD CONSTRAINT fk_studfee_student FOREIGN KEY (student_i
 ALTER TABLE student_fee ADD CONSTRAINT fk_studfee_batch FOREIGN KEY (batch_id) REFERENCES batch (id) ON UPDATE CASCADE ON DELETE NO ACTION;
 ALTER TABLE student_fee ADD CONSTRAINT fk_studfee_course FOREIGN KEY (course_id) REFERENCES course (id) ON UPDATE CASCADE ON DELETE NO ACTION;
 -- ALTER TABLE student_fee ADD CONSTRAINT fk_studfee_semester FOREIGN KEY (semester_id) REFERENCES semester (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+
+----------------------------------------------------------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS student_attendance;
+
+CREATE TABLE student_attendance 
+(
+  id                 INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  batch_id           INT NOT NULL,
+  course_id          INT NOT NULL,
+  semester_id        INT NOT NULL,
+  student_id         INT NOT NULL,
+  month_name         VARCHAR(20),
+  `1`                VARCHAR(3),
+  `2`                VARCHAR(3),
+  `3`                VARCHAR(3),
+  `4`                VARCHAR(3),
+  `5`                VARCHAR(3),
+  `6`                VARCHAR(3),
+  `7`                VARCHAR(3),
+  `8`                VARCHAR(3),
+  `9`                VARCHAR(3),
+  `10`               VARCHAR(3),
+  `11`               VARCHAR(3),
+  `12`               VARCHAR(3),
+  `13`               VARCHAR(3),
+  `14`               VARCHAR(3),
+  `15`               VARCHAR(3),
+  `16`               VARCHAR(3),
+  `17`               VARCHAR(3),
+  `18`               VARCHAR(3),
+  `19`               VARCHAR(3),
+  `20`               VARCHAR(3),
+  `21`               VARCHAR(3),
+  `22`               VARCHAR(3),
+  `23`               VARCHAR(3),
+  `24`               VARCHAR(3),
+  `25`               VARCHAR(3),
+  `26`               VARCHAR(3),
+  `27`               VARCHAR(3),
+  `28`               VARCHAR(3),
+  `29`               VARCHAR(3),
+  `30`               VARCHAR(3),
+  `31`               VARCHAR(3),
+  total_days_in_month  INT DEFAULT 0,
+  total_holidays_in_month  INT DEFAULT 0,
+  total_working_days_in_month  INT DEFAULT 0,
+  total_present_count  INT DEFAULT 0,
+  total_absent_count  INT DEFAULT 0,
+  total_leave_count  INT DEFAULT 0,
+  data_update_time   TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+ENGINE = InnoDB;
+
+ALTER TABLE student_attendance ADD CONSTRAINT fk_studattendance_student FOREIGN KEY (student_id) REFERENCES student (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+
+ALTER TABLE student_attendance ADD CONSTRAINT fk_studattendance_batch FOREIGN KEY (batch_id) REFERENCES batch (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+
+ALTER TABLE student_attendance ADD CONSTRAINT fk_studattendance_course FOREIGN KEY (course_id) REFERENCES course (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+
+ALTER TABLE student_attendance ADD CONSTRAINT fk_studattendance_semester FOREIGN KEY (semester_id) REFERENCES semester (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+

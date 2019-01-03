@@ -124,4 +124,14 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.getStudentFeeHistory(student);
     }
 
+    @Override
+    public Student getStudentByEnrollmentNumber(String enrollmentNumber) {
+        return studentMapper.getStudentByEnrollmentNumber(enrollmentNumber);
+    }
+    
+    @Override
+    public int deleteStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month){
+        return studentMapper.deleteStudentAttendanceForGivenCriteria(courseId, batchId, semesterId, month);
+    }
+
 }

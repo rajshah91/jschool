@@ -43,7 +43,21 @@ public class CommonMapperImpl implements CommonMapper {
             return false;
         }
     }
+    
+    @Override
+    @Transactional
+    public Boolean saveOrUpdateObject(Object obj) {
+        try {
+            hibernateTemplate.saveOrUpdate(obj);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error in CommonMapperImpl.saveOrUpdateObject : "+e.getMessage());
+            log.error(e.getMessage(), e);
+            return false;
+        }
+    }
 
+    
     @Override
     @Transactional
     public Boolean deleteObject(Object obj) {

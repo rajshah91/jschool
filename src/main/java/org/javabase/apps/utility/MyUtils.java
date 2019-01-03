@@ -5,16 +5,26 @@
  */
 package org.javabase.apps.utility;
 
-import java.util.Iterator;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author raj.shah
  */
 public class MyUtils {
+
+    private final static String TEMP_UPLOAD_DIRECTORY_NAME = "TEMP_UPLOAD";
+    private final static String PERMANENT_UPLOAD_DIRECTORY_NAME = "FINAL_UPLOAD";
+
+    public enum FileType {
+        Temporary, Permanent
+    }
 
     public static boolean isNullOrEmpty(String str) {
         boolean isNullOrEmpty = false;
@@ -32,29 +42,50 @@ public class MyUtils {
         return str;
     }
 
-//    public static String CreateWhereClauseString(Map<String, Object> map) {
-//        StringBuilder sbr = new StringBuilder();
-//        if (map != null && map.size() > 0) {
-//            sbr.append(" WHERE ");
-//
-//            for (Map.Entry<String, Object> entry : map.keySet()) {
-//                Integer key = entry.getKey();
-//                String value = entry.getValue();
-//
-//                // do stuff
-//            }
-//            Set<String> keySet = map.keySet();
-//            Iterator itr = keySet.iterator();
-//            while (itr.hasNext()) {
-//                Object obj = itr.next();
-//
-//                if (obj instanceof String) {
-//                    sbr.append()
-//                } else if (obj instanceof Integer) {
-//
-//                }
-//            }
-//        }
-//        return sbr.toString();
-//    }
+    public static String getRootPath() {
+//         String rootPath = System.getProperty("catalina.home"); // C:\Program Files\Apache Software Foundation\apache-tomcat-9.0.10
+        String rootPath = System.getProperty("user.home");   //   C:\Users\raj.shah
+//              String rootPath = System.getProperty("user.dir");    //   C:\Program Files\Apache Software Foundation\apache-tomcat-9.0.10\bin
+        return rootPath;
+    }
+
+    public static Map<String, String> uploadFile(MultipartFile file,FileType fileType,String uploadedFileNewName) {
+        Map<String,String> myMap= new HashMap();
+        String newlyUploadedFileFullPath="";
+        boolean isUploadSuccess=false;
+        String message="";
+        String newFileName= "";
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+                String uploadDirectoryName= fileType == FileType.Temporary ? TEMP_UPLOAD_DIRECTORY_NAME : PERMANENT_UPLOAD_DIRECTORY_NAME;
+                newFileName= isNullOrEmpty(uploadedFileNewName) ? file.getOriginalFilename() : uploadedFileNewName ;
+                // Creating the directory to store file
+                File dir = new File(getRootPath() + File.separator + uploadDirectoryName);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
+                // Create the file on server
+                File serverFile = new File(dir.getAbsolutePath() + File.separator + newFileName);
+                try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
+                    stream.write(bytes);
+                }
+                
+                newlyUploadedFileFullPath=serverFile.getAbsolutePath();
+                isUploadSuccess=true;
+                message="File "+ uploadedFileNewName +" Uploaded Successfully";
+            } catch (Exception e) {
+                System.out.println("ERROR in File Upload : "+e.getMessage());
+                message="File Upload Failed.";
+            }
+        } else {
+            message="File Upload Failed because the file was empty.";
+        }
+        myMap.put("message", message);
+        myMap.put("success", String.valueOf(isUploadSuccess));
+        myMap.put("uploaded_file_full_path", newlyUploadedFileFullPath);
+        myMap.put("uploaded_file_name", newFileName);
+        return myMap;
+    }
 }

@@ -28,6 +28,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 public class Semester implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "semesterId")
+    private List<StudentAttendance> studentAttendanceList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -94,6 +97,15 @@ public class Semester implements Serializable {
     @Override
     public String toString() {
         return "org.javabase.apps.entity.Semester[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<StudentAttendance> getStudentAttendanceList() {
+        return studentAttendanceList;
+    }
+
+    public void setStudentAttendanceList(List<StudentAttendance> studentAttendanceList) {
+        this.studentAttendanceList = studentAttendanceList;
     }
     
 }

@@ -78,7 +78,7 @@ $(document).ready(function ($) {
         data["disabilityDetail"] = $("#disability_detail").val();
         data["discount"] = $("#discount").val();
         
-        url = "enrollstudent";
+        var url = "enrollstudent";
 
         $.ajax({
             type: "POST",

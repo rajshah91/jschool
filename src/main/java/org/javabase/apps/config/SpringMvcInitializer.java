@@ -9,9 +9,9 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-    private int maxUploadSizeInMb = 1 * 1024 * 1024; // 1 MB
+    private final int maxUploadSizeInMb = 5 * 1024 * 1024; // 30 MB
     
-	@Override
+    @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[] { AppConfig.class };
     }

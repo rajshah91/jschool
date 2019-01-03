@@ -28,6 +28,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 public class Batch implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "batchId")
+    private List<StudentAttendance> studentAttendanceList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -127,6 +130,15 @@ public class Batch implements Serializable {
     @Override
     public String toString() {
         return "org.javabase.apps.entity.Batch[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<StudentAttendance> getStudentAttendanceList() {
+        return studentAttendanceList;
+    }
+
+    public void setStudentAttendanceList(List<StudentAttendance> studentAttendanceList) {
+        this.studentAttendanceList = studentAttendanceList;
     }
     
 }

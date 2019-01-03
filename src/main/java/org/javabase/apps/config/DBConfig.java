@@ -70,6 +70,7 @@ public class DBConfig {
             properties.put("hibernate.hbm2ddl.import_files", "import.sql");
             properties.put("logging.level.org.hibernate.SQL", "DEBUG");
             properties.put("logging.level.org.hibernate.type", "TRACE");
+            properties.put("hibernate.dialect.storage_engine", "innodb");
             return properties;        
        }	
 }

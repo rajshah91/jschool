@@ -16,4 +16,8 @@ public interface StudentMapper {
 
     public List<StudentFee> getStudentFeeHistory(Student student);
 
+    public Student getStudentByEnrollmentNumber(String enrollmentNumber);
+    
+    public int deleteStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month);
+
 }
