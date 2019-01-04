@@ -2,6 +2,7 @@ package org.javabase.apps.mapper;
 
 import java.util.List;
 import org.javabase.apps.entity.Student;
+import org.javabase.apps.entity.StudentAttendance;
 import org.javabase.apps.entity.StudentFee;
 
 public interface StudentMapper {
@@ -19,5 +20,7 @@ public interface StudentMapper {
     public Student getStudentByEnrollmentNumber(String enrollmentNumber);
     
     public int deleteStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month);
+    
+    public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month);
 
 }

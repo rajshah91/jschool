@@ -3,10 +3,12 @@
  */
 package org.javabase.apps.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.javabase.apps.entity.Student;
+import org.javabase.apps.entity.StudentAttendance;
 import org.javabase.apps.entity.StudentFee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
@@ -122,6 +124,20 @@ public class StudentMapperImpl implements StudentMapper {
             System.out.println("Error in CommonMapperImpl.deleteObject : "+e.getMessage());
             e.printStackTrace();
             return totalDeleteCount;
+        }
+    }
+    
+    @Override
+    public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month){
+        List<StudentAttendance> salist=new ArrayList<>();
+        try {
+            String hql=" FROM StudentAttendance sa WHERE  sa.courseId.id="+courseId+
+                    " AND sa.batchId.id="+batchId+" AND sa.semesterId.id="+semesterId+" AND sa.monthName='"+month+"' ";
+            return (List<StudentAttendance>) hibernateTemplate.find(hql);
+        } catch (Exception e) {
+            System.out.println("Error in CommonMapperImpl.getStudentAttendanceForGivenCriteria : "+e.getMessage());
+            e.printStackTrace();
+            return salist;
         }
     }
 }

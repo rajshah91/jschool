@@ -20,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -80,69 +81,69 @@ public class StudentAttendance implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "month_name")
+    @Column(name = "month_name", length=20)
     private String monthName;
-    @Column(name = "a1")
+    @Column(name = "a1", length=3)
     private String a1;
-    @Column(name = "a2")
+    @Column(name = "a2", length=3)
     private String a2;
-    @Column(name = "a3")
+    @Column(name = "a3", length=3)
     private String a3;
-    @Column(name = "a4")
+    @Column(name = "a4", length=3)
     private String a4;
-    @Column(name = "a5")
+    @Column(name = "a5", length=3)
     private String a5;
-    @Column(name = "a6")
+    @Column(name = "a6", length=3)
     private String a6;
-    @Column(name = "a7")
+    @Column(name = "a7", length=3)
     private String a7;
-    @Column(name = "a8")
+    @Column(name = "a8", length=3)
     private String a8;
-    @Column(name = "a9")
+    @Column(name = "a9", length=3)
     private String a9;
-    @Column(name = "a10")
+    @Column(name = "a10", length=3)
     private String a10;
-    @Column(name = "a11")
+    @Column(name = "a11", length=3)
     private String a11;
-    @Column(name = "a12")
+    @Column(name = "a12", length=3)
     private String a12;
-    @Column(name = "a13")
+    @Column(name = "a13", length=3)
     private String a13;
-    @Column(name = "a14")
+    @Column(name = "a14", length=3)
     private String a14;
-    @Column(name = "a15")
+    @Column(name = "a15", length=3)
     private String a15;
-    @Column(name = "a16")
+    @Column(name = "a16", length=3)
     private String a16;
-    @Column(name = "a17")
+    @Column(name = "a17", length=3)
     private String a17;
-    @Column(name = "a18")
+    @Column(name = "a18", length=3)
     private String a18;
-    @Column(name = "a19")
+    @Column(name = "a19", length=3)
     private String a19;
-    @Column(name = "a20")
+    @Column(name = "a20", length=3)
     private String a20;
-    @Column(name = "a21")
+    @Column(name = "a21", length=3)
     private String a21;
-    @Column(name = "a22")
+    @Column(name = "a22", length=3)
     private String a22;
-    @Column(name = "a23")
+    @Column(name = "a23", length=3)
     private String a23;
-    @Column(name = "a24")
+    @Column(name = "a24", length=3)
     private String a24;
-    @Column(name = "a25")
+    @Column(name = "a25", length=3)
     private String a25;
-    @Column(name = "a26")
+    @Column(name = "a26", length=3)
     private String a26;
-    @Column(name = "a27")
+    @Column(name = "a27", length=3)
     private String a27;
-    @Column(name = "a28")
+    @Column(name = "a28", length=3)
     private String a28;
-    @Column(name = "a29")
+    @Column(name = "a29", length=3)
     private String a29;
-    @Column(name = "a30")
+    @Column(name = "a30", length=3)
     private String a30;
-    @Column(name = "a31")
+    @Column(name = "a31", length=3)
     private String a31;
     @Column(name = "total_days_in_month")
     private Integer totalDaysInMonth;
@@ -557,5 +558,29 @@ public class StudentAttendance implements Serializable {
     public String toString() {
         return "org.javabase.apps.entity.StudentAttendance[ id=" + id + " ]";
     }
+    
+    /*  These are only for getting setting other values..These are not saved into database*/
+    @Transient
+    private String studentName;
+    @Transient
+    private String enrollmentNumber;
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getEnrollmentNumber() {
+        return enrollmentNumber;
+    }
+
+    public void setEnrollmentNumber(String enrollmentNumber) {
+        this.enrollmentNumber = enrollmentNumber;
+    }
+    
+    
     
 }

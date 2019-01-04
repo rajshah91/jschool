@@ -10,7 +10,6 @@ import org.javabase.apps.dto.TempStudentFee;
 import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.CourseFee;
-import org.javabase.apps.entity.Semester;
 import org.javabase.apps.entity.Student;
 import org.javabase.apps.entity.StudentFee;
 import org.javabase.apps.service.CommonService;

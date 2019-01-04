@@ -8,16 +8,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.javabase.apps.dto.TempFileUpload;
 import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.Semester;
+import org.javabase.apps.entity.Student;
 import org.javabase.apps.entity.StudentAttendance;
 import org.javabase.apps.excel.ExcelReadHandler;
 import org.javabase.apps.service.BatchService;
@@ -28,13 +28,11 @@ import org.javabase.apps.utility.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 @RequestMapping(value = "dashboard/student")
@@ -49,7 +47,7 @@ public class StudentAttendanceController {
     @Autowired
     private CommonService commonService;
 
-    @RequestMapping(value ={ "/attendance","/attendance?*"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = {"/attendance", "/attendance?*"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String studentAttendancePage() {
         return "student/studentAttendance";
     }
@@ -92,7 +90,7 @@ public class StudentAttendanceController {
         Map<String, Object> response = new HashMap<>();
 
         boolean success = false;
-        boolean isAnyRecordFailed=false;
+        boolean isAnyRecordFailed = false;
         boolean fileUploadsuccess = false;
         String message = "";
         String fileUploadMessage = "";
@@ -119,19 +117,54 @@ public class StudentAttendanceController {
                     erd.setStudentService(studentService);
                     List<StudentAttendance> studAttendance = erd.handleStudentAttendanceFile(uploadedFileName, uploadedFileFullPath, course, batch, semester, month);
                     if (studAttendance != null && studAttendance.size() > 0) {
-                        int deleted=studentService.deleteStudentAttendanceForGivenCriteria(course.getId(), batch.getId(), semester.getId(), month);
-                        for(StudentAttendance sa : studAttendance){
-                                success=commonService.saveObject(sa);
-                                if(!success){
-                                    isAnyRecordFailed=true;
-                                }
+                        int deleted = studentService.deleteStudentAttendanceForGivenCriteria(course.getId(), batch.getId(), semester.getId(), month);
+                        for (StudentAttendance sa : studAttendance) {
+                            success = commonService.saveObject(sa);
+                            if (!success) {
+                                isAnyRecordFailed = true;
+                            }
                         }
                     }
                 }
             }
         }
 
-        return "redirect:/dashboard/student/attendance?success="+!isAnyRecordFailed;
+        return "redirect:/dashboard/student/attendance?success=" + !isAnyRecordFailed;
     }
 
+    /*
+    
+    Student Attendance view related
+    
+     */
+    @RequestMapping(value = {"/viewAttendance"}, method = {RequestMethod.GET, RequestMethod.POST})
+    public String viewStudentAttendancePage() {
+        return "student/viewStudentAttendance";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/viewAttendance/getStudentAttendance", method = {RequestMethod.POST, RequestMethod.GET})
+    public Map<String, Object> getStudentAttendance(@RequestParam("batchId") String batchId, @RequestParam("semesterId") String semesterId,
+            @RequestParam("courseId") String courseId, @RequestParam("month") String month) {
+
+        Map<String, Object> response = new HashMap<>();
+        List<StudentAttendance> studentAttendanceList = new ArrayList<>();
+
+        if (!MyUtils.isNullOrEmpty(month) && !MyUtils.isNullOrEmpty(batchId) && !MyUtils.isNullOrEmpty(courseId) && !MyUtils.isNullOrEmpty(semesterId)) {
+            studentAttendanceList = studentService.getStudentAttendanceForGivenCriteria(Integer.parseInt(courseId), Integer.parseInt(batchId), Integer.parseInt(semesterId), month);
+        }
+
+        if (studentAttendanceList != null && !studentAttendanceList.isEmpty()) {
+            for (StudentAttendance sa : studentAttendanceList) {
+                Student student = sa.getStudentId();
+                sa.setStudentName(student.getFirstName()+" "+student.getLastName());
+                sa.setEnrollmentNumber(student.getEnrollmentNumber());
+            }
+        }
+
+        response.put("success", true);
+        response.put("message", "Student Attendance Load Sucess.");
+        response.put("data", studentAttendanceList);
+        return response;
+    }
 }

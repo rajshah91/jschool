@@ -12,6 +12,7 @@ import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.Semester;
 import org.javabase.apps.entity.Student;
+import org.javabase.apps.entity.StudentAttendance;
 import org.javabase.apps.entity.StudentFee;
 import org.javabase.apps.mapper.CourseMapper;
 import org.javabase.apps.mapper.StudentMapper;
@@ -132,6 +133,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public int deleteStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month){
         return studentMapper.deleteStudentAttendanceForGivenCriteria(courseId, batchId, semesterId, month);
+    }
+    
+    @Override
+    public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month){
+        return studentMapper.getStudentAttendanceForGivenCriteria(courseId, batchId, semesterId, month);
     }
 
 }

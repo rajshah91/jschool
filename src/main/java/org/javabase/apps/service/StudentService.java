@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import org.javabase.apps.dto.TempStudent;
 import org.javabase.apps.entity.Student;
+import org.javabase.apps.entity.StudentAttendance;
 import org.javabase.apps.entity.StudentFee;
 
 
@@ -26,4 +27,6 @@ public interface StudentService {
     public List<StudentFee> getStudentFeeHistory(Student student);
     
     public int deleteStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month);
+    
+    public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month);
 }

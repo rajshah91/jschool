@@ -2,8 +2,23 @@
 <t:dashboard>
     <jsp:attribute name="header">
         <!-- DATA TABES SCRIPT -->
-        <script src=<c:url value="/resources/js/jschool/studentAttendance.js"/> type="text/javascript"></script>
+        <script src=<c:url value="/resources/js/jschool/viewStudentAttendance.js"/> type="text/javascript"></script>
+
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js" type="text/javascript"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js" type="text/javascript"></script>
+
+        <link href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel="stylesheet" type="text/css" />
+        <link href='https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css' rel="stylesheet" type="text/css" />
+
+        <style>
+            .dataTables_scrollHeadInner {
+                width:100% !important;
+                padding: 0 !important;
+            }
+        </style>
     </jsp:attribute>
+
     <jsp:body>
         <div class="row">
             <div class="col-md-12">
@@ -11,11 +26,11 @@
                     <div class="box-header with-border">
                         <div class="box-title">
                             <span><i class="fa fa-check-circle"></i>
-                                Student Attendance</span>            	
+                                Student Attendance Detail</span>            	
                         </div>
                     </div>
                     <div class="box-body">
-                        <form name="student_attendance_form" action="uploadStudentAttendance" method="post" class="form-horizontal" id="student_attendance_form" enctype="multipart/form-data">
+                        <form name="student_attendance_form" action="" method="post" class="form-horizontal" id="student_attendance_form" enctype="multipart/form-data">
                             <div class="form-group">
                                 <input type="hidden" id="csrfToken" value="${_csrf.token}"/>
                                 <input type="hidden" id="csrfHeader" value="${_csrf.headerName}"/>
@@ -70,43 +85,24 @@
                                     </select>
 
                                 </div>
-                                <input type="button" value="Download Sample File" name="sample_file_download" id="sample_file_download" class="btn btn-warning">
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="semester">Select File To Upload<span class="require-field">*</span></label>
-                                <div class="col-sm-3 ">
-                                    <input type="file" name="file"  class="form-control z-depth-1 " id="file" >
-                                </div>
                             </div>
 
                             <div class="col-sm-offset-2 col-sm-8">
-                                <input type="submit" value="Upload Attendance" name="save_student" class="btn btn-success">
+                                <input type="submit" value="View Attendance" name="view_attendance" class="btn btn-success">
                             </div>
 
 
                         </form>
-                            <br><br/>
-                            <div>
-                                <h3><b>Note for Uploading Sheet :</b></h3>
-                                <ul>
-                                    <li>Do not change the sheet format</li>
-                                    <li>Fill your details in the exported sheet for specified month</li>
-                                    <li>Do not add any extra column into sheet</li>
-                                    <li>Remove extra date column from Sheet
-                                        <br/>Ex. 29 from February month Sheet if it is non-leap year.</li>
-                                    <li>If you are uploading partial attendance of month,then remove extra date columns from Sheet.
-                                        <br/>Ex. if you are uploading attendance of January month and upto data 8th then, remove 9 to 31 date column from sheet.</li>
-                                    <li>Do not fill empty values in sheet.Use below values for filling Attendance Sheet.
-                                        <ul><b>
-                                            <li style="color: red">Absent  : A</li>
-                                            <li style="color: green">Present : P</li>
-                                            <li style="color: greenyellow">Holiday : H</li>
-                                            <li style="color: blue">Leave   : L</li></b>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
+
+
+                    </div>
+
+                    <!-- =========================== Search Datatable Start ======================== -->
+                    <div class="box-body">
+                        <div class="box-body table-responsive">
+                            <table id="studentAttendanceTable" class="table table-striped table-bordered cell-border display"  style="width:100%">
+                            </table>
+                        </div><!-- /.box-body -->
                     </div>
                 </div>
             </div>
