@@ -106,37 +106,17 @@
                                 </div>
                             </div>
                             
-                            
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="address">Address<span class="require-field">*</span></label>
-                                <div class="col-sm-8">
-                                    <input id="address" class="form-control validate[required]" type="text" name="addressLine1" value="" placeholder="House No , Society/Flat Name , Street , Location">
+                                <div class="col-sm-8 shadow-textarea">
+                                    <textarea class="form-control z-depth-1 validate[required]" id="address" name="address" rows="3" placeholder="Student Full Address"></textarea>
                                 </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="city"></label>
-                                <div class="col-sm-2">
-                                    <input id="city" class="form-control validate[required]" type="text" name="city" value=""  placeholder="City">
-                                </div>
-                                <div class="col-sm-2">
-                                    <input id="state" class="form-control validate[required]" type="text" name="state" value=""  placeholder="State">
-                                </div>
-                                <div class="col-sm-2">
-                                    <input id="country" class="form-control validate[required]" type="text" name="country" value=""  placeholder="Country">
-                                </div>
-                                
-                                <div class="col-sm-2">
-                                    <input id="pincode" class="form-control validate[required]" type="text" name="pincode" value=""  placeholder="Pincode">
-                                </div>
-                                
                             </div>
                             
                             
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="mobile_number">Mobile Number<span class="require-field">*</span></label>
                                 <div class="col-sm-2">
-
                                     <input type="text" readonly value="+91" class="form-control text-input" name="phonecode">
                                 </div>
                                 <div class="col-sm-6">

@@ -61,11 +61,7 @@ $(document).ready(function ($) {
         data["gender"] = $("input[name='gender']:checked").val();
         data["birthDate"] = $("#birth_date").val();
         data["enrollmentDate"] = $("#enrollment_date").val();
-        data["addressLine1"] = $("#address").val();
-        data["city"] = $("#city").val();
-        data["state"] = $("#state").val();
-        data["country"] = $("#country").val();
-        data["pincode"] = $("#pincode").val();
+        data["address"] = $("#address").val();
         data["mobileNumber"] = $("#mobile_number").val();
         data["emailId"] = $("#email").val();
         data["guardianFullName"] = $("#guardian_full_name").val();
@@ -94,7 +90,7 @@ $(document).ready(function ($) {
                     document.getElementById("student_form").reset();
                     $('#courseCombo').val("").trigger('change');
                     $('#batchCombo').val("").trigger('change');
-        data["batchId"] = $("#batchCombo").val();
+                    $("#password").val(generateRandomPassword());
                 }else{
                     error(message);
                 }

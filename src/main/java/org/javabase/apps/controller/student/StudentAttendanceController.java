@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.javabase.apps.dto.TempStudentAttendance;
 import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.Semester;
@@ -149,22 +150,19 @@ public class StudentAttendanceController {
 
         Map<String, Object> response = new HashMap<>();
         List<StudentAttendance> studentAttendanceList = new ArrayList<>();
+        List<TempStudentAttendance> tempstudentAttendanceList = new ArrayList<>();
 
         if (!MyUtils.isNullOrEmpty(month) && !MyUtils.isNullOrEmpty(batchId) && !MyUtils.isNullOrEmpty(courseId) && !MyUtils.isNullOrEmpty(semesterId)) {
             studentAttendanceList = studentService.getStudentAttendanceForGivenCriteria(Integer.parseInt(courseId), Integer.parseInt(batchId), Integer.parseInt(semesterId), month);
         }
 
         if (studentAttendanceList != null && !studentAttendanceList.isEmpty()) {
-            for (StudentAttendance sa : studentAttendanceList) {
-                Student student = sa.getStudentId();
-                sa.setStudentName(student.getFirstName()+" "+student.getLastName());
-                sa.setEnrollmentNumber(student.getEnrollmentNumber());
-            }
+            tempstudentAttendanceList=studentService.convertStudentAttendanceObjectToTemp(studentAttendanceList);
         }
-
+        
         response.put("success", true);
         response.put("message", "Student Attendance Load Sucess.");
-        response.put("data", studentAttendanceList);
+        response.put("data", tempstudentAttendanceList);
         return response;
     }
 }

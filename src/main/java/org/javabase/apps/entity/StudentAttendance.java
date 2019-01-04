@@ -559,28 +559,28 @@ public class StudentAttendance implements Serializable {
         return "org.javabase.apps.entity.StudentAttendance[ id=" + id + " ]";
     }
     
-    /*  These are only for getting setting other values..These are not saved into database*/
-    @Transient
-    private String studentName;
-    @Transient
-    private String enrollmentNumber;
-
-    public String getStudentName() {
-        return studentName;
-    }
-
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public String getEnrollmentNumber() {
-        return enrollmentNumber;
-    }
-
-    public void setEnrollmentNumber(String enrollmentNumber) {
-        this.enrollmentNumber = enrollmentNumber;
-    }
-    
-    
+//    /*  These are only for getting setting other values..These are not saved into database*/
+//    @Transient
+//    private String studentName;
+//    @Transient
+//    private String enrollmentNumber;
+//
+//    public String getStudentName() {
+//        return studentName;
+//    }
+//
+//    public void setStudentName(String studentName) {
+//        this.studentName = studentName;
+//    }
+//
+//    public String getEnrollmentNumber() {
+//        return enrollmentNumber;
+//    }
+//
+//    public void setEnrollmentNumber(String enrollmentNumber) {
+//        this.enrollmentNumber = enrollmentNumber;
+//    }
+//    
+//    
     
 }

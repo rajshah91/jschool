@@ -153,7 +153,7 @@ $(document).ready(function ($) {
         var tbl = $('#studentTable').dataTable({
             "processing": true,
             "destroy": true,
-            "responsive": true,
+//            "responsive": true,
 //            "serverSide": true,
             "ajax": {
                 "url": "student/loadallstudents",
@@ -188,9 +188,6 @@ $(document).ready(function ($) {
                 }, {
                     title: 'Email',
                     data: 'emailId'
-                }, {
-                    title: 'City',
-                    data: 'city'
                 }, {
                     title: '',
                     data: null,

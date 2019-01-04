@@ -45,21 +45,21 @@ public class Student implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "enrollment_number")
+    @Column(name = "enrollment_number", length=30)
     private String enrollmentNumber;
     @Basic(optional = false)
-    @Column(name = "first_name")
+    @Column(name = "first_name", length=50)
     private String firstName;
-    @Column(name = "middle_name")
+    @Column(name = "middle_name", length=50)
     private String middleName;
     @Basic(optional = false)
-    @Column(name = "last_name")
+    @Column(name = "last_name", length=50)
     private String lastName;
     @Basic(optional = false)
-    @Column(name = "gender")
+    @Column(name = "gender", length=10)
     private String gender;
     @Basic(optional = false)
-    @Column(name = "qualification")
+    @Column(name = "qualification", length=80)
     private String qualification;
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
@@ -67,31 +67,23 @@ public class Student implements Serializable {
     @Column(name = "enrollment_date")
     @Temporal(TemporalType.DATE)
     private Date enrollmentDate;
-    @Column(name = "address_line1")
-    private String addressLine1;
-    @Column(name = "city")
-    private String city;
-    @Column(name = "state")
-    private String state;
-    @Column(name = "country")
-    private String country;
-    @Column(name = "pincode")
-    private String pincode;
-    @Column(name = "mobile_number")
+    @Column(name = "address", length=700)
+    private String address;
+    @Column(name = "mobile_number", length=20)
     private String mobileNumber;
-    @Column(name = "email_id")
+    @Column(name = "email_id", length=80)
     private String emailId;
-    @Column(name = "guardian_full_name")
+    @Column(name = "guardian_full_name", length=100)
     private String guardianFullName;
-    @Column(name = "guardian_full_address")
+    @Column(name = "guardian_full_address", length=700)
     private String guardianFullAddress;
-    @Column(name = "guardian_mobile_number")
+    @Column(name = "guardian_mobile_number", length=20)
     private String guardianMobileNumber;
-    @Column(name = "blood_group")
+    @Column(name = "blood_group", length=20)
     private String bloodGroup;
-    @Column(name = "disability")
+    @Column(name = "disability", length=10)
     private String disability;
-    @Column(name = "disability_detail")
+    @Column(name = "disability_detail", length=200)
     private String disabilityDetail;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "discount")
@@ -201,46 +193,14 @@ public class Student implements Serializable {
         this.enrollmentDate = enrollmentDate;
     }
 
-    public String getAddressLine1() {
-        return addressLine1;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddressLine1(String addressLine1) {
-        this.addressLine1 = addressLine1;
+    public void setAddress(String address) {
+        this.address = address;
     }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getPincode() {
-        return pincode;
-    }
-
-    public void setPincode(String pincode) {
-        this.pincode = pincode;
-    }
-
+    
     public String getMobileNumber() {
         return mobileNumber;
     }
