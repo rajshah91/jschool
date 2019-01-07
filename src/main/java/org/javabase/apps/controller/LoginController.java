@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.javabase.apps.entity.Role;
+import org.javabase.apps.entity.Student;
 import org.javabase.apps.entity.User;
+import org.javabase.apps.service.StudentService;
 import org.javabase.apps.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +32,9 @@ public class LoginController {
 	
 	@Autowired
 	UserService userservice;
-	
+	@Autowired
+        private StudentService studentService;
+    
 	@Autowired
 	HttpSession session;
 	
@@ -44,6 +48,13 @@ public class LoginController {
 		
 	    String username = authentication.getName();
 		User user = userservice.getUserByUsername(username);
+                
+                if(user != null && user.getRole() !=null && user.getRole().getRoleName().equalsIgnoreCase("student")){
+                    Student stud=studentService.getStudentByMobileNumber(username);
+                    if(stud != null){
+                        session.setAttribute("studentId", stud.getId());
+                    }
+                }
 		 
 		log.debug("user {}", user.getRole().getRoleName());
 		session.setAttribute("user", user);
@@ -54,7 +65,7 @@ public class LoginController {
 	@ResponseBody
 	@RequestMapping(value="/registration", method = RequestMethod.POST)
 	public Map<String, Object> registration(@RequestBody User user) {
-		Map<String, Object> response= new HashMap<String, Object>();
+		Map<String, Object> response= new HashMap<>();
         Role role = new Role();
         role.setRoleId(1);
 		user.setCreateDate(new Date());

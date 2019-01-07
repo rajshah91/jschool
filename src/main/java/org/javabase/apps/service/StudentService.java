@@ -19,6 +19,8 @@ public interface StudentService {
     
     public Student getStudentByEnrollmentNumber(String enrollmentNumber);
     
+    public Student getStudentByMobileNumber(String mobileNumber);
+    
     public List<TempStudent> convertMainObjectToTemp(List<Student> student);
 
     public List<Student> getAllStudentsWithSearchCriteria(String searchType, String searchText);
@@ -32,4 +34,6 @@ public interface StudentService {
     public int deleteStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month);
     
     public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month);
+    
+    public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int studentId);
 }

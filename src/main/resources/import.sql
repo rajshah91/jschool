@@ -4,6 +4,7 @@
 -- === Role Preload Insert ==
 -- ==========================
 INSERT INTO role(role_name, display_name, description) VALUES ('admin', 'Admin', 'Role Define For Administrative task');
+INSERT INTO role(role_name, display_name, description) VALUES ('student', 'Student', 'Role Define For Student task');
 
 -- ==========================
 -- === User Preload Insert ==

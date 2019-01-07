@@ -108,6 +108,17 @@ public class StudentMapperImpl implements StudentMapper {
             return null;
         }
     }
+
+    @Override
+    public Student getStudentByMobileNumber(String mobileNumber) {
+        try {
+            String hql = "FROM Student s WHERE s.mobileNumber='" + mobileNumber+"'";
+            return (Student) hibernateTemplate.find(hql).get(0);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
     
     @Override
     @Transactional
@@ -133,6 +144,19 @@ public class StudentMapperImpl implements StudentMapper {
         try {
             String hql=" FROM StudentAttendance sa WHERE  sa.courseId.id="+courseId+
                     " AND sa.batchId.id="+batchId+" AND sa.semesterId.id="+semesterId+" AND sa.monthName='"+month+"' ";
+            return (List<StudentAttendance>) hibernateTemplate.find(hql);
+        } catch (Exception e) {
+            System.out.println("Error in CommonMapperImpl.getStudentAttendanceForGivenCriteria : "+e.getMessage());
+            e.printStackTrace();
+            return salist;
+        }
+    }
+    
+    @Override
+    public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int studentId){
+        List<StudentAttendance> salist=new ArrayList<>();
+        try {
+            String hql=" FROM StudentAttendance sa WHERE  sa.studentId.id="+studentId;
             return (List<StudentAttendance>) hibernateTemplate.find(hql);
         } catch (Exception e) {
             System.out.println("Error in CommonMapperImpl.getStudentAttendanceForGivenCriteria : "+e.getMessage());

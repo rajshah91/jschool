@@ -44,7 +44,7 @@ public class User implements java.io.Serializable {
 	private String firstName;
 	private String lastName;
 	private Date lastLogin;
-	private Set<UserPermission> userPermissions = new HashSet<UserPermission>(0);
+	private Set<UserPermission> userPermissions = new HashSet<>(0);
 	private Role role;
 	private UserInformation userInformation;
 

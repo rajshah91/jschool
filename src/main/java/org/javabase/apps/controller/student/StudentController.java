@@ -39,6 +39,11 @@ public class StudentController {
     public String studentPage() {
         return "student/students";
     }
+    
+    @RequestMapping(method = {RequestMethod.GET,RequestMethod.POST},value = {"/viewFeeToStudent"})
+    public String viewFeePageToStudent() {
+        return "student/viewFeeToStudent";
+    }
 
     @ResponseBody
     @RequestMapping(value = "loadallstudents", method = {RequestMethod.POST, RequestMethod.GET})
@@ -160,7 +165,7 @@ public class StudentController {
     
     
     @ResponseBody
-    @RequestMapping(value = "getstudentfeehistory", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = {"getstudentfeehistory", "viewFeeDetailStudent"}, method = {RequestMethod.POST, RequestMethod.GET})
     public Map<String, Object> loadStudentFeeHistory(@RequestParam("studentId") String studentId) {
         
         List<TempStudentFee> tempStudentFeeList = new ArrayList<>();

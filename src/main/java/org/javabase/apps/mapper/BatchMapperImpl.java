@@ -66,4 +66,15 @@ public class BatchMapperImpl implements BatchMapper {
         }
     }
 
+    @Override
+    public Batch getBatchByName(String batchName) {
+        try {
+            String hql = "FROM Batch b WHERE b.batch = '" + batchName + "'";
+            return (Batch) hibernateTemplate.find(hql).get(0);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
 }

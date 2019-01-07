@@ -19,8 +19,12 @@ public interface StudentMapper {
 
     public Student getStudentByEnrollmentNumber(String enrollmentNumber);
     
+    public Student getStudentByMobileNumber(String mobileNumber);
+    
     public int deleteStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month);
     
     public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month);
+    
+    public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int studentId);
 
 }

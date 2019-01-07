@@ -11,4 +11,6 @@ public interface BatchMapper {
 
     public Boolean addBatch(Batch batch);
 
+    public Batch getBatchByName(String batchName);
+
 }

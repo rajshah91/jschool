@@ -35,5 +35,10 @@ public class BatchServiceImpl implements BatchService {
     public Boolean addBatch(Batch batch) {
         return batchMapper.addBatch(batch);
     }
+    
+    @Override
+    public Batch getBatchByName(String batchName) {
+        return batchMapper.getBatchByName(batchName);
+    }
 
 }

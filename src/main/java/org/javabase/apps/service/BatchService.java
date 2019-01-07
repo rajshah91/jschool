@@ -16,5 +16,7 @@ public interface BatchService {
     public List<Batch> getAllBatch();
 
     public Boolean addBatch(Batch batch);
+    
+    public Batch getBatchByName(String batchName);
 
 }

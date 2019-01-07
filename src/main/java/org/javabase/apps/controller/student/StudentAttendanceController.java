@@ -52,6 +52,16 @@ public class StudentAttendanceController {
     public String studentAttendancePage() {
         return "student/studentAttendance";
     }
+    
+    @RequestMapping(value = {"/viewAttendance"}, method = {RequestMethod.GET, RequestMethod.POST})
+    public String viewStudentAttendancePage() {
+        return "student/viewStudentAttendance";
+    }
+
+    @RequestMapping(value = {"/viewAttendanceToStudent", "/viewAttendanceToStudent?*"}, method = {RequestMethod.GET, RequestMethod.POST})
+    public String AttendanceViewToStudentPage() {
+        return "student/viewAttendanceToStudent";
+    }
 
     @RequestMapping(value = "downloadsamplefile", method = {RequestMethod.GET, RequestMethod.POST})
     public void studentAttendanceSampleFileDownload(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -133,16 +143,6 @@ public class StudentAttendanceController {
         return "redirect:/dashboard/student/attendance?success=" + !isAnyRecordFailed;
     }
 
-    /*
-    
-    Student Attendance view related
-    
-     */
-    @RequestMapping(value = {"/viewAttendance"}, method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewStudentAttendancePage() {
-        return "student/viewStudentAttendance";
-    }
-
     @ResponseBody
     @RequestMapping(value = "/viewAttendance/getStudentAttendance", method = {RequestMethod.POST, RequestMethod.GET})
     public Map<String, Object> getStudentAttendance(@RequestParam("batchId") String batchId, @RequestParam("semesterId") String semesterId,
@@ -154,6 +154,28 @@ public class StudentAttendanceController {
 
         if (!MyUtils.isNullOrEmpty(month) && !MyUtils.isNullOrEmpty(batchId) && !MyUtils.isNullOrEmpty(courseId) && !MyUtils.isNullOrEmpty(semesterId)) {
             studentAttendanceList = studentService.getStudentAttendanceForGivenCriteria(Integer.parseInt(courseId), Integer.parseInt(batchId), Integer.parseInt(semesterId), month);
+        }
+
+        if (studentAttendanceList != null && !studentAttendanceList.isEmpty()) {
+            tempstudentAttendanceList=studentService.convertStudentAttendanceObjectToTemp(studentAttendanceList);
+        }
+        
+        response.put("success", true);
+        response.put("message", "Student Attendance Load Sucess.");
+        response.put("data", tempstudentAttendanceList);
+        return response;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/viewAttendanceToStudent/getStudentAttendance", method = {RequestMethod.POST, RequestMethod.GET})
+    public Map<String, Object> getAttendanceOfStudent(@RequestParam("studentId") String studentId) {
+
+        Map<String, Object> response = new HashMap<>();
+        List<StudentAttendance> studentAttendanceList = new ArrayList<>();
+        List<TempStudentAttendance> tempstudentAttendanceList = new ArrayList<>();
+
+        if (!MyUtils.isNullOrEmpty(studentId)) {
+            studentAttendanceList = studentService.getStudentAttendanceForGivenCriteria(Integer.parseInt(studentId));
         }
 
         if (studentAttendanceList != null && !studentAttendanceList.isEmpty()) {

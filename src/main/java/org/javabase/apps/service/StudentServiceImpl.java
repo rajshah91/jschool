@@ -187,6 +187,11 @@ public class StudentServiceImpl implements StudentService {
     }
     
     @Override
+    public Student getStudentByMobileNumber(String mobileNumber) {
+        return studentMapper.getStudentByMobileNumber(mobileNumber);
+    }
+    
+    @Override
     public int deleteStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month){
         return studentMapper.deleteStudentAttendanceForGivenCriteria(courseId, batchId, semesterId, month);
     }
@@ -194,6 +199,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month){
         return studentMapper.getStudentAttendanceForGivenCriteria(courseId, batchId, semesterId, month);
+    }
+    
+    @Override
+    public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int studentId){
+        return studentMapper.getStudentAttendanceForGivenCriteria(studentId);
     }
 
 }
