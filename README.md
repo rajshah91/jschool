@@ -13,7 +13,7 @@ use this sample change your own style.
   6. jquery 2.1.14
   
 #Developer: 
-  Saurav Wahid <swahidfx@gmail.com>
+  Raj Shah <rajshah131291@gmail.com>
   
 #Note : after run this project make changes db.propersie file hibernate.hmb2ddl.auto property create to update
 otherwise every time database drop and create data will be lost
