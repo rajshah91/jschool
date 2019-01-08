@@ -14,8 +14,9 @@
         <ul class="treeview-menu">
             <li><a href='<c:url value="/dashboard/student/add"/>'><i class="fa fa-user"></i>Enroll Student</a></li>
             <li><a href='<c:url value="/dashboard/student"/>'><i class="fa fa-info-circle"></i>Student Information</a></li>
-            <li><a href='<c:url value="/dashboard/student/attendance"/>'><i class="fa fa-check-square-o"></i> <span>Upload Student Attendance</span></a></li>
-            <li><a href='<c:url value="/dashboard/student/viewAttendance"/>'><i class="fa fa-search-plus"></i> <span>View Student Attendance</span></a></li>
+            <li><a href='<c:url value="/dashboard/student/attendance"/>'><i class="fa fa-check-square-o"></i> <span>Upload Attendance</span></a></li>
+            <li><a href='<c:url value="/dashboard/student/viewAttendance"/>'><i class="fa fa-search-plus"></i> <span>View Attendance</span></a></li>
+            <li><a href='<c:url value="/dashboard/student/viewAggregateAttendance"/>'><i class="fa fa-check-circle"></i> <span>View Aggregate Attendance</span></a></li>
             <!-- <li><a href="#">Student Promotion</a></li> -->
         </ul>
     </li>

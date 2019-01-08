@@ -63,6 +63,11 @@ public class StudentAttendanceController {
         return "student/viewAttendanceToStudent";
     }
 
+    @RequestMapping(value = {"/viewAggregateAttendance"}, method = {RequestMethod.GET, RequestMethod.POST})
+    public String viewAggregateAttendance() {
+        return "student/viewAggregateStudentAttendance";
+    }
+
     @RequestMapping(value = "downloadsamplefile", method = {RequestMethod.GET, RequestMethod.POST})
     public void studentAttendanceSampleFileDownload(HttpServletRequest request, HttpServletResponse response) throws IOException {
         File file = null;
@@ -154,6 +159,30 @@ public class StudentAttendanceController {
 
         if (!MyUtils.isNullOrEmpty(month) && !MyUtils.isNullOrEmpty(batchId) && !MyUtils.isNullOrEmpty(courseId) && !MyUtils.isNullOrEmpty(semesterId)) {
             studentAttendanceList = studentService.getStudentAttendanceForGivenCriteria(Integer.parseInt(courseId), Integer.parseInt(batchId), Integer.parseInt(semesterId), month);
+        }
+
+        if (studentAttendanceList != null && !studentAttendanceList.isEmpty()) {
+            tempstudentAttendanceList=studentService.convertStudentAttendanceObjectToTemp(studentAttendanceList);
+        }
+        
+        response.put("success", true);
+        response.put("message", "Student Attendance Load Sucess.");
+        response.put("data", tempstudentAttendanceList);
+        return response;
+    }
+    
+    
+    @ResponseBody
+    @RequestMapping(value = "/viewAttendance/getAggregateStudentAttendance", method = {RequestMethod.POST, RequestMethod.GET})
+    public Map<String, Object> getAggregateStudentAttendance(@RequestParam("batchId") String batchId, @RequestParam("semesterId") String semesterId,
+            @RequestParam("courseId") String courseId) {
+
+        Map<String, Object> response = new HashMap<>();
+        List<StudentAttendance> studentAttendanceList = new ArrayList<>();
+        List<TempStudentAttendance> tempstudentAttendanceList = new ArrayList<>();
+
+        if (!MyUtils.isNullOrEmpty(batchId) && !MyUtils.isNullOrEmpty(courseId) && !MyUtils.isNullOrEmpty(semesterId)) {
+            studentAttendanceList = studentService.getStudentAggregateAttendanceForGivenCriteria(Integer.parseInt(courseId), Integer.parseInt(batchId), Integer.parseInt(semesterId));
         }
 
         if (studentAttendanceList != null && !studentAttendanceList.isEmpty()) {

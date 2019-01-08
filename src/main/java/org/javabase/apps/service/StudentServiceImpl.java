@@ -154,6 +154,7 @@ public class StudentServiceImpl implements StudentService {
                     tsa.setTotalPresentCount(sa.getTotalPresentCount());
                     tsa.setTotalHolidaysInMonth(sa.getTotalHolidaysInMonth());
                     tsa.setTotalLeaveCount(sa.getTotalLeaveCount());
+                    tsa.setTotalAggregatePercentage((100 * (sa.getTotalPresentCount() + sa.getTotalLeaveCount()))/sa.getTotalWorkingDaysInMonth());
                    
                     tempStudentAttendanceList.add(tsa);
                 }
@@ -204,6 +205,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int studentId){
         return studentMapper.getStudentAttendanceForGivenCriteria(studentId);
+    }
+
+    @Override
+    public List<StudentAttendance> getStudentAggregateAttendanceForGivenCriteria(int courseId, int batchId, int semesterId) {
+         return studentMapper.getStudentAggregateAttendanceForGivenCriteria(courseId, batchId, semesterId);
     }
 
 }

@@ -27,4 +27,6 @@ public interface StudentMapper {
     
     public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int studentId);
 
+    public List<StudentAttendance> getStudentAggregateAttendanceForGivenCriteria(int courseId, int batchId, int semesterId);
+
 }

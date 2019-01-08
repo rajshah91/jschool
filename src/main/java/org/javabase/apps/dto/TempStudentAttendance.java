@@ -5,12 +5,6 @@
  */
 package org.javabase.apps.dto;
 
-import java.util.Date;
-import org.javabase.apps.entity.Batch;
-import org.javabase.apps.entity.Course;
-import org.javabase.apps.entity.Semester;
-import org.javabase.apps.entity.Student;
-
 /**
  *
  * @author raj.shah
@@ -55,6 +49,7 @@ public class TempStudentAttendance{
     private Integer totalPresentCount;
     private Integer totalAbsentCount;
     private Integer totalLeaveCount;
+    private Integer totalAggregatePercentage;
     
     private String batchId;
     private String batchName;
@@ -446,6 +441,13 @@ public class TempStudentAttendance{
     public void setEnrollmentNumber(String enrollmentNumber) {
         this.enrollmentNumber = enrollmentNumber;
     }
-    
+
+    public Integer getTotalAggregatePercentage() {
+        return totalAggregatePercentage;
+    }
+
+    public void setTotalAggregatePercentage(Integer totalAggregatePercentage) {
+        this.totalAggregatePercentage = totalAggregatePercentage;
+    }
     
 }

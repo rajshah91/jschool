@@ -36,4 +36,6 @@ public interface StudentService {
     public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month);
     
     public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int studentId);
+
+    public List<StudentAttendance> getStudentAggregateAttendanceForGivenCriteria(int courseId, int batchId, int semesterId);
 }
