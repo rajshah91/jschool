@@ -222,3 +222,28 @@ ALTER TABLE student_attendance ADD CONSTRAINT fk_studattendance_course FOREIGN K
 
 ALTER TABLE student_attendance ADD CONSTRAINT fk_studattendance_semester FOREIGN KEY (semester_id) REFERENCES semester (id) ON UPDATE CASCADE ON DELETE NO ACTION;
 
+------------------------------------------------------------------------------------------------------------------
+
+
+DROP TABLE IF EXISTS student_result;
+
+CREATE TABLE student_result 
+(
+  id                 INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  batch_id           INT NOT NULL,
+  course_id          INT NOT NULL,
+  semester_id        INT NOT NULL,
+  student_id         INT NOT NULL,
+  student_result_json TEXT,
+  data_update_time   TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+ENGINE = InnoDB;
+
+ALTER TABLE student_result ADD CONSTRAINT fk_studresult_student FOREIGN KEY (student_id) REFERENCES student (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+
+ALTER TABLE student_result ADD CONSTRAINT fk_studresult_batch FOREIGN KEY (batch_id) REFERENCES batch (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+
+ALTER TABLE student_result ADD CONSTRAINT fk_studresult_course FOREIGN KEY (course_id) REFERENCES course (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+
+ALTER TABLE student_result ADD CONSTRAINT fk_studresult_semester FOREIGN KEY (semester_id) REFERENCES semester (id) ON UPDATE CASCADE ON DELETE NO ACTION;
+

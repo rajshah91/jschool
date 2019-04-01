@@ -2,17 +2,13 @@ package org.javabase.apps.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.NamedQuery;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.javabase.apps.dto.TempCourse;
 import org.javabase.apps.dto.TempCourseSubject;
-import org.javabase.apps.entity.Batch;
 
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.CourseFee;
 import org.javabase.apps.entity.CourseSubject;
-import org.javabase.apps.entity.Semester;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;

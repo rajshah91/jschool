@@ -6,7 +6,7 @@ $(document).ready(function ($) {
     var courseSemesterMap = new Map();
     getAllCourse();
     getAllBatch();
-    studentAttendanceDatatable();
+    studentResultDatatable();
 
     $('#courseCombo').select2({
         placeholder: "Select Course"
@@ -20,17 +20,22 @@ $(document).ready(function ($) {
         placeholder: "Select Semester"
     });
 
+    $('#month').select2({
+        placeholder: "Select Month"
+    });
+
     $("#courseCombo").change(function () {
         populateSemester();
     });
 
-    $("form#student_attendance_form").submit(function (event) {
+    $("form#student_result_form").submit(function (event) {
         event.preventDefault();
         var courseId = $("#courseCombo").val();
         var batchId = $("#batchCombo").val();
         var semesterId = $("#semesterCombo").val();
+        
         if (courseId != "" && batchId != "" && semesterId != "") {
-            studentAttendanceDatatable();
+            studentResultDatatable();
         }
     });
 
@@ -93,13 +98,13 @@ $(document).ready(function ($) {
     }
 
 
-    function studentAttendanceDatatable() {
+    function studentResultDatatable() {
 
         var tbl = $('#studentAttendanceTable').dataTable({
             "processing": true,
             "destroy": true,
             "ajax": {
-                "url": "viewAttendance/getAggregateStudentAttendance",
+//                "url": "viewAttendance/getStudentAttendance",
                 "type": "POST",
                 "data": function (d) {
                     d.courseId = $("#courseCombo").val();
@@ -110,7 +115,6 @@ $(document).ready(function ($) {
             "columns": [
                 {
                     data: null,
-                    title:'No',
                     sortable: false,
                     render: function (data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;
@@ -123,20 +127,116 @@ $(document).ready(function ($) {
                     title: 'Student Name',
                     data: 'studentName'
                 }, {
-                    title: 'Total Working Days in Semester',
+                    title: '1',
+                    data: 'a1'
+                }, {
+                    title: '2',
+                    data: 'a2'
+                }, {
+                    title: '3',
+                    data: 'a3'
+                }, {
+                    title: '4',
+                    data: 'a4'
+                }, {
+                    title: '5',
+                    data: 'a5'
+                }, {
+                    title: '6',
+                    data: 'a6'
+                }, {
+                    title: '7',
+                    data: 'a7'
+                }, {
+                    title: '8',
+                    data: 'a8'
+                }, {
+                    title: '9',
+                    data: 'a9'
+                }, {
+                    title: '10',
+                    data: 'a10'
+                }, {
+                    title: '11',
+                    data: 'a11'
+                }, {
+                    title: '12',
+                    data: 'a12'
+                }, {
+                    title: '13',
+                    data: 'a13'
+                }, {
+                    title: '14',
+                    data: 'a14'
+                }, {
+                    title: '15',
+                    data: 'a15'
+                }, {
+                    title: '16',
+                    data: 'a16'
+                }, {
+                    title: '17',
+                    data: 'a17'
+                }, {
+                    title: '18',
+                    data: 'a18'
+                }, {
+                    title: '19',
+                    data: 'a19'
+                }, {
+                    title: '20',
+                    data: 'a20'
+                }, {
+                    title: '21',
+                    data: 'a21'
+                }, {
+                    title: '22',
+                    data: 'a22'
+                }, {
+                    title: '23',
+                    data: 'a23'
+                }, {
+                    title: '24',
+                    data: 'a24'
+                }, {
+                    title: '25',
+                    data: 'a25'
+                }, {
+                    title: '26',
+                    data: 'a26'
+                }, {
+                    title: '27',
+                    data: 'a27'
+                }, {
+                    title: '28',
+                    data: 'a28'
+                }, {
+                    title: '29',
+                    data: 'a29'
+                }, {
+                    title: '30',
+                    data: 'a30'
+                }, {
+                    title: '31',
+                    data: 'a31'
+                }, {
+                    title: 'Total Days in Month',
+                    data: 'totalDaysInMonth'
+                }, {
+                    title: 'Total Holidays in Month',
+                    data: 'totalHolidaysInMonth'
+                }, {
+                    title: 'Total Working Days in Month',
                     data: 'totalWorkingDaysInMonth'
                 }, {
-                    title: 'Total Present',
+                    title: 'Total Presence',
                     data: 'totalPresentCount'
-                }, {
-                    title: 'Total Leaves Taken',
-                    data: 'totalLeaveCount'
                 }, {
                     title: 'Total Absence',
                     data: 'totalAbsentCount'
                 }, {
-                    title: 'Total Aggregate (%)',
-                    data: 'totalAggregatePercentage'
+                    title: 'Total Leaves Taken',
+                    data: 'totalLeaveCount'
                 }
             ],
             "scrollCollapse": true,

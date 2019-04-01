@@ -140,6 +140,24 @@ public class StudentMapperImpl implements StudentMapper {
             return totalDeleteCount;
         }
     }
+    
+    @Override
+    @Transactional
+    public int deleteStudentResultForGivenCriteria(int courseId, int batchId, int semesterId) {
+        Session session = hibernateTemplate.getSessionFactory().openSession();
+        int totalDeleteCount = 0;
+        try {
+            Query hql = session.createQuery("DELETE FROM StudentResult sa WHERE  sa.courseId.id=" + courseId
+                    + " AND sa.batchId.id=" + batchId + " AND sa.semesterId.id=" + semesterId );
+            totalDeleteCount = hql.executeUpdate();
+            return totalDeleteCount;
+        } catch (Exception e) {
+            session.close();
+            System.out.println("Error in CommonMapperImpl.deleteStudentResultForGivenCriteria : " + e.getMessage());
+            e.printStackTrace();
+            return totalDeleteCount;
+        }
+    }
 
     @Override
     public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int courseId, int batchId, int semesterId, String month) {

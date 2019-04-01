@@ -20,7 +20,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -548,39 +547,11 @@ public class StudentAttendance implements Serializable {
             return false;
         }
         StudentAttendance other = (StudentAttendance) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
         return "org.javabase.apps.entity.StudentAttendance[ id=" + id + " ]";
     }
-    
-//    /*  These are only for getting setting other values..These are not saved into database*/
-//    @Transient
-//    private String studentName;
-//    @Transient
-//    private String enrollmentNumber;
-//
-//    public String getStudentName() {
-//        return studentName;
-//    }
-//
-//    public void setStudentName(String studentName) {
-//        this.studentName = studentName;
-//    }
-//
-//    public String getEnrollmentNumber() {
-//        return enrollmentNumber;
-//    }
-//
-//    public void setEnrollmentNumber(String enrollmentNumber) {
-//        this.enrollmentNumber = enrollmentNumber;
-//    }
-//    
-//    
-    
 }

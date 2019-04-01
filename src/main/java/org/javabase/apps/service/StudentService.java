@@ -38,4 +38,6 @@ public interface StudentService {
     public List<StudentAttendance> getStudentAttendanceForGivenCriteria(int studentId);
 
     public List<StudentAttendance> getStudentAggregateAttendanceForGivenCriteria(int courseId, int batchId, int semesterId);
+    
+    public int deleteStudentResultForGivenCriteria(int courseId, int batchId,int semesterId);
 }

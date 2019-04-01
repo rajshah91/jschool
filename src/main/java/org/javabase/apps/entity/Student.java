@@ -6,6 +6,7 @@
 package org.javabase.apps.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -34,6 +35,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name = "student")
 @XmlRootElement
 public class Student implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentId")
+    private List<StudentResult> studentResultList;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentId")
     private List<StudentAttendance> studentAttendanceList;
@@ -346,6 +350,14 @@ public class Student implements Serializable {
 
     public void setStudentAttendanceList(List<StudentAttendance> studentAttendanceList) {
         this.studentAttendanceList = studentAttendanceList;
+    }
+
+    public List<StudentResult> getStudentResultCollection() {
+        return studentResultList;
+    }
+
+    public void setStudentResultCollection(List<StudentResult> studentResultList) {
+        this.studentResultList = studentResultList;
     }
     
 }

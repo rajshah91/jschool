@@ -15,7 +15,7 @@
     ================================================== -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <title>School Management : Home</title>
+     <title>College Management : Home</title>
 
     <!-- Mobile Specific Metas
     ================================================== -->
@@ -91,11 +91,11 @@
                 <c:if test="${loggedIn}">
                 <li><a href="<c:url value='/dashboard/'/>">Dashboard</a></li>
                 </c:if>
-                <li><a href="<c:url value='/course'/>">Course</a></li>
-                <li><a href="<c:url value='/scholarship'/>">Scholarship</a></li>
-                <li><a href="<c:url value='/events'/>">Events</a></li>
-                <li><a href="<c:url value='/gallery'/>">Gallery</a></li>                
-                <li><a href="<c:url value='/blog'/>">Blog</a></li>
+                <!--<li><a href="<c:url value='/course'/>">Course</a></li>-->
+                <!--<li><a href="<c:url value='/scholarship'/>">Scholarship</a></li>-->
+                <!--<li><a href="<c:url value='/events'/>">Events</a></li>-->
+                <!--<li><a href="<c:url value='/gallery'/>">Gallery</a></li>-->                
+                <!--<li><a href="<c:url value='/blog'/>">Blog</a></li>-->
 <!--                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Page<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
@@ -104,7 +104,7 @@
                     <li><a href="#">Link Three</a></li>               
                   </ul>
                 </li>        -->        
-                <li><a href="<c:url value='/contact'/>">Contact</a></li>
+                <!--<li><a href="<c:url value='/contact'/>">Contact</a></li>-->
                 <c:choose>
 				    <c:when test="${loggedIn}">
 		                <li><a href="<c:url value='/logout'/>">Logout</a></li>
@@ -127,7 +127,7 @@
     <!--=========== BEGIN FOOTER SECTION ================-->
     <footer id="footer">
       <!-- Start footer top area -->
-      <div class="footer_top">
+  <!--    <div class="footer_top">
         <div class="container">
           <div class="row">
             <div class="col-ld-3  col-md-3 col-sm-3">
@@ -174,7 +174,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>   -->
       <!-- End footer top area -->
 
       <!-- Start footer bottom area -->
@@ -188,7 +188,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
               <div class="footer_bootomRight">
-                <p>Designed by <a href="http://wpfreeware.com/" rel="nofollow">Javabase.org</a></p>
+                <p>Designed by <a href="#" rel="nofollow">Raj Shah</a></p>
               </div>
             </div>
           </div>

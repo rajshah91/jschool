@@ -11,7 +11,6 @@ import org.javabase.apps.dto.TempStudent;
 import org.javabase.apps.dto.TempStudentAttendance;
 import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.Course;
-import org.javabase.apps.entity.Semester;
 import org.javabase.apps.entity.Student;
 import org.javabase.apps.entity.StudentAttendance;
 import org.javabase.apps.entity.StudentFee;
@@ -195,6 +194,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public int deleteStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month){
         return studentMapper.deleteStudentAttendanceForGivenCriteria(courseId, batchId, semesterId, month);
+    }
+    
+    @Override
+    public int deleteStudentResultForGivenCriteria(int courseId, int batchId,int semesterId){
+        return studentMapper.deleteStudentResultForGivenCriteria(courseId, batchId, semesterId);
     }
     
     @Override

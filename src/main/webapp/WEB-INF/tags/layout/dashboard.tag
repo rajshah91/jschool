@@ -52,7 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b><img src="<c:url value="/resources/images/schoolLogo.png"/>" class="img-circle" alt="School Logo"></b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg">School Managemant </span>
+          <span class="logo-lg">School Management </span>
         </a>
 
         <!-- Header Navbar -->

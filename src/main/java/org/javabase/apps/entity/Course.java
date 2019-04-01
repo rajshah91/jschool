@@ -6,6 +6,7 @@
 package org.javabase.apps.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -27,6 +28,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "course")
 @XmlRootElement
 public class Course implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    private List<StudentResult> studentResultList;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
     private List<StudentAttendance> studentAttendanceList;
@@ -149,6 +153,14 @@ public class Course implements Serializable {
 
     public void setStudentAttendanceList(List<StudentAttendance> studentAttendanceList) {
         this.studentAttendanceList = studentAttendanceList;
+    }
+
+    public List<StudentResult> getStudentResultCollection() {
+        return studentResultList;
+    }
+
+    public void setStudentResultCollection(List<StudentResult> studentResultList) {
+        this.studentResultList = studentResultList;
     }
     
 }

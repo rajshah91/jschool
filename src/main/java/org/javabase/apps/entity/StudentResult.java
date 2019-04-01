@@ -6,6 +6,7 @@
 package org.javabase.apps.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,18 +14,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
- * @author raj.shah
+ * @author JKRN
  */
 @Entity
-@Table(name = "course_subject")
-@XmlRootElement
-public class CourseSubject implements Serializable {
+@Table(name = "student_result")
+@NamedQueries({
+    @NamedQuery(name = "StudentResult.findAll", query = "SELECT s FROM StudentResult s")})
+public class StudentResult implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,6 +38,12 @@ public class CourseSubject implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Lob
+    @Column(name = "student_result_json")
+    private String studentResultJson;
+    @Column(name = "data_update_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUpdateTime;
     @JoinColumn(name = "batch_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Batch batchId;
@@ -41,14 +53,14 @@ public class CourseSubject implements Serializable {
     @JoinColumn(name = "semester_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Semester semesterId;
-    @JoinColumn(name = "subject_id", referencedColumnName = "sub_id")
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Subject subjectId;
+    private Student studentId;
 
-    public CourseSubject() {
+    public StudentResult() {
     }
 
-    public CourseSubject(Integer id) {
+    public StudentResult(Integer id) {
         this.id = id;
     }
 
@@ -58,6 +70,22 @@ public class CourseSubject implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getStudentResultJson() {
+        return studentResultJson;
+    }
+
+    public void setStudentResultJson(String studentResultJson) {
+        this.studentResultJson = studentResultJson;
+    }
+
+    public Date getDataUpdateTime() {
+        return dataUpdateTime;
+    }
+
+    public void setDataUpdateTime(Date dataUpdateTime) {
+        this.dataUpdateTime = dataUpdateTime;
     }
 
     public Batch getBatchId() {
@@ -84,12 +112,12 @@ public class CourseSubject implements Serializable {
         this.semesterId = semesterId;
     }
 
-    public Subject getSubjectId() {
-        return subjectId;
+    public Student getStudentId() {
+        return studentId;
     }
 
-    public void setSubjectId(Subject subjectId) {
-        this.subjectId = subjectId;
+    public void setStudentId(Student studentId) {
+        this.studentId = studentId;
     }
 
     @Override
@@ -102,16 +130,19 @@ public class CourseSubject implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CourseSubject)) {
+        if (!(object instanceof StudentResult)) {
             return false;
         }
-        CourseSubject other = (CourseSubject) object;
-        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
+        StudentResult other = (StudentResult) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "org.javabase.apps.entity.CourseSubject[ id=" + id + " ]";
+        return "org.javabase.apps.entity.StudentResult[ id=" + id + " ]";
     }
     
 }

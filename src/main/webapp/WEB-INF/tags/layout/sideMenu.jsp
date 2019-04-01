@@ -17,6 +17,8 @@
             <li><a href='<c:url value="/dashboard/student/attendance"/>'><i class="fa fa-check-square-o"></i> <span>Upload Attendance</span></a></li>
             <li><a href='<c:url value="/dashboard/student/viewAttendance"/>'><i class="fa fa-search-plus"></i> <span>View Attendance</span></a></li>
             <li><a href='<c:url value="/dashboard/student/viewAggregateAttendance"/>'><i class="fa fa-check-circle"></i> <span>View Aggregate Attendance</span></a></li>
+            <li><a href='<c:url value="/dashboard/student/uploadResult"/>'><i class="fa fa-file-text"></i> <span>Upload Result</span></a></li>
+            <li><a href='<c:url value="/dashboard/student/viewResult"/>'><i class="fa fa-search-plus"></i> <span>View Result</span></a></li>
             <!-- <li><a href="#">Student Promotion</a></li> -->
         </ul>
     </li>

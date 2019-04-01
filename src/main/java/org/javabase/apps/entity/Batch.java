@@ -6,6 +6,7 @@
 package org.javabase.apps.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -28,9 +29,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 public class Batch implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "batchId")
-    private List<StudentAttendance> studentAttendanceList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +46,13 @@ public class Batch implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "batchId")
     private List<CourseFee> courseFeeList;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "batchId")
+    private List<StudentResult> studentResultList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "batchId")
+    private List<StudentAttendance> studentAttendanceList;
+
+   
     public Batch() {
     }
 
@@ -139,6 +144,14 @@ public class Batch implements Serializable {
 
     public void setStudentAttendanceList(List<StudentAttendance> studentAttendanceList) {
         this.studentAttendanceList = studentAttendanceList;
+    }
+
+    public List<StudentResult> getStudentResultCollection() {
+        return studentResultList;
+    }
+
+    public void setStudentResultCollection(List<StudentResult> studentResultList) {
+        this.studentResultList = studentResultList;
     }
     
 }

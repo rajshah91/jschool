@@ -67,36 +67,37 @@
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box parent">
             <div class="info-box-stats">
-				<p class="counter">50</p>
-				<span class="info-box-title">Parent</span>
+                <p class="counter">200</p>
+				<span class="info-box-title">Attendance</span>
+				
 			  </div>
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
+<!--        <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box attendence">
             <div class="info-box-stats">
-				<p class="counter">200</p>
-				<span class="info-box-title">Attendance</span>
+				<p class="counter">50</p>
+				<span class="info-box-title">Parent</span>
 			  </div>
-            <!-- /.info-box-content -->
+             /.info-box-content 
           </div>
-          <!-- /.info-box -->
-        </div>
+           /.info-box 
+        </div>-->
         <!-- /.col -->
       </div>
       <!-- /.row -->
       
 	<!-- =======================Info boxes End =================================== -->
-	
+	<!-------- ----------------  END  ------------------------->
 	<div class="row">
         <div class="col-md-8">
           <div class="box box-primary">
             <div class="box-body no-padding">
               <!-- THE CALENDAR -->
-              <div id="calendar"></div>
+              <!--<div id="calendar"></div>-->
             </div>
             <!-- /.box-body -->
           </div>
@@ -124,9 +125,9 @@
 					</div>
 										</div>
 				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="panel panel-white">
+             
+             
+                                <div class="panel panel-white">
 					<div class="panel-heading">
 						<h3 class="panel-title">Holiday List</h3>
 						
@@ -152,9 +153,14 @@
 					</div>
 										</div>
 				</div>
+             
 			</div>
+			
         <!-- /.col -->
       </div>
+        
+        <!-------- ----------------  END  ------------------------->
+        
       <!-- /.row -->
       </sec:authorize>
 	</sec:authorize>
