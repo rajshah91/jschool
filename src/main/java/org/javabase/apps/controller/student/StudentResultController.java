@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.Semester;
+import org.javabase.apps.entity.Student;
 import org.javabase.apps.entity.StudentResult;
 import org.javabase.apps.excel.ExcelReadHandler;
 import org.javabase.apps.service.BatchService;
@@ -48,7 +49,7 @@ public class StudentResultController {
     public String studentResultUploadPage() {
         return "student/uploadStudentResult";
     }
-    
+
     @RequestMapping(value = {"/viewResult"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String viewStudentResultPage() {
         return "student/viewStudentResult";
@@ -63,7 +64,6 @@ public class StudentResultController {
 //    public String viewAggregateAttendance() {
 //        return "student/viewAggregateStudentAttendance";
 //    }
-
     @RequestMapping(value = "downloadsampleresultfile", method = {RequestMethod.GET, RequestMethod.POST})
     public void studentResultSampleFileDownload(HttpServletRequest request, HttpServletResponse response) throws IOException {
         File file = null;
@@ -95,7 +95,7 @@ public class StudentResultController {
 
     @RequestMapping(value = "uploadStudentResult", method = {RequestMethod.POST, RequestMethod.GET})
     public String uploadStudentResult(@RequestParam("batchId") String batchId, @RequestParam("semesterId") String semesterId,
-            @RequestParam("courseId") String courseId,@RequestParam("file") MultipartFile file) throws IOException {
+            @RequestParam("courseId") String courseId, @RequestParam("file") MultipartFile file) throws IOException {
 
         Map<String, Object> response = new HashMap<>();
 
@@ -106,7 +106,7 @@ public class StudentResultController {
         String fileUploadMessage = "";
         String uploadedFileFullPath = "";
         String uploadedFileName = "";
-        if (!MyUtils.isNullOrEmpty(courseId) && !MyUtils.isNullOrEmpty(batchId) && !MyUtils.isNullOrEmpty(semesterId) &&  file != null && !file.isEmpty()) {
+        if (!MyUtils.isNullOrEmpty(courseId) && !MyUtils.isNullOrEmpty(batchId) && !MyUtils.isNullOrEmpty(semesterId) && file != null && !file.isEmpty()) {
             Batch batch = new Batch();
             batch = (Batch) commonService.getObjectById(batch, Integer.parseInt(batchId));
 
@@ -125,19 +125,25 @@ public class StudentResultController {
                 if (!MyUtils.isNullOrEmpty(uploadedFileName) && !MyUtils.isNullOrEmpty(uploadedFileFullPath)) {
                     ExcelReadHandler erd = new ExcelReadHandler();
                     erd.setStudentService(studentService);
-                    
-                    Map<String,String> studentResultJsonMap=erd.handleStudentResultFile(uploadedFileName, uploadedFileFullPath);
-                    
+
+                    Map<String, String> studentResultJsonMap = erd.handleStudentResultFile(uploadedFileName, uploadedFileFullPath);
+
                     if (studentResultJsonMap != null && studentResultJsonMap.size() > 0) {
                         int deleted = studentService.deleteStudentResultForGivenCriteria(course.getId(), batch.getId(), semester.getId());
-//                        for (studentResultJsonMap.entrySet()) {
-//                            success = commonService.saveObject(sa);
-//                            if (!success && !isAnyRecordFailed) {
-//                                isAnyRecordFailed = true;
-//                            }else{
-//                                isAnyRecordFailed =false;
-//                            }
-//                        }
+                        for (Map.Entry<String, String> entry : studentResultJsonMap.entrySet()) {
+                            Student student = null;
+                            student = studentService.getStudentByEnrollmentNumber(entry.getKey());
+                            if (student != null && student.getId() != null) {
+                                StudentResult sr = new StudentResult();
+                                sr.setBatchId(batch);
+                                sr.setCourseId(course);
+                                sr.setSemesterId(semester);
+                                sr.setStudentId(student);
+                                sr.setStudentResultJson(entry.getValue());
+                                success = commonService.saveObject(sr);
+                            }
+                            isAnyRecordFailed = !success && !isAnyRecordFailed;
+                        }
                     }
                 }
             }
@@ -145,7 +151,7 @@ public class StudentResultController {
 
         return "redirect:/dashboard/student/uploadResult?success=" + !isAnyRecordFailed;
     }
- /* 
+    /* 
     @ResponseBody
     @RequestMapping(value = "/viewAttendance/getStudentAttendance", method = {RequestMethod.POST, RequestMethod.GET})
     public Map<String, Object> getStudentAttendance(@RequestParam("batchId") String batchId, @RequestParam("semesterId") String semesterId,

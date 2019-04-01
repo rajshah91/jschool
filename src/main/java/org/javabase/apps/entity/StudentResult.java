@@ -21,6 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.UpdateTimestamp;
 
 /**
  *
@@ -41,6 +42,8 @@ public class StudentResult implements Serializable {
     @Lob
     @Column(name = "student_result_json")
     private String studentResultJson;
+    
+    @UpdateTimestamp
     @Column(name = "data_update_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUpdateTime;
