@@ -13,7 +13,9 @@ import org.javabase.apps.entity.Semester;
 import org.javabase.apps.entity.Student;
 import org.javabase.apps.entity.StudentAttendance;
 import org.javabase.apps.entity.StudentFee;
+import org.javabase.apps.entity.StudentResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -217,6 +219,20 @@ public class StudentMapperImpl implements StudentMapper {
             System.out.println("Error in CommonMapperImpl.getStudentAggregateAttendanceForGivenCriteria : " + e.getMessage());
             e.printStackTrace();
             session.close();
+            return salist;
+        }
+    }
+    
+    @Override
+    public List<StudentResult> getStudentResultForGivenCriteria(int courseId, int batchId, int semesterId) {
+        List<StudentResult> salist = new ArrayList<>();
+        try {
+            String hql = " FROM StudentResult sa WHERE  sa.courseId.id=" + courseId
+                    + " AND sa.batchId.id=" + batchId + " AND sa.semesterId.id=" + semesterId ;
+            return (List<StudentResult>) hibernateTemplate.find(hql);
+        } catch (DataAccessException e) {
+            System.out.println("Error in CommonMapperImpl.getStudentResultForGivenCriteria : " + e.getMessage());
+            e.printStackTrace();
             return salist;
         }
     }

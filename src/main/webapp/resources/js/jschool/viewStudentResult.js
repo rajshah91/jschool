@@ -6,7 +6,7 @@ $(document).ready(function ($) {
     var courseSemesterMap = new Map();
     getAllCourse();
     getAllBatch();
-    studentResultDatatable();
+//    studentResultDatatable();
 
     $('#courseCombo').select2({
         placeholder: "Select Course"
@@ -20,10 +20,6 @@ $(document).ready(function ($) {
         placeholder: "Select Semester"
     });
 
-    $('#month').select2({
-        placeholder: "Select Month"
-    });
-
     $("#courseCombo").change(function () {
         populateSemester();
     });
@@ -33,9 +29,9 @@ $(document).ready(function ($) {
         var courseId = $("#courseCombo").val();
         var batchId = $("#batchCombo").val();
         var semesterId = $("#semesterCombo").val();
-        
+
         if (courseId != "" && batchId != "" && semesterId != "") {
-            studentResultDatatable();
+            fetchStudentResultData();
         }
     });
 
@@ -98,180 +94,179 @@ $(document).ready(function ($) {
     }
 
 
-    function studentResultDatatable() {
+    function fetchStudentResultData() {
+        var data = {};
+        data["batchId"] = $("#batchCombo").val();
+        data["courseId"] = $("#courseCombo").val();
+        data["semesterId"] = $("#semesterCombo").val();
 
-        var tbl = $('#studentAttendanceTable').dataTable({
-            "processing": true,
-            "destroy": true,
-            "ajax": {
-//                "url": "viewAttendance/getStudentAttendance",
-                "type": "POST",
-                "data": function (d) {
-                    d.courseId = $("#courseCombo").val();
-                    d.batchId = $("#batchCombo").val();
-                    d.semesterId = $("#semesterCombo").val();
+        var url = "viewResult/getStudentResult";
+
+        $.ajax({
+            url: url,
+            type: "GET",
+//            data: JSON.stringify(data),
+
+            data: data,
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                if (response.success === true) {
+                    var data = response.data;
+                    if (data !== null && data !== undefined && data !== "" && data.length > 0) {
+                        prepareResultTableFromJSON(data);
+                    }
+
+                } else {
+                    error(response.message);
                 }
             },
-            "columns": [
-                {
-                    data: null,
-                    sortable: false,
-                    render: function (data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
-                {
-                    title: 'Enrollment No',
-                    data: 'enrollmentNumber'
-                }, {
-                    title: 'Student Name',
-                    data: 'studentName'
-                }, {
-                    title: '1',
-                    data: 'a1'
-                }, {
-                    title: '2',
-                    data: 'a2'
-                }, {
-                    title: '3',
-                    data: 'a3'
-                }, {
-                    title: '4',
-                    data: 'a4'
-                }, {
-                    title: '5',
-                    data: 'a5'
-                }, {
-                    title: '6',
-                    data: 'a6'
-                }, {
-                    title: '7',
-                    data: 'a7'
-                }, {
-                    title: '8',
-                    data: 'a8'
-                }, {
-                    title: '9',
-                    data: 'a9'
-                }, {
-                    title: '10',
-                    data: 'a10'
-                }, {
-                    title: '11',
-                    data: 'a11'
-                }, {
-                    title: '12',
-                    data: 'a12'
-                }, {
-                    title: '13',
-                    data: 'a13'
-                }, {
-                    title: '14',
-                    data: 'a14'
-                }, {
-                    title: '15',
-                    data: 'a15'
-                }, {
-                    title: '16',
-                    data: 'a16'
-                }, {
-                    title: '17',
-                    data: 'a17'
-                }, {
-                    title: '18',
-                    data: 'a18'
-                }, {
-                    title: '19',
-                    data: 'a19'
-                }, {
-                    title: '20',
-                    data: 'a20'
-                }, {
-                    title: '21',
-                    data: 'a21'
-                }, {
-                    title: '22',
-                    data: 'a22'
-                }, {
-                    title: '23',
-                    data: 'a23'
-                }, {
-                    title: '24',
-                    data: 'a24'
-                }, {
-                    title: '25',
-                    data: 'a25'
-                }, {
-                    title: '26',
-                    data: 'a26'
-                }, {
-                    title: '27',
-                    data: 'a27'
-                }, {
-                    title: '28',
-                    data: 'a28'
-                }, {
-                    title: '29',
-                    data: 'a29'
-                }, {
-                    title: '30',
-                    data: 'a30'
-                }, {
-                    title: '31',
-                    data: 'a31'
-                }, {
-                    title: 'Total Days in Month',
-                    data: 'totalDaysInMonth'
-                }, {
-                    title: 'Total Holidays in Month',
-                    data: 'totalHolidaysInMonth'
-                }, {
-                    title: 'Total Working Days in Month',
-                    data: 'totalWorkingDaysInMonth'
-                }, {
-                    title: 'Total Presence',
-                    data: 'totalPresentCount'
-                }, {
-                    title: 'Total Absence',
-                    data: 'totalAbsentCount'
-                }, {
-                    title: 'Total Leaves Taken',
-                    data: 'totalLeaveCount'
-                }
-            ],
-            "scrollCollapse": true,
-            "scrollX" : "2000px",
-//            "scrollY":"500px",
-            "columnDefs": [
-                {
-                    "targets": "_all",
-                    "createdCell": function (td, cellData, rowData, row, col) {
-                        if (cellData === 'P') {
-                            $(td).css('color', 'green');
-                        }else if(cellData === "A"){
-                            $(td).css('color', 'red');
-                            $(td).css('font-weight', 'bold');
-                        }else if(cellData === "L"){
-                            $(td).css('color', 'blue');
-                            $(td).css('font-weight', 'bold');
-                        }else if(cellData === "H"){
-                            $(td).css('color', 'greenyellow');
-                            $(td).css('font-weight', 'bold');
-                        }else if(cellData === null || cellData === "null"){
-                            $(td).css('background', 'gray');
+            error: function (e) {
+                console.log("ERROR: ", e);
+                error("fetchStudentResultData failed");
+            }
+        });
+    }
+
+    function prepareResultTableFromJSON(data) {
+        var tableBaseStr = "<table id='example' style='width:100%' border='1' class='table table-striped  display no-footer dataTable' role='grid'>";
+        tableBaseStr += "<thead><tr>";
+        tableBaseStr += "<th rowspan='5' style='text-align: center'>No</th>";
+        tableBaseStr += "<th rowspan='5' style='text-align: center'>Name</th>";
+        tableBaseStr += "<th rowspan='5' style='text-align: center'>Enrollment No</th>";
+        
+        var tableDataStr="<tbody>";
+
+        for (var i = 0; i < data.length; i++) {
+            var obj = data[i];
+            
+            var index= (i) + 1;
+            var oddEven= (index % 2 === 0 ? "style='background-color: #FFF';text-align: center" : "style='background-color: #CCC;text-align: center'");
+            var currentRowStr="<tr role='row' "+oddEven+"><th>"+index+"</th>";
+            
+            if ("studentName" in obj) {
+                currentRowStr += "<th style='text-align: center'>"+obj.studentName+"</th>";
+            }
+            if ("enrollmentNo" in obj) {
+                currentRowStr += "<th style='text-align: center'>"+obj.enrollmentNo+"</th>";
+            }
+            if ("studentResultJson" in obj) {
+                var studentResultJson = obj.studentResultJson;
+                var parsedJson = JSON.parse(studentResultJson);
+
+                var subjectStr = "";
+                var theoryPractialGradeStr = "<tr>";
+                var examDateStr = "<tr>";
+                var twthprStr = "<tr>";
+                var twthprValueStr = "<tr>";
+                for (var j = 0; j < parsedJson.length; j++) {
+                    
+                    var internalJsonObj = parsedJson[j];
+                    var colSpanRow1=0;
+                    if (i === 0) {
+                        if ("theory" in internalJsonObj) {
+                            colSpanRow1 = 5;
+                        }
+                        if ("practical" in internalJsonObj) {
+                            colSpanRow1 += 4;
+                        }
+                        if ("finalGrade" in internalJsonObj) {
+                            colSpanRow1 = 3;
                         }
                     }
-                },
-//                { 
-//                    "targets": [31,32,33],
-//                    visible: false 
-//                }
-                
-            ]
-        });
-        
-    };
-    
-    
+                        
+                    if ("subject" in internalJsonObj) {
+                        if (i === 0) {
+                            subjectStr += ("<th colspan='"+colSpanRow1+"' style='text-align: center'>" + internalJsonObj.subject + "</th>");
+                        }
+                    }
+                        
+                    if ("theory" in internalJsonObj) {
+                        var theoryObj = internalJsonObj.theory;
+                        if (i === 0) {
+                            theoryPractialGradeStr += ("<th colspan='5' style='text-align: center'>THEORY</th>");
+
+                            examDateStr += ("<th colspan='5' style='text-align: center'>" + theoryObj.examDate + "</th>");
+
+                            twthprStr += ("<th style='text-align: center'>TW</th>");
+                            twthprStr += ("<th style='text-align: center'>TH</th>");
+                            twthprStr += ("<th style='text-align: center'>Total</th>");
+                            twthprStr += ("<th style='text-align: center'>%</th>");
+                            twthprStr += ("<th style='text-align: center'>Grade</th>");
+
+                            twthprValueStr += ("<th style='text-align: center'>" + theoryObj.ofTW + "</th>");
+                            twthprValueStr += ("<th style='text-align: center'>" + theoryObj.ofTH + "</th>");
+                            twthprValueStr += ("<th style='text-align: center'>" + theoryObj.ofTotal + "</th>");
+                            twthprValueStr += ("<th style='text-align: center'></th>");// %
+                            twthprValueStr += ("<th style='text-align: center'></th>");// Grade
+                        }
+                        currentRowStr += "<th style='text-align: center'>"+theoryObj.tw+"</th>";
+                        currentRowStr += "<th style='text-align: center'>"+theoryObj.th+"</th>";
+                        currentRowStr += "<th style='text-align: center'>"+theoryObj.total+"</th>";
+                        currentRowStr += "<th style='text-align: center'>"+theoryObj.percentage+"</th>";
+                        currentRowStr += "<th style='text-align: center'>"+theoryObj.grade+"</th>";
+                    }
+                    if ("practical" in internalJsonObj) {
+                         var practicalObj = internalJsonObj.practical;
+                        if (i === 0) {
+                            theoryPractialGradeStr += ("<th colspan='4' style='text-align: center'>PRACTICAL</th>");
+                           
+                            examDateStr += ("<th colspan='4' style='text-align: center'>" + practicalObj.examDate + "</th>");
+
+                            twthprStr += ("<th style='text-align: center'>PR</th>");
+                            twthprStr += ("<th style='text-align: center'>Total</th>");
+                            twthprStr += ("<th style='text-align: center'>%</th>");
+                            twthprStr += ("<th style='text-align: center'>Grade</th>");
+
+                            twthprValueStr += ("<th style='text-align: center'>" + practicalObj.ofPR + "</th>");
+                            twthprValueStr += ("<th style='text-align: center'>" + practicalObj.ofTotal + "</th>");
+                            twthprValueStr += ("<th style='text-align: center'></th>");// %
+                            twthprValueStr += ("<th style='text-align: center'></th>");// Grade
+                        }
+                        
+                        currentRowStr += "<th style='text-align: center'>"+practicalObj.pr+"</th>";
+                        currentRowStr += "<th style='text-align: center'>"+practicalObj.total+"</th>";
+                        currentRowStr += "<th style='text-align: center'>"+practicalObj.percentage+"</th>";
+                        currentRowStr += "<th style='text-align: center'>"+practicalObj.grade+"</th>";
+                    }
+                    if ("finalGrade" in internalJsonObj) {
+                        var finalGradeObj = internalJsonObj.finalGrade;
+                        if (i === 0) {
+                            subjectStr += ("<th colspan='" + colSpanRow1 + "' style='text-align: center'>FINAL GRADE</th>");
+
+                            theoryPractialGradeStr += ("<th colspan='3' style='text-align: center'></th>");// empty as theory/practical
+                            examDateStr += ("<th colspan='3' style='text-align: center'></th>");// empty as examdate
+
+                            twthprStr += ("<th style='text-align: center'>Total</th>");
+                            twthprStr += ("<th style='text-align: center'>%</th>");
+                            twthprStr += ("<th style='text-align: center'>Grade</th>");
+
+                            twthprValueStr += ("<th style='text-align: center'>" + finalGradeObj.ofTotal + "</th>");
+                            twthprValueStr += ("<th style='text-align: center'></th>");// %
+                            twthprValueStr += ("<th style='text-align: center'></th>");// Grade
+                        }
+                        currentRowStr += "<th style='text-align: center'>"+finalGradeObj.total+"</th>";
+                        currentRowStr += "<th style='text-align: center'>"+finalGradeObj.percentage+"</th>";
+                        currentRowStr += "<th style='text-align: center'>"+finalGradeObj.grade+"</th>";
+                    }
+//                    console.log(parsedJson[j]); // Object with id and time
+                }
+                currentRowStr += "</tr>";
+                tableDataStr += currentRowStr;
+                if (i === 0) {                     
+                    subjectStr += "</tr>";
+                    theoryPractialGradeStr+= "</tr>";
+                    examDateStr+= "</tr>";
+                    twthprStr+= "</tr>";
+                    twthprValueStr+= "</tr>";
+                    
+                    tableBaseStr += (subjectStr + theoryPractialGradeStr + examDateStr + twthprStr + twthprValueStr);
+                    tableBaseStr += "</tr></thead>";
+                }
+            }
+        }
+        tableDataStr += "</tbody></table>";
+        $("#tablediv").html(tableBaseStr + tableDataStr);
+    }
 
 });

@@ -8,11 +8,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.javabase.apps.dto.TempStudentResult;
 import org.javabase.apps.entity.Batch;
 import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.Semester;
@@ -30,6 +32,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -151,33 +154,47 @@ public class StudentResultController {
 
         return "redirect:/dashboard/student/uploadResult?success=" + !isAnyRecordFailed;
     }
-    /* 
+     
     @ResponseBody
-    @RequestMapping(value = "/viewAttendance/getStudentAttendance", method = {RequestMethod.POST, RequestMethod.GET})
-    public Map<String, Object> getStudentAttendance(@RequestParam("batchId") String batchId, @RequestParam("semesterId") String semesterId,
-            @RequestParam("courseId") String courseId, @RequestParam("month") String month) {
-
+    @RequestMapping(value = "/viewResult/getStudentResult", method = {RequestMethod.POST, RequestMethod.GET})
+    public Map<String, Object> getStudentResult(@RequestParam("batchId") String batchId, @RequestParam("semesterId") String semesterId,
+            @RequestParam("courseId") String courseId) {
+        
         Map<String, Object> response = new HashMap<>();
-        List<StudentAttendance> studentAttendanceList = new ArrayList<>();
-        List<TempStudentAttendance> tempstudentAttendanceList = new ArrayList<>();
+        List<StudentResult> studentResultList = new ArrayList<>();
+        List<TempStudentResult> tempstudentResultList = new ArrayList<>();
 
-        if (!MyUtils.isNullOrEmpty(month) && !MyUtils.isNullOrEmpty(batchId) && !MyUtils.isNullOrEmpty(courseId) && !MyUtils.isNullOrEmpty(semesterId)) {
-            studentAttendanceList = studentService.getStudentAttendanceForGivenCriteria(Integer.parseInt(courseId), Integer.parseInt(batchId), Integer.parseInt(semesterId), month);
+        if (!MyUtils.isNullOrEmpty(batchId) && !MyUtils.isNullOrEmpty(courseId) && !MyUtils.isNullOrEmpty(semesterId)) {
+            studentResultList = studentService.getStudentResultForGivenCriteria(Integer.parseInt(courseId), Integer.parseInt(batchId), Integer.parseInt(semesterId));
         }
 
-        if (studentAttendanceList != null && !studentAttendanceList.isEmpty()) {
-            tempstudentAttendanceList=studentService.convertStudentAttendanceObjectToTemp(studentAttendanceList);
+        if (studentResultList != null && !studentResultList.isEmpty()) {
+            for(StudentResult sr : studentResultList){
+                TempStudentResult tsr=new TempStudentResult();
+                tsr.setBatchId(sr.getBatchId().getId());
+                tsr.setBatchName(sr.getBatchId().getBatch());
+                tsr.setCourseId(sr.getCourseId().getId());
+                tsr.setCourseName(sr.getCourseId().getCourseName());
+                tsr.setSemesterId(sr.getSemesterId().getId());
+                tsr.setSemesterName(String.valueOf(sr.getSemesterId().getSemester()));
+                tsr.setStudentId(sr.getStudentId().getId());
+                tsr.setStudentName(sr.getStudentId().getFirstName() +  " " + sr.getStudentId().getLastName());
+                tsr.setStudentName(sr.getStudentId().getFirstName() +  " " + sr.getStudentId().getLastName());
+                tsr.setEnrollmentNo(sr.getStudentId().getEnrollmentNumber());
+                tsr.setStudentResultJson(sr.getStudentResultJson());
+                tempstudentResultList.add(tsr);
+            }
         }
         
         response.put("success", true);
-        response.put("message", "Student Attendance Load Sucess.");
-        response.put("data", tempstudentAttendanceList);
+        response.put("message", "Student Result Load Sucess.");
+        response.put("data", tempstudentResultList);
         return response;
     }
     
-    
+   /* 
     @ResponseBody
-    @RequestMapping(value = "/viewAttendance/getAggregateStudentAttendance", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/viewResult/getAggregateStudentAttendance", method = {RequestMethod.POST, RequestMethod.GET})
     public Map<String, Object> getAggregateStudentAttendance(@RequestParam("batchId") String batchId, @RequestParam("semesterId") String semesterId,
             @RequestParam("courseId") String courseId) {
 
@@ -218,6 +235,6 @@ public class StudentResultController {
         response.put("success", true);
         response.put("message", "Student Attendance Load Sucess.");
         response.put("data", tempstudentAttendanceList);
-        return response;
+        return response; 
     } */
 }

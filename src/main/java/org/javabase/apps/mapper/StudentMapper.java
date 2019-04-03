@@ -4,6 +4,7 @@ import java.util.List;
 import org.javabase.apps.entity.Student;
 import org.javabase.apps.entity.StudentAttendance;
 import org.javabase.apps.entity.StudentFee;
+import org.javabase.apps.entity.StudentResult;
 
 public interface StudentMapper {
 
@@ -30,5 +31,7 @@ public interface StudentMapper {
     public List<StudentAttendance> getStudentAggregateAttendanceForGivenCriteria(int courseId, int batchId, int semesterId);
 
     public int deleteStudentResultForGivenCriteria(int courseId, int batchId, int semesterId);
+
+    public List<StudentResult> getStudentResultForGivenCriteria(int courseId, int batchId, int semesterId);
 
 }

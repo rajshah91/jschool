@@ -516,7 +516,8 @@ public class ExcelReadHandler {
                                             JSONObject newFinalGradeObj = new JSONObject();
                                             if (fgObject.has("ofTotal")) {
                                                 newFinalGradeObj.put("ofTotal", fgObject.get("ofTotal"));
-                                            } else if (fgObject.has("total")) {
+                                            }
+                                            if (fgObject.has("total")) {
                                                 newFinalGradeObj.put("total", fgObject.get("total"));
                                             }
                                             if (fgObject.has("percentage")) {
@@ -547,7 +548,8 @@ public class ExcelReadHandler {
                                     }
                                     if (thObject.has("ofTotal")) {
                                         newthObj.put("ofTotal", thObject.get("ofTotal"));
-                                    } else if (thObject.has("total")) {
+                                    }
+                                    if(thObject.has("total")) {
                                         newthObj.put("total", thObject.get("total"));
                                     }
                                     if (thObject.has("percentage")) {
@@ -577,7 +579,8 @@ public class ExcelReadHandler {
                                     }
                                     if (prObject.has("ofTotal")) {
                                         newprObj.put("ofTotal", prObject.get("ofTotal"));
-                                    } else if (prObject.has("total")) {
+                                    }
+                                    if (prObject.has("total")) {
                                         newprObj.put("total", prObject.get("total"));
                                     }
                                     if (prObject.has("percentage")) {

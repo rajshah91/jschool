@@ -65,31 +65,10 @@
                                 </div>
                             </div>
 
-                            <!--                            <div class="form-group">
-                                                            <label class="col-sm-2 control-label" for="month">Month<span class="require-field">*</span></label>
-                                                            <div class="col-sm-3">
-                                                                <select name="month" class="form-control select2 validate[required]" id="month" style="width: 100%" placeholder="Select Month">
-                                                                    <option value=""></option>
-                                                                    <option value="January">January</option>
-                                                                    <option value="February">February</option>
-                                                                    <option value="March">March</option>
-                                                                    <option value="April">April</option>
-                                                                    <option value="May">May</option>
-                                                                    <option value="June">June</option>
-                                                                    <option value="July">July</option>
-                                                                    <option value="August">August</option>
-                                                                    <option value="September">September</option>
-                                                                    <option value="October">October</option>
-                                                                    <option value="November">November</option>
-                                                                    <option value="December">December</option>
-                                                                </select>
-                            
-                                                            </div>
-                                                        </div>-->
-
                             <div class="col-sm-offset-2 col-sm-8">
                                 <input type="submit" value="View Result" name="view_result" class="btn btn-success">
                             </div>
+                            
 
 
                         </form>
@@ -98,7 +77,7 @@
                     </div>
 
                     <!-- =========================== Search Datatable Start ======================== -->
-                    <div class="box-body">
+                    <div class="box-body" id="">
                         <div class="box-body table-responsive">
                             <!--                            <table id="studentAttendanceTable" class="table table-striped table-bordered cell-border display"  style="width:100%">
                                                         </table>-->
@@ -106,124 +85,10 @@
 
 
                         <!--  START OF  DATA TABLE STATIC DATA  -->
+                        <div id="tablediv" style="overflow: scroll">
+                            
+                        </div>
 
-
-
-                        <table id="example" class="display" style="width:100%" border="1">
-                            <thead>
-                                <tr>
-                                    <th rowspan="5" style="text-align: center">No</th>
-                                    <th rowspan="5" style="text-align: center">Enrollment No</th>
-                                    <th colspan="5" style="text-align: center">Lodging</th>
-                                    <th colspan="5" style="text-align: center">POM</th>
-                                    <th colspan="5" style="text-align: center">BFA</th>
-                                </tr>
-                                <tr>
-                                    <th colspan="5" style="text-align: center">Theory</th>
-                                    <th colspan="5" style="text-align: center">Theory</th>
-                                    <th colspan="5" style="text-align: center">Theory</th>
-                                </tr>
-                                <tr>
-                                    <th colspan="5" style="text-align: center">18-12-17</th>
-                                    <th colspan="5" style="text-align: center">19-12-17</th>
-                                    <th colspan="5" style="text-align: center">16-12-17</th>
-                                </tr>
-                                <tr>
-                                    <th style="text-align: center">TW</th>
-                                    <th style="text-align: center">Th</th>
-                                    <th style="text-align: center">Total</th>
-                                    <th style="text-align: center">%</th>
-                                    <th style="text-align: center">GR</th>
-                                    
-                                    <th style="text-align: center">TW</th>
-                                    <th style="text-align: center">Th</th>
-                                    <th style="text-align: center">Total</th>
-                                    <th style="text-align: center">%</th>
-                                    <th style="text-align: center">GR</th>
-                                    
-                                    <th style="text-align: center">TW</th>
-                                    <th style="text-align: center">Th</th>
-                                    <th style="text-align: center">Total</th>
-                                    <th style="text-align: center">%</th>
-                                    <th style="text-align: center">GR</th>
-                                </tr>
-                                <tr>
-                                    <th style="text-align: center">50</th>
-                                    <th style="text-align: center">50</th>
-                                    <th style="text-align: center">100</th>
-                                    <th style="text-align: center"></th>
-                                    <th style="text-align: center"></th>
-                                    
-                                    <th style="text-align: center">50</th>
-                                    <th style="text-align: center">50</th>
-                                    <th style="text-align: center">100</th>
-                                    <th style="text-align: center"></th>
-                                    <th style="text-align: center"></th>
-                                    
-                                     <th style="text-align: center">50</th>
-                                    <th style="text-align: center">50</th>
-                                    <th style="text-align: center">100</th>
-                                    <th style="text-align: center"></th>
-                                    <th style="text-align: center"></th>
-                                </tr>
-                                
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>472117</td>
-                                    <td>43</td>
-                                    <td>34</td>
-                                    <td>77</td>
-                                    <td>77</td>
-                                    <td>B</td>
-                                    
-                                    <td>43</td>
-                                    <td>34</td>
-                                    <td>77</td>
-                                    <td>77</td>
-                                    <td>B</td>
-                                    
-                                    <td>43</td>
-                                    <td>34</td>
-                                    <td>77</td>
-                                    <td>77</td>
-                                    <td>B</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>482117</td>
-                                    <td>30</td>
-                                    <td>AB</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>AB</td>
-                                    
-                                    <td>30</td>
-                                    <td>AB</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>AB</td>
-                                    
-                                    <td>30</td>
-                                    <td>AB</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>AB</td>
-                                </tr>
-                                
-                            </tbody>
-                            <!--                            <tfoot>
-                                                            <tr>
-                                                                <th>Name</th>
-                                                                <th>Position</th>
-                                                                <th>Office</th>
-                                                                <th>Age</th>
-                                                                <th>Start date</th>
-                                                                <th>Salary</th>
-                                                            </tr>
-                                                        </tfoot>-->
-                        </table>
 
                         <!--   END OF DATA TABLE STATIC DATA  -->
                         

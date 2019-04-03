@@ -14,6 +14,7 @@ import org.javabase.apps.entity.Course;
 import org.javabase.apps.entity.Student;
 import org.javabase.apps.entity.StudentAttendance;
 import org.javabase.apps.entity.StudentFee;
+import org.javabase.apps.entity.StudentResult;
 import org.javabase.apps.mapper.CourseMapper;
 import org.javabase.apps.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -215,5 +216,9 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentAttendance> getStudentAggregateAttendanceForGivenCriteria(int courseId, int batchId, int semesterId) {
          return studentMapper.getStudentAggregateAttendanceForGivenCriteria(courseId, batchId, semesterId);
     }
-
+    
+    @Override
+    public List<StudentResult> getStudentResultForGivenCriteria(int courseId, int batchId,int semesterId){
+        return studentMapper.getStudentResultForGivenCriteria(courseId, batchId, semesterId);
+    }
 }

@@ -7,6 +7,7 @@ import org.javabase.apps.dto.TempStudentAttendance;
 import org.javabase.apps.entity.Student;
 import org.javabase.apps.entity.StudentAttendance;
 import org.javabase.apps.entity.StudentFee;
+import org.javabase.apps.entity.StudentResult;
 
 
 public interface StudentService {
@@ -40,4 +41,6 @@ public interface StudentService {
     public List<StudentAttendance> getStudentAggregateAttendanceForGivenCriteria(int courseId, int batchId, int semesterId);
     
     public int deleteStudentResultForGivenCriteria(int courseId, int batchId,int semesterId);
+
+    public List<StudentResult> getStudentResultForGivenCriteria(int parseInt, int parseInt0, int parseInt1);
 }
