@@ -221,4 +221,9 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentResult> getStudentResultForGivenCriteria(int courseId, int batchId,int semesterId){
         return studentMapper.getStudentResultForGivenCriteria(courseId, batchId, semesterId);
     }
+    
+    @Override
+    public List<StudentResult> getStudentResultForGivenCriteria(int courseId, int batchId,int semesterId,int studentId){
+        return studentMapper.getStudentResultForGivenCriteria(courseId, batchId, semesterId,studentId);
+    }
 }

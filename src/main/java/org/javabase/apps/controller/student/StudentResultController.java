@@ -192,49 +192,40 @@ public class StudentResultController {
         return response;
     }
     
-   /* 
     @ResponseBody
-    @RequestMapping(value = "/viewResult/getAggregateStudentAttendance", method = {RequestMethod.POST, RequestMethod.GET})
-    public Map<String, Object> getAggregateStudentAttendance(@RequestParam("batchId") String batchId, @RequestParam("semesterId") String semesterId,
-            @RequestParam("courseId") String courseId) {
-
+    @RequestMapping(value = "/viewResultToStudent/getStudentResult", method = {RequestMethod.POST, RequestMethod.GET})
+    public Map<String, Object> getResultOfStudent(@RequestParam("batchId") String batchId, @RequestParam("semesterId") String semesterId,
+            @RequestParam("courseId") String courseId,@RequestParam("studentId") String studentId) {
+        
         Map<String, Object> response = new HashMap<>();
-        List<StudentAttendance> studentAttendanceList = new ArrayList<>();
-        List<TempStudentAttendance> tempstudentAttendanceList = new ArrayList<>();
+        List<StudentResult> studentResultList = new ArrayList<>();
+        List<TempStudentResult> tempstudentResultList = new ArrayList<>();
 
-        if (!MyUtils.isNullOrEmpty(batchId) && !MyUtils.isNullOrEmpty(courseId) && !MyUtils.isNullOrEmpty(semesterId)) {
-            studentAttendanceList = studentService.getStudentAggregateAttendanceForGivenCriteria(Integer.parseInt(courseId), Integer.parseInt(batchId), Integer.parseInt(semesterId));
+        if (!MyUtils.isNullOrEmpty(batchId) && !MyUtils.isNullOrEmpty(courseId) && !MyUtils.isNullOrEmpty(semesterId) && !MyUtils.isNullOrEmpty(studentId)) {
+            studentResultList = studentService.getStudentResultForGivenCriteria(Integer.parseInt(courseId), Integer.parseInt(batchId), Integer.parseInt(semesterId), Integer.parseInt(studentId));
         }
 
-        if (studentAttendanceList != null && !studentAttendanceList.isEmpty()) {
-            tempstudentAttendanceList=studentService.convertStudentAttendanceObjectToTemp(studentAttendanceList);
+        if (studentResultList != null && !studentResultList.isEmpty()) {
+            for(StudentResult sr : studentResultList){
+                TempStudentResult tsr=new TempStudentResult();
+                tsr.setBatchId(sr.getBatchId().getId());
+                tsr.setBatchName(sr.getBatchId().getBatch());
+                tsr.setCourseId(sr.getCourseId().getId());
+                tsr.setCourseName(sr.getCourseId().getCourseName());
+                tsr.setSemesterId(sr.getSemesterId().getId());
+                tsr.setSemesterName(String.valueOf(sr.getSemesterId().getSemester()));
+                tsr.setStudentId(sr.getStudentId().getId());
+                tsr.setStudentName(sr.getStudentId().getFirstName() +  " " + sr.getStudentId().getLastName());
+                tsr.setStudentName(sr.getStudentId().getFirstName() +  " " + sr.getStudentId().getLastName());
+                tsr.setEnrollmentNo(sr.getStudentId().getEnrollmentNumber());
+                tsr.setStudentResultJson(sr.getStudentResultJson());
+                tempstudentResultList.add(tsr);
+            }
         }
         
         response.put("success", true);
-        response.put("message", "Student Aggregate Attendance Load Sucess.");
-        response.put("data", tempstudentAttendanceList);
+        response.put("message", "Student Result Load Sucess.");
+        response.put("data", tempstudentResultList);
         return response;
     }
-
-    @ResponseBody
-    @RequestMapping(value = "/viewAttendanceToStudent/getStudentAttendance", method = {RequestMethod.POST, RequestMethod.GET})
-    public Map<String, Object> getAttendanceOfStudent(@RequestParam("studentId") String studentId) {
-
-        Map<String, Object> response = new HashMap<>();
-        List<StudentAttendance> studentAttendanceList = new ArrayList<>();
-        List<TempStudentAttendance> tempstudentAttendanceList = new ArrayList<>();
-
-        if (!MyUtils.isNullOrEmpty(studentId)) {
-            studentAttendanceList = studentService.getStudentAttendanceForGivenCriteria(Integer.parseInt(studentId));
-        }
-
-        if (studentAttendanceList != null && !studentAttendanceList.isEmpty()) {
-            tempstudentAttendanceList=studentService.convertStudentAttendanceObjectToTemp(studentAttendanceList);
-        }
-        
-        response.put("success", true);
-        response.put("message", "Student Attendance Load Sucess.");
-        response.put("data", tempstudentAttendanceList);
-        return response; 
-    } */
 }

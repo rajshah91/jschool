@@ -33,5 +33,7 @@ public interface StudentMapper {
     public int deleteStudentResultForGivenCriteria(int courseId, int batchId, int semesterId);
 
     public List<StudentResult> getStudentResultForGivenCriteria(int courseId, int batchId, int semesterId);
+    
+    public List<StudentResult> getStudentResultForGivenCriteria(int courseId, int batchId, int semesterId,int studentId);
 
 }

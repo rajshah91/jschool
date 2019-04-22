@@ -42,5 +42,7 @@ public interface StudentService {
     
     public int deleteStudentResultForGivenCriteria(int courseId, int batchId,int semesterId);
 
-    public List<StudentResult> getStudentResultForGivenCriteria(int parseInt, int parseInt0, int parseInt1);
+    public List<StudentResult> getStudentResultForGivenCriteria(int courseId, int batchId, int semesterId);
+    
+    public List<StudentResult> getStudentResultForGivenCriteria(int courseId, int batchId, int semesterId,int studentId);
 }

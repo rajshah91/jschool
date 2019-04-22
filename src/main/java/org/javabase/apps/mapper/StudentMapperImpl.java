@@ -236,4 +236,18 @@ public class StudentMapperImpl implements StudentMapper {
             return salist;
         }
     }
+    
+    @Override
+    public List<StudentResult> getStudentResultForGivenCriteria(int courseId, int batchId, int semesterId,int studentId) {
+        List<StudentResult> salist = new ArrayList<>();
+        try {
+            String hql = " FROM StudentResult sa WHERE  sa.courseId.id=" + courseId
+                    + " AND sa.batchId.id=" + batchId + " AND sa.semesterId.id=" + semesterId +" AND sa.studentId.id="+studentId;
+            return (List<StudentResult>) hibernateTemplate.find(hql);
+        } catch (DataAccessException e) {
+            System.out.println("Error in CommonMapperImpl.getStudentResultForGivenCriteria : " + e.getMessage());
+            e.printStackTrace();
+            return salist;
+        }
+    }
 }

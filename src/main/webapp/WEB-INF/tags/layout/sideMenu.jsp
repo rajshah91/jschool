@@ -100,6 +100,7 @@
     <li><a href='<c:url value="/home"/>'><i class="fa fa-home"></i> <span>Home</span></a></li>
     <li><a href='<c:url value="/dashboard/student/viewFeeToStudent"/>'><i class="fa fa-info-circle"></i>View Fee Detail</a></li>
     <li><a href='<c:url value="/dashboard/student/viewAttendanceToStudent"/>'><i class="fa fa-check-square-o"></i> <span>View My Attendance</span></a></li>
+    <li><a href='<c:url value="/dashboard/student/viewResultToStudent"/>'><i class="fa fa-search-plus"></i> <span>View Result</span></a></li>
 </sec:authorize>
 <!-- =========================== Student Role Menu Section END =========================== -->
 
