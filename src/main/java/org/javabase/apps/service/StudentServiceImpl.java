@@ -193,6 +193,11 @@ public class StudentServiceImpl implements StudentService {
     }
     
     @Override
+    public Student getStudentByEmailId(String emailId){
+        return studentMapper.getStudentByEmailId(emailId);
+    }
+    
+    @Override
     public int deleteStudentAttendanceForGivenCriteria(int courseId, int batchId,int semesterId,String month){
         return studentMapper.deleteStudentAttendanceForGivenCriteria(courseId, batchId, semesterId, month);
     }

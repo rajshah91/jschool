@@ -22,6 +22,8 @@ public interface StudentService {
     
     public Student getStudentByMobileNumber(String mobileNumber);
     
+    public Student getStudentByEmailId(String emailId);
+    
     public List<TempStudent> convertMainObjectToTemp(List<Student> student);
 
     public List<Student> getAllStudentsWithSearchCriteria(String searchType, String searchText);

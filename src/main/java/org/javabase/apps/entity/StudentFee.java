@@ -176,4 +176,4 @@ public class StudentFee implements Serializable {
         return "org.javabase.apps.entity.StudentFee[ id=" + id + " ]";
     }
     
-}
+        }

@@ -124,6 +124,17 @@ public class StudentMapperImpl implements StudentMapper {
             return null;
         }
     }
+    
+    @Override
+    public Student getStudentByEmailId(String emaiId) {
+        try {
+            String hql = "FROM Student s WHERE s.emailId='" + emaiId + "'";
+            return (Student) hibernateTemplate.find(hql).get(0);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
     @Override
     @Transactional

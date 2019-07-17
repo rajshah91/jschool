@@ -51,7 +51,8 @@ public class LoginController {
                 
                 if(user != null && user.getRole() !=null && user.getRole().getRoleName().equalsIgnoreCase("student")){
                     Student stud=studentService.getStudentByMobileNumber(username);
-                    if(stud != null){
+                    Student stud1=studentService.getStudentByEmailId(user.getEmail());
+                    if(stud1 != null){
                         session.setAttribute("studentId", stud.getId());
                     }
                 }

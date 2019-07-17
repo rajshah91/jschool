@@ -14,9 +14,16 @@
 
 
             </div>
-
-            <input type="hidden" name="studentId" id="studentId" value="${studentId}"/>
-            <div class="box-body">
+           <div class="box-body">
+                <form name="student_result_form" action="" method="post" class="form-horizontal" id="student_result_form" enctype="multipart/form-data">
+                            <div class="form-group">
+                                 <input type="hidden" name="studentId" id="studentId" value="${studentId}"/>
+                                <input type="hidden" id="csrfToken" value="${_csrf.token}"/>
+                                <input type="hidden" id="csrfHeader" value="${_csrf.headerName}"/>
+                                <!-- Get User information like userid or user name -->
+                                <input type="hidden" id="userId" value="${user.userId}"/>
+                            </div>
+                </form>
                 <div class="box-body table-responsive">
                     <table id="studentFeeHistory" class="table table-striped table-bordered cell-border display"  style="width:100%">
                     </table>

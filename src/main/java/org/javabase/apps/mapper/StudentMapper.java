@@ -36,4 +36,6 @@ public interface StudentMapper {
     
     public List<StudentResult> getStudentResultForGivenCriteria(int courseId, int batchId, int semesterId,int studentId);
 
+    public Student getStudentByEmailId(String emailId);
+
 }
